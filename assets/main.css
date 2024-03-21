@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  color: #020105;
+}
+
+.nav-item {
+  @apply flex items-center space-x-2;
+}
+
+.conponent-margin-top {
+  @apply mt-[120px];
+}
+
+.category-grid-item {
+  @apply cursor-pointer flex flex-col items-center justify-center md:col-span-1 bg-[#F9F9F9] p-[24px] space-y-[20px] hover:text-orange;
+}
+
+.brand-grid-item {
+  @apply flex items-center justify-center border border-[#EEEEEE] rounded-xl cursor-pointer;
+}
+
+.top-grid-item {
+  @apply flex flex-col space-y-[8px] cursor-pointer;
+}
+
+.top-grid-item-info {
+  @apply flex flex-col space-y-2 bg-[#F9F9F9] p-[12px];
+}
+
+.title {
+  @apply font-medium text-[32px] mb-[24px];
+}
+
+.title-temp {
+  @apply font-medium text-[32px];
+}
+
+.footer-title {
+  @apply text-black text-[24px] font-medium mb-[32px];
+}
+
+.footer-link {
+  @apply text-[18px] text-gray;
+}
+
+.footer-link-box {
+  @apply flex flex-col space-y-[16px];
+}
+
+.main-title {
+  @apply text-[40px] text-black font-medium;
+}
+
+.user-data-cont {
+  @apply mt-[30px];
+}
+
+.main-grid {
+  @apply grid grid-cols-1 md:grid-cols-6 gap-4;
+}
+
+.blog-grid {
+  @apply grid grid-cols-1 md:grid-cols-4 gap-4;
+}
