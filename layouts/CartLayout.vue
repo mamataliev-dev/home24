@@ -4,6 +4,7 @@
 
     <nuxt />
 
+    <ProductsTopProducts />
     <ProductsRecentlyProducts />
     <MainAppFooter />
   </div>
