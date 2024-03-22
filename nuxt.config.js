@@ -25,6 +25,11 @@ export default {
     '@nuxtjs/tailwindcss',
   ],
 
+  server: {
+    host: 'localhost',
+    port: 8000,
+  },
+
   modules: [],
 
   build: {},
