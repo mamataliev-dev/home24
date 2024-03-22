@@ -4,13 +4,12 @@
 
 <script>
 export default {
-  name: 'CategoriesPage',
+  name: 'ComparePage',
+  layout: 'UserDataLayout',
   head() {
     return {
-      title: 'Категории',
+      title: 'Сравнение | ID',
     }
   },
 }
 </script>
-
-<style lang="scss" scoped></style>

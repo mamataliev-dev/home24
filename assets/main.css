@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
 body {
   color: #020105;
 }
@@ -51,7 +62,7 @@ body {
 }
 
 .main-title {
-  @apply text-[40px] text-black font-medium;
+  @apply text-[40px] text-black font-medium mt-[12px];
 }
 
 .user-data-cont {
@@ -62,6 +73,26 @@ body {
   @apply grid grid-cols-1 md:grid-cols-6 gap-4;
 }
 
+.category-grid {
+  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4;
+}
+
 .blog-grid {
   @apply grid grid-cols-1 md:grid-cols-4 gap-4;
+}
+
+.profile-item-box {
+  @apply flex items-center space-x-[8px];
+}
+
+.profile-box {
+  @apply flex space-x-[8px];
+}
+
+.category-title {
+  @apply font-medium text-[20px] text-black;
+}
+
+.category-box {
+  @apply flex flex-col space-y-[16px];
 }

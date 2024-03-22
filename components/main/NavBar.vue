@@ -97,9 +97,9 @@
             <span class="">Корзина</span>
           </nuxt-link>
 
-          <nuxt-link class="nav-item" to="/">
+          <nuxt-link class="nav-item" to="/user/orders">
             <img src="@/assets/img/profile.svg" alt="" />
-            <span class="">Войти</span>
+            <span class="">Diyorbek</span>
           </nuxt-link>
         </li>
       </ul>

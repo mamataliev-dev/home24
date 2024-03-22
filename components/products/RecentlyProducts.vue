@@ -1,10 +1,7 @@
 <template>
   <div class="container mx-auto conponent-margin-top">
     <div class="flex items-end space-x-[24px] mb-[24px]">
-      <h1 class="title-temp">Хиты продаж</h1>
-      <nuxt-link to="/" class="text-orange text-[20px] underline"
-        >Все товары</nuxt-link
-      >
+      <h1 class="title-temp">Просмотренные товары</h1>
     </div>
 
     <div class="main-grid">
@@ -18,12 +15,5 @@
 </template>
 
 <script>
-export default {
-  name: 'AppCategories',
-  methods: {
-    getProduct(val) {
-      console.log(val)
-    },
-  },
-}
+export default {}
 </script>

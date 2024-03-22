@@ -2,7 +2,9 @@
   <div class="container mx-auto">
     <h1 class="main-title">Список сравнения</h1>
 
-    <SlotEmty :image-src="require('@/assets/img/icons/empty-compare.svg')">
+    <ReusedSlotEmty
+      :image-src="require('@/assets/img/icons/empty-compare.svg')"
+    >
       <template #header>
         <h1 class="text-[32px] font-medium">Сравнивать пока нечего</h1>
       </template>
@@ -13,7 +15,7 @@
           подходящий вам товар
         </p>
       </template>
-    </SlotEmty>
+    </ReusedSlotEmty>
   </div>
 </template>
 

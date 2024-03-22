@@ -19,6 +19,10 @@
 <script>
 export default {
   name: 'ErrorPage',
-  title: 'Ничего не найдено',
+  head() {
+    return {
+      title: 'Ничего не найдено',
+    }
+  },
 }
 </script>

@@ -2,7 +2,7 @@
   <div class="container mx-auto">
     <h1 class="main-title">Избранное</h1>
 
-    <SlotEmty :image-src="require('@/assets/img/icons/empty-favourites.svg')">
+    <ReusedSlotEmty :image-src="require('@/assets/img/icons/empty-favourites.svg')">
       <template #header>
         <h1 class="text-[32px] font-medium">В избранном пока ничего нет</h1>
       </template>
@@ -13,7 +13,7 @@
           на карточке товара
         </p>
       </template>
-    </SlotEmty>
+    </ReusedSlotEmty>
   </div>
 </template>
 
@@ -21,10 +21,5 @@
 export default {
   name: 'FavouritesPage',
   layout: 'UserDataLayout',
-  head() {
-    return {
-      title: 'Избранное',
-    }
-  },
 }
 </script>

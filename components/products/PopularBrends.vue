@@ -8,40 +8,12 @@
     </div>
 
     <div class="main-grid">
-      <div @click="getBrand(val)" class="brand-grid-item">
-        <img src="@/assets/img/png/apple-logo.png" alt="" />
-      </div>
-      <div @click="getBrand(val)" class="brand-grid-item">
-        <img src="@/assets/img/png/apple-logo.png" alt="" />
-      </div>
-      <div @click="getBrand(val)" class="brand-grid-item">
-        <img src="@/assets/img/png/apple-logo.png" alt="" />
-      </div>
-      <div @click="getBrand(val)" class="brand-grid-item">
-        <img src="@/assets/img/png/apple-logo.png" alt="" />
-      </div>
-      <div @click="getBrand(val)" class="brand-grid-item">
-        <img src="@/assets/img/png/apple-logo.png" alt="" />
-      </div>
-      <div @click="getBrand(val)" class="brand-grid-item">
-        <img src="@/assets/img/png/apple-logo.png" alt="" />
-      </div>
-      <div @click="getBrand(val)" class="brand-grid-item">
-        <img src="@/assets/img/png/apple-logo.png" alt="" />
-      </div>
-      <div @click="getBrand(val)" class="brand-grid-item">
-        <img src="@/assets/img/png/apple-logo.png" alt="" />
-      </div>
-      <div @click="getBrand(val)" class="brand-grid-item">
-        <img src="@/assets/img/png/apple-logo.png" alt="" />
-      </div>
-      <div @click="getBrand(val)" class="brand-grid-item">
-        <img src="@/assets/img/png/apple-logo.png" alt="" />
-      </div>
-      <div @click="getBrand(val)" class="brand-grid-item">
-        <img src="@/assets/img/png/apple-logo.png" alt="" />
-      </div>
-      <div @click="getBrand(val)" class="brand-grid-item">
+      <div
+        v-for="item in 12"
+        :key="item"
+        class="brand-grid-item"
+        @click="getBrand(item)"
+      >
         <img src="@/assets/img/png/apple-logo.png" alt="" />
       </div>
     </div>
@@ -53,7 +25,7 @@ export default {
   name: 'PopularBrends',
   methods: {
     getBrand(val) {
-      console.log(val)
+      this.$router.push(`/brand/${val}`)
     },
   },
 }

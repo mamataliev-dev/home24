@@ -1,5 +1,7 @@
 <template>
-  <div class="container mx-auto mt-[120px] pt-[80px] pb-[40px] conponent-margin-top">
+  <div
+    class="container mx-auto mt-[120px] pt-[80px] pb-[40px] conponent-margin-top"
+  >
     <div class="flex justify-between pb-[32px] border-b border-[#EBEBEB]">
       <div class="flex flex-col">
         <h1 class="footer-title">Информация</h1>

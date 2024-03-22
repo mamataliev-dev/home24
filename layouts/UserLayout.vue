@@ -5,6 +5,7 @@
 
     <nuxt />
 
+    <AppAdvertising />
     <MainAppFooter />
   </div>
 </template>

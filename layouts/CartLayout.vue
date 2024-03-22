@@ -1,10 +1,10 @@
 <template>
   <div>
     <MainNavBar />
-    <DynamicRouter />
 
     <nuxt />
 
+    <ProductsRecentlyProducts />
     <MainAppFooter />
   </div>
 </template>

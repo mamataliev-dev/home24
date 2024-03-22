@@ -14,11 +14,11 @@
         </slot>
       </div>
 
-      <button
+      <nuxt-link
         class="border border-orange py-[16px] px-[126px] rounded-lg text-orange font-medium text-[16px] mt-[24px]"
+        to="/"
+        >На главную</nuxt-link
       >
-        <nuxt-link to="/">На главную</nuxt-link>
-      </button>
     </div>
   </div>
 </template>

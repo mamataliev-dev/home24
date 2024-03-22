@@ -1,8 +1,8 @@
 <template>
-  <div class="flex flex-col space-x-[35px]">
-    <h1 class="main-title">Реклама</h1>
+  <div class="flex flex-col space-y-[35px]">
+    <h1 class="text-[40px] text-black font-medium">Реклама</h1>
 
-    <div v-for="item in 3" :key="item">
+    <div class="flex flex-col space-y-[24px]" v-for="item in 3" :key="item">
       <img class="rounded-lg" src="@/assets/img/jpg/blog-ad.jpg" alt="" />
     </div>
   </div>

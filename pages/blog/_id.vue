@@ -1,0 +1,49 @@
+<template>
+  <div class="container mx-auto">
+    <h1 class="main-title">Блог</h1>
+
+    <div class="flex flex-wrap mt-[32px]">
+      <div class="w-full md:w-9/12">
+        <div class="flex flex-col space-y-[24px]">
+          <div class="flex flex-col">
+            <h1 class="text-[32px] font-medium">
+              Любовь к семье и верность университету - по наследству: два
+              поколения преподавателей Грехнёвых в ННГУ
+            </h1>
+            <span class="text-[16px] text-gray">4 июля</span>
+          </div>
+
+          <p class="text-[18px] text-gray">
+            Ежегодному празднованию Международного женского дня положила начало
+            Вторая Международная конференция социалисток, состоявшаяся в
+            Копенгагене в 1910 году. Праздновать этот день предложила Клара
+            Цеткин[3]. Одной из целей была обозначена борьба за всеобщее
+            избирательное право для женщин.
+            <br />
+            Предложение получило единодушную поддержку более 100 женщин из 17
+            стран, однако дата празднования зафиксирована не была[2]. До 1914
+            года в разных странах этот день отмечали в различные числа марта[3].
+          </p>
+        </div>
+      </div>
+      <div class="w-full md:w-3/12">
+        <AdBlog />
+      </div>
+    </div>
+
+    <ReusedSlotBaner :is-blog="true" />
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'BlogId',
+  head() {
+    return {
+      title: 'Блог | Id',
+    }
+  },
+}
+</script>
+
+<style lang="scss" scoped></style>

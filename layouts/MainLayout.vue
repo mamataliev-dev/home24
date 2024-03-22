@@ -10,6 +10,8 @@
 
     <nuxt />
 
+    <AppAdvertising />
+    <ReusedSlotBaner />
     <MainAppFooter />
   </div>
 </template>

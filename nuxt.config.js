@@ -25,6 +25,12 @@ export default {
     '@nuxtjs/tailwindcss',
   ],
 
+  loadingIndicator: {
+    name: 'folding-cube',
+    color: '#FF6418',
+    background: 'white',
+  },
+
   modules: [],
 
   build: {},
