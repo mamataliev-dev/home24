@@ -100,7 +100,7 @@
 export default {
   name: 'BrandPage',
   layout: 'CategoryLayout',
-  haed() {
+  head() {
     return {
       title: 'Брэнд | Artel',
     }

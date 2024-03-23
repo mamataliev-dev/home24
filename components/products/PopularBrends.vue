@@ -1,10 +1,8 @@
 <template>
   <div class="container mx-auto conponent-margin-top">
-    <div class="flex items-end space-x-[24px] mb-[24px]">
+    <div class="comp-title-box">
       <h1 class="title-temp">Популярные бренды</h1>
-      <nuxt-link to="/" class="text-orange text-[20px] underline"
-        >Смотреть все</nuxt-link
-      >
+      <nuxt-link to="/" class="see-all-text">Смотреть все</nuxt-link>
     </div>
 
     <div class="main-grid">

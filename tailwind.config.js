@@ -20,6 +20,12 @@ module.exports = {
         white: '#FFFFFF',
         innerBlack: '#27282A',
       },
+      fontFamily: {
+        firsNeueLight: 'Firs Neue Light',
+        firsNeueRegular: 'Firs Neue Regular',
+        firsNeueMedium: 'Firs Neue Medium',
+        firsNeueBold: 'Firs Neue Bold',
+      },
     },
   },
   plugins: [],

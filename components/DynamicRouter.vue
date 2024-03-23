@@ -1,15 +1,17 @@
 <template>
-  <div class="container mx-auto mt-[32px]">
+  <div class="container mx-auto" :class="{ 'mt-[32px]': applyMarginTop }">
     <el-breadcrumb separator=">">
       <el-breadcrumb-item :to="{ path: '/' }">
-        <span class="text-orange"> Главная </span>
+        <span class="text-orange text-[16px] font-firsNeueRegular">
+          Главная
+        </span>
       </el-breadcrumb-item>
       <el-breadcrumb-item
         v-for="(crumb, index) in breadcrumbs"
         :key="index"
         :to="{ path: crumb.to }"
       >
-        <span class="text-gray text-[16px]">
+        <span class="text-gray text-[16px] font-firsNeueRegular">
           {{ crumb.text }}
         </span>
       </el-breadcrumb-item>
@@ -20,6 +22,12 @@
 <script>
 export default {
   name: 'DynamicRouter',
+  props: {
+    applyMarginTop: {
+      type: Boolean,
+      default: true,
+    },
+  },
   computed: {
     breadcrumbs() {
       const pathArray = this.$route.path.split('/').filter((p) => p)

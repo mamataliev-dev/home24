@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto">
-    <!-- If bad serach -->
+    <!-- If bad search -->
     <!-- <div v-show="false">
       <h1 class="main-title">
         Результаты поиска по запросу "Мягкая мебель из тропик дерево"
@@ -27,9 +27,7 @@
 
           <ul>
             <li>
-              <ul>
-                <li></li>
-              </ul>
+              <button class="hover:text-orange">Категории</button>
             </li>
           </ul>
         </div>
@@ -161,10 +159,6 @@ export default {
         {
           value: 'Популярные',
           label: 'Популярные',
-        },
-        {
-          value: 'Подешевле',
-          label: 'Подешевле',
         },
         {
           value: 'Подороже',

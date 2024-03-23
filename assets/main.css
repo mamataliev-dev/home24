@@ -2,19 +2,62 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+@font-face {
+  font-family: 'Firs Neue Light';
+  src: url('@/assets/fonts/tt_firs_neue/TTFirsNeueTrialLight.ttf')
+    format('truetype');
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Firs Neue Regular';
+  src: url('@/assets/fonts/tt_firs_neue/TTFirsNeueTrialRegular.ttf')
+    format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Firs Neue Medium';
+  src: url('@/assets/fonts/tt_firs_neue/TTFirsNeueTrialMedium.ttf')
+    format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Firs Neue Bold';
+  src: url('@/assets/fonts/tt_firs_neue/TTFirsNeueTrialBold.ttf')
+    format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+body {
+  color: #020105;
+  font-family: 'Inter', sans-serif;
+}
+
 input[type='number']::-webkit-inner-spin-button,
 input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-/* Firefox */
-input[type='number'] {
-  -moz-appearance: textfield;
+.comp-title-box {
+  @apply flex items-center space-x-[24px] mb-[24px];
 }
 
-body {
-  color: #020105;
+.see-all-text {
+  @apply text-orange text-[20px]  w-auto border-b border-orange mt-[10px] leading-[28px] font-firsNeueRegular;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
 }
 
 .nav-item {
@@ -42,15 +85,15 @@ body {
 }
 
 .title {
-  @apply font-medium text-[32px] mb-[24px];
+  @apply font-medium text-[32px] mb-[24px] font-firsNeueMedium;
 }
 
 .title-temp {
-  @apply font-medium text-[32px];
+  @apply font-medium text-[32px] font-firsNeueMedium;
 }
 
 .footer-title {
-  @apply text-black text-[24px] font-medium mb-[32px];
+  @apply text-black text-[24px] font-medium mb-[32px] font-firsNeueMedium;
 }
 
 .footer-link {
@@ -62,7 +105,7 @@ body {
 }
 
 .main-title {
-  @apply text-[40px] text-black font-medium mt-[12px];
+  @apply text-[40px] text-black font-medium mt-[12px] font-firsNeueMedium;
 }
 
 .user-data-cont {

@@ -5,7 +5,6 @@
 
     <nuxt />
 
-    <ProductsTopProducts />
     <MainAppFooter />
   </div>
 </template>

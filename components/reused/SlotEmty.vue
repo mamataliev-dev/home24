@@ -5,10 +5,10 @@
 
       <div class="flex flex-col items-center mt-[32px]">
         <slot name="header">
-          <h1 class="text-[32px] font-medium">Default Header</h1>
+          <h1 class="text-[32px] font-medium font-firsNeueMedium">Default Header</h1>
         </slot>
         <slot name="description">
-          <p class="text-gray text-[16px] max-w-[377px] text-center">
+          <p class="text-gray text-[16px] max-w-[377px] text-center font-firsNeueRegular">
             Default description text.
           </p>
         </slot>

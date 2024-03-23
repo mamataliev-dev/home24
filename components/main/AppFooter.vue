@@ -87,7 +87,9 @@
 
           <div class="flex items-center space-x-[24px] mt-14 footer-qr">
             <img src="@/assets/img/png/footer-qr.png" alt="" />
-            <p class="max-w-[246px] text-[18px] text-[#9A999B]">
+            <p
+              class="max-w-[246px] text-[18px] text-[#9A999B] font-firsNeueRegular"
+            >
               Наведите камеру на QR-код, чтобы найти местоположение
             </p>
           </div>

@@ -1,26 +1,28 @@
 <template>
   <div :class="{ 'bg-[#F4F5F5]': !isEmpty }">
     <div class="container mx-auto pt-[24px]">
-      <div>
-        <DynamicRouter />
+      <DynamicRouter :apply-margin-top="false" />
+
+      <div class="flex flex-col space-y-[14px]">
         <h1 class="main-title">Корзина</h1>
-        <span>Товаров: 5</span>
+        <span class="text-[16px] font-firsNeueRegular">Товаров: 5</span>
       </div>
 
+      <!-- Products -->
       <div class="flex space-x-[24px] pb-[73px]">
         <div class="w-8/12 mt-[32px] bg-white rounded-lg px-[45px] py-[34px]">
           <div class="flex space-x-[12px] pb-[14px] border-b border-[#DDDDDD]">
-            <input type="radio" />
+            <input type="checkbox" />
             <label>Выбрать для заказа</label>
           </div>
 
           <div
-            v-for="item in 3"
+            v-for="item in 2"
             :key="item"
             class="flex justify-between items-center py-[24px] border-b border-[#DDDDDD]"
           >
             <div class="flex items-center space-x-[12px]">
-              <input type="radio" />
+              <input type="checkbox" />
 
               <div class="flex items-center space-x-[32px]">
                 <img

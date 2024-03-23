@@ -17,7 +17,10 @@
           <span class="text-orange text-[16px]">Профиль</span>
         </nuxt-link>
 
-        <div class="profile-item-box cursor-pointer" @click="logOut">
+        <div
+          class="profile-item-box cursor-pointer"
+          @click="isModalLogOut = true"
+        >
           <img src="@/assets/img/icons/log-out.svg" alt="" />
           <span class="text-black text-[16px]">Выйти</span>
         </div>
@@ -101,7 +104,7 @@
       </div>
 
       <!-- Edit  Personal Datas-->
-      <div v-show="isEditing" class="flex flex-col pl-[24px]">
+      <div v-show="isEditing" class="w-10/12 flex flex-col pl-[24px]">
         <div>
           <button
             class="flex items-center justify-center space-x-[12px] py-[12px] px-[20px] rounded-md bg-[#FFF3ED]"
@@ -271,6 +274,14 @@
         </div>
       </div>
     </div>
+
+    <!-- Cofirm Log Out Modal -->
+    <ReusedSlotConfirm
+      v-show="isModalLogOut"
+      :title="'Хотите выйти из аккаунта?'"
+      @closeModal="closeModal"
+      @confirmOperation="logOutUser"
+    />
   </div>
 </template>
 
@@ -280,6 +291,7 @@ export default {
   layout: 'UserLayout',
   data() {
     return {
+      isModalLogOut: false,
       activeName: 'orders',
       userName: 'Diyorbek',
       userEmail: 'info@home24.uz',
@@ -411,8 +423,10 @@ export default {
     }
   },
   methods: {
-    handleClick(tab, event) {},
-    logOut() {},
+    closeModal(val) {
+      this.isModalLogOut = val
+    },
+    logOutUser() {},
     updateUsetData() {},
     onChangeRegion() {},
     onChangeCiteStreet() {},
@@ -431,16 +445,3 @@ export default {
   },
 }
 </script>
-
-<style>
-input[type='number']::-webkit-inner-spin-button,
-input[type='number']::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* For Firefox */
-input[type='number'] {
-  -moz-appearance: textfield;
-}
-</style>

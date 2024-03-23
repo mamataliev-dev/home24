@@ -46,8 +46,10 @@
       <div class="top-grid-item-info">
         <div class="flex justify-between">
           <div class="flex flex-col">
-            <span>3 512 750 сум</span>
-            <span class="line-through text-[#9A999B]">3 512 750</span>
+            <span class="font-firsNeueRegular">3 512 750 сум</span>
+            <span class="line-through text-[#9A999B] font-firsNeueRegular"
+              >3 512 750</span
+            >
           </div>
 
           <img src="@/assets/img/order-bag.svg" alt="" />
@@ -55,7 +57,7 @@
 
         <div class="flex space-x-2">
           <img src="@/assets/img/icons/star-full.svg" alt="" />
-          <span class="font-light">5.0</span>
+          <span class="font-firsNeueLight">5.0</span>
         </div>
 
         <h1 class="font-medium text-[14px] leading-[20px]">

@@ -31,6 +31,11 @@ export default {
     background: 'white',
   },
 
+  server: {
+    host: 'localhost',
+    port: 8000,
+  },
+
   modules: [],
 
   build: {},

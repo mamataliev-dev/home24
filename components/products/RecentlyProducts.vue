@@ -6,9 +6,9 @@
 
     <div class="main-grid">
       <ProductsBaseProduct
-        v-for="item in 10"
+        v-for="item in 6"
         :key="item"
-        @click="getProduct(val)"
+        @click="getProduct(item)"
       />
     </div>
   </div>

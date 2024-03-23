@@ -1,17 +1,15 @@
 <template>
   <div class="container mx-auto conponent-margin-top">
-    <div class="flex items-end space-x-[24px] mb-[24px]">
+    <div class="comp-title-box">
       <h1 class="title-temp">Популярные товары</h1>
-      <nuxt-link to="/" class="text-orange text-[20px] underline"
-        >Все товары</nuxt-link
-      >
+      <nuxt-link to="/" class="see-all-text">Все товары</nuxt-link>
     </div>
 
     <div class="main-grid">
       <ProductsBaseProduct
-        v-for="item in 10"
+        v-for="item in 6"
         :key="item"
-        @click="getProduct(val)"
+        @click="getProduct(item)"
       />
     </div>
   </div>

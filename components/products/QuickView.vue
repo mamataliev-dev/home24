@@ -7,7 +7,7 @@
         <div
           class="flex justify-between items-center rounded-md px-[32px] py-[24px] bg-[#F7F7F7]"
         >
-          <h1 class="font-medium text-[24px] text-black">
+          <h1 class="font-medium text-[24px] text-black font-firsNeueMedium">
             ОФИСНОЕ КРЕСЛО 6206A-2
           </h1>
 
@@ -59,11 +59,15 @@
             >
               <div class="flex items-start justify-between">
                 <div>
-                  <h1 class="text-black font-medium text-[24px]">
+                  <h1
+                    class="text-black font-medium text-[24px] font-firsNeueMedium"
+                  >
                     25 880 000 СУМ
                   </h1>
 
-                  <h3 class="text-gray line-through">28 880 000 СУМ</h3>
+                  <h3 class="text-gray line-through font-firsNeueMedium">
+                    28 880 000 СУМ
+                  </h3>
                 </div>
 
                 <div class="flex space-x-4">
