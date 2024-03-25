@@ -7,10 +7,12 @@
         v-for="item in 12"
         :key="item"
         class="category-grid-item"
-        @click="getChosenCategory(item)"
+        @click="$router.push(`/category/furniture`)"
       >
         <img src="@/assets/img/png/fridge.png" alt="" />
-        <span>Бытовая техника</span>
+        <span class="font-firsNeueRegular text-[20px] text-center"
+          >Бытовая техника</span
+        >
       </div>
     </div>
   </div>
@@ -19,10 +21,6 @@
 <script>
 export default {
   name: 'AppCategories',
-  methods: {
-    getChosenCategory(val) {
-      this.$router.push(`/category/${val}`)
-    },
-  },
+  methods: {},
 }
 </script>

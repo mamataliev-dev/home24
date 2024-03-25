@@ -27,6 +27,7 @@
 
     <!-- Products -->
     <div
+      v-show="!isEmpty"
       class="grid grid-cols-1 md:grid-cols-6 gap-x-[24px] gap-y-[48px] mt-[32px]"
     >
       <ProductsBaseProduct

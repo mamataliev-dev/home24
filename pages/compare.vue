@@ -1,8 +1,28 @@
 <template>
   <div class="container mx-auto">
-    <div class="flex flex-col space-y-[14px]">
-      <h1 class="main-title">Список сравнения</h1>
-      <span class="text-[16px] font-firsNeueRegular">Товаров: 5</span>
+    <div class="flex items-center justify-between">
+      <div class="flex flex-col space-y-[14px]">
+        <h1 class="main-title">Список сравнения</h1>
+        <span class="text-[16px] font-firsNeueRegular">Товаров: 5</span>
+      </div>
+
+      <div v-show="!isEmpty" class="flex items-center space-x-[40px]">
+        <button
+          class="text-orange text-[16px] w-auto border-b border-orange leading-[24px] font-firsNeueRegular"
+        >
+          Очистить
+        </button>
+
+        <el-select v-model="sortCategory" placeholder="Подешевле">
+          <el-option
+            v-for="item in sorts"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          >
+          </el-option>
+        </el-select>
+      </div>
     </div>
 
     <!-- Compare Porducts List -->
@@ -69,7 +89,7 @@
                 <span class="font-firsNeueRegular text-[14px] text-gray"
                   >Фронтальная камера</span
                 >
-                <span class="text-[14px]">20MP</span>
+                <span class="text-[14px]">20mp</span>
               </div>
             </div>
           </div>
@@ -112,7 +132,7 @@ import 'swiper/swiper-bundle.min.css'
 
 export default {
   name: 'ComparePage',
-  layout: 'UserDataLayout',
+  layout: 'default',
   data() {
     return {
       isEmpty: false,

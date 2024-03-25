@@ -9,7 +9,7 @@
       </div>
 
       <!-- Products -->
-      <div class="flex space-x-[24px] pb-[73px]">
+      <div class="flex items-start space-x-[24px] pb-[73px]">
         <div class="w-8/12 mt-[32px] bg-white rounded-lg px-[45px] py-[34px]">
           <div class="flex space-x-[12px] pb-[14px] border-b border-[#DDDDDD]">
             <input type="checkbox" />
@@ -17,9 +17,9 @@
           </div>
 
           <div
-            v-for="item in 2"
+            v-for="item in 5"
             :key="item"
-            class="flex justify-between items-center py-[24px] border-b border-[#DDDDDD]"
+            class="flex justify-between items-center py-[24px] last:border-0 border-b border-[#DDDDDD]"
           >
             <div class="flex items-center space-x-[12px]">
               <input type="checkbox" />
@@ -80,7 +80,7 @@
           <div class="flex flex-col space-y-[33px] mt-[30px]">
             <!-- Porducts -->
             <div
-              v-for="item in 2"
+              v-for="item in 5"
               :key="item"
               class="flex flex-col space-y-[16px] pb-[16px] border-b border-lightGray"
             >
@@ -102,11 +102,12 @@
             </div>
 
             <!-- Order -->
-            <button
-              class="text-white text-[20px] font-medium bg-orange p-[18px] rounded-lg"
+            <nuxt-link
+              to="/cart/order"
+              class="flex items-center justify-center text-white text-[20px] font-medium bg-orange p-[18px] rounded-lg"
             >
               Перейти к оформлению
-            </button>
+            </nuxt-link>
           </div>
         </div>
       </div>

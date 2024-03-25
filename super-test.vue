@@ -2,22 +2,22 @@
   <div class="container mx-auto">
     <!-- If bad search -->
     <!-- <div v-show="false">
-      <h1 class="main-title">
-        Результаты поиска по запросу "Мягкая мебель из тропик дерево"
-      </h1>
-
-      <ReusedSlotEmty :image-src="require('@/assets/img/icons/bad-query.svg')">
-        <template #header>
-          <h1 class="text-[32px] font-medium">Мы не нашли то, что вы искали</h1>
-        </template>
-
-        <template #description>
-          <p class="text-gray text-[16px] max-w-[374px] text-center">
-            Возможно, в названии товара ошибка или у нас пока нет такого товара
-          </p>
-        </template>
-      </ReusedSlotEmty>
-    </div> -->
+        <h1 class="main-title">
+          Результаты поиска по запросу "Мягкая мебель из тропик дерево"
+        </h1>
+  
+        <ReusedSlotEmty :image-src="require('@/assets/img/icons/bad-query.svg')">
+          <template #header>
+            <h1 class="text-[32px] font-medium">Мы не нашли то, что вы искали</h1>
+          </template>
+  
+          <template #description>
+            <p class="text-gray text-[16px] max-w-[374px] text-center">
+              Возможно, в названии товара ошибка или у нас пока нет такого товара
+            </p>
+          </template>
+        </ReusedSlotEmty>
+      </div> -->
 
     <div class="flex">
       <div class="flex flex-col space-y-[40px] w-2/12 mt-[32px]">
@@ -126,12 +126,15 @@
           </div>
         </div>
 
+        <!-- Products -->
         <div class="mt-[32px]">
           <div class="category-grid">
             <ProductsBaseProduct
               v-for="item in 10"
               :key="item"
-              @click="getProduct(item)"
+              @click="
+                $router.push('category/furniture/cahirs/ОФИСНОЕ КРЕСЛО 6206A-2')
+              "
             />
           </div>
         </div>
@@ -145,7 +148,7 @@
 <script>
 export default {
   name: 'CategoryID',
-  layout: 'CategoryLayout',
+  layout: 'BrandCategoryLayout',
   data() {
     return {
       price: 0,

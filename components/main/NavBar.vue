@@ -84,22 +84,65 @@
         <li class="flex items-center space-x-[40px]">
           <nuxt-link class="nav-item" to="/compare">
             <img src="@/assets/img/comparison.svg" alt="" />
-            <span class="">Сравнение</span>
+            <span>Сравнение</span>
           </nuxt-link>
 
           <nuxt-link class="nav-item" to="/favourites">
             <img src="@/assets/img/like.svg" alt="" />
-            <span class="">Избранное</span>
+            <span>Избранное</span>
           </nuxt-link>
 
-          <nuxt-link class="nav-item" to="/cart">
-            <img src="@/assets/img/bag.svg" alt="" />
-            <span class="">Корзина</span>
-          </nuxt-link>
+          <div
+            class="nav-item relative cursor-pointer"
+            @click="openOrdersModal = true"
+          >
+            <ImgBagImg />
+            <span>Корзина</span>
+          </div>
+
+          <!-- Drop Down Orders List -->
+          <div
+            v-show="openOrdersModal"
+            class="w-[552px] absolute top-[100px] right-[145px] z-50 flex flex-col space-y-[30px] bg-white px-[24px] pt-[24px] pb-[32px] rounded-lg shadow-lg"
+          >
+            <div class="flex flex-col space-y-[16px]">
+              <div
+                v-for="item in 3"
+                :key="item"
+                class="flex justify-between items-center"
+              >
+                <div class="flex items-center space-x-[24px]">
+                  <img
+                    class="w-[58px] h-[66px] border border-[#F2F2F2] rounded-lg"
+                    src="@/assets/img/jpg/test-image.jpg"
+                    alt=""
+                  />
+
+                  <div class="flex flex-col space-y-[4px]">
+                    <span class="text-[14px]"
+                      >Офисное кресло CM-F55AS(Muller)</span
+                    >
+                    <span class="text-[14px]">1 000 000 сум</span>
+                  </div>
+                </div>
+
+                <button>
+                  <img src="@/assets/img/icons/trash-gray.svg" alt="" />
+                </button>
+              </div>
+            </div>
+
+            <nuxt-link
+              to="/cart/order"
+              class="text-white text-[20px] font-medium bg-orange py-[17px] rounded-lg flex items-center justify-center"
+            >
+              Перейти к оформлению
+            </nuxt-link>
+          </div>
 
           <nuxt-link class="nav-item" to="/user/orders">
             <img src="@/assets/img/profile.svg" alt="" />
-            <span class="">Diyorbek</span>
+            <span>Diyorbek</span>
           </nuxt-link>
         </li>
       </ul>
@@ -165,6 +208,7 @@ export default {
   data() {
     return {
       query: '',
+      openOrdersModal: false,
     }
   },
   methods: {

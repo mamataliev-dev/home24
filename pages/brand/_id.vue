@@ -21,7 +21,7 @@
         </div>
 
         <!-- Price -->
-        <div class="category-box">
+        <div class="category-box mt-[40px]">
           <h1 class="category-title">Цена</h1>
 
           <div class="flex flex-col">
@@ -51,12 +51,12 @@
       <div class="w-10/12 pl-[38px]">
         <DynamicRouter />
         <div class="flex items-center justify-between">
-          <div class="flex items-center space-x-[22px]">
+          <div class="flex items-center xl:space-x-[12px] 2xl:space-x-[22px]">
             <h1 class="main-title">Artel весь ассортимент</h1>
             <span class="text-[14px] text-gray">100 товаров</span>
           </div>
 
-          <div class="flex space-x-[60px]">
+          <div class="flex xl:space-x-[40px] 2xl:space-x-[60px]">
             <div class="flex items-center space-x-[16px]">
               <span class="text-gray text-[14px]">Сортировка</span>
 
@@ -99,7 +99,7 @@
 <script>
 export default {
   name: 'BrandPage',
-  layout: 'CategoryLayout',
+  layout: 'BrandCategoryLayout',
   head() {
     return {
       title: 'Брэнд | Artel',

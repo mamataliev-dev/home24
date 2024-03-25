@@ -1,28 +1,46 @@
 <template>
   <div class="bg-[#F4F5F5] flex items-center pt-[39px] pb-[57px]">
-    <div class="container mx-auto flex items-center space-x-[23px]">
-      <div class="">
-        <div class="swiper swiper-1">
+    <!-- flex items-center space-x-[23px] -->
+    <div class="grid grid-cols-12 gap-x-[23px] container mx-auto">
+      <div class="col-span-8 relative">
+        <div class="swiper-baner">
           <div class="swiper-wrapper">
             <div v-for="i in 3" :key="i" class="swiper-slide">
-              <div class="slider-content slider-content-1">
-                <img src="@/assets/img/jpg/ad-baner.jpg" alt="" />
+              <div class="slider-content">
+                <img
+                  class="xl:h-[386px] 2xl:h-[432px] rounded-xl"
+                  src="@/assets/img/jpg/ad-baner.jpg"
+                  alt=""
+                />
               </div>
             </div>
           </div>
+        </div>
 
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
-          <div class="swiper-pagination"></div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-prev">
+          <img
+            class="w-[48px] h-[48px]"
+            src="@/assets/img/icons/swiper-left.svg"
+            alt=""
+          />
+        </div>
+
+        <div class="swiper-button-next">
+          <img
+            class="w-[48px] h-[48px]"
+            src="@/assets/img/icons/swiper-right.svg"
+            alt=""
+          />
         </div>
       </div>
 
-      <div class="">
-        <div class="swiper swiper-2">
+      <div class="col-span-4">
+        <div class="swiper-product">
           <div class="swiper-wrapper">
             <div v-for="i in 3" :key="i" class="swiper-slide">
               <div
-                class="slider-content slider-content-2 bg-white rounded-xl px-[32px] pt-[30px]"
+                class="slider-content bg-white rounded-xl xl:px-[25px] 2xl:px-[32px] xl:pt-[25px] 2xl:pt-[30px] xl:pb-[30px] 2xl:pb-[45px]"
               >
                 <div class="flex justify-between">
                   <h2 class="text-lg font-medium">ТОВАР ДНЯ</h2>
@@ -32,14 +50,18 @@
                   </button>
                 </div>
 
-                <div class="mt-[34px] flex items-center space-x-[25px]">
+                <div
+                  class="flex items-start xl:mt-[25px] 2xl:mt-[34px] justify-between"
+                >
                   <img
                     class="w-[139px] h-[246px]"
-                    src="@/assets/img/jpg/test-image.jpg"
+                    src="@/assets/img/png/product-baner-image.png"
                     alt=""
                   />
 
-                  <div class="flex flex-col w-[140px] space-y-[16px]">
+                  <div
+                    class="flex flex-col w-[140px] xl:space-y-[13px] 2xl:space-y-[16px]"
+                  >
                     <!-- Discount -->
                     <button
                       class="flex items-center justify-between py-[10px] px-[13px] bg-[#F4F5F5] rounded-xl"
@@ -54,17 +76,23 @@
                     <!-- Total Price -->
                     <div>
                       <div class="flex items-start space-x-[4px]">
-                        <h3 class="text-lg font-medium">1.240.000</h3>
+                        <h3 class="text-lg font-firsNeueMedium">1.240.000</h3>
                         <span class="text-[10px]">сум</span>
                       </div>
 
-                      <h3 class="line-through text-[#949498]">1.500.000</h3>
+                      <h3
+                        class="line-through text-[#949498] font-firsNeueRegular"
+                      >
+                        1.500.000
+                      </h3>
                     </div>
 
                     <!-- Feedbacks -->
                     <div class="flex items-center space-x-1">
                       <img src="@/assets/img/star.svg" alt="" />
-                      <span class="text-gray">Нет отзывов</span>
+                      <span class="text-gray font-firsNeueRegular"
+                        >Нет отзывов</span
+                      >
                     </div>
 
                     <!-- Product Title -->
@@ -72,11 +100,11 @@
 
                     <!-- Orded Button -->
                     <button
-                      class="flex items-center justify-center space-x-[12px] bg-orange py-[9px] w-[154px]"
+                      class="flex items-center justify-center space-x-[12px] bg-orange py-[9px] w-[154px] rounded-lg"
                     >
                       <img src="@/assets/img/bag-white.svg" alt="" />
 
-                      <span class="font-medium text-sm text-white"
+                      <span class="font-firsNeueMedium text-sm text-white"
                         >В КОРЗИНУ</span
                       >
                     </button>
@@ -85,7 +113,7 @@
               </div>
             </div>
           </div>
-          <div class="swiper-pagination"></div>
+          <div class="swiper-pagination-product"></div>
         </div>
       </div>
     </div>
@@ -101,7 +129,7 @@ export default {
     Swiper.use([Navigation, Pagination, Autoplay])
 
     /* eslint-disable no-unused-vars */
-    const swiper = new Swiper('.swiper', {
+    const swiper = new Swiper('.swiper-baner', {
       direction: 'horizontal',
       loop: true,
       modules: [Navigation, Pagination, Autoplay],
@@ -110,87 +138,69 @@ export default {
         type: 'bullets',
         clickable: true,
       },
-      // autoplay: {
-      //   delay: 1500,
-      // },
+      autoplay: {
+        delay: 1500,
+      },
       navigation: {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev',
       },
+      slidesPerView: 1,
+      spaceBetween: 0,
+    })
+
+    /* eslint-disable no-unused-vars */
+    const swiperProduct = new Swiper('.swiper-product', {
+      direction: 'horizontal',
+      loop: true,
+      modules: [Pagination],
+      pagination: {
+        el: '.swiper-pagination-product',
+        type: 'bullets',
+        clickable: true,
+      },
+      slidesPerView: 1,
+      spaceBetween: 0,
     })
   },
 }
 </script>
 
 <style scoped>
-.el-carousel__item h3 {
-  color: #475669;
-  font-size: 18px;
-  opacity: 0.75;
-  line-height: 300px;
-  margin: 0;
-}
-
-.el-carousel__item img {
-  width: 100%;
-  height: 100%;
-}
-
-.el-carousel__item:nth-child(2n) {
-  background-color: #99a9bf;
-}
-
-.el-carousel__item:nth-child(2n + 1) {
-  background-color: #d3dce6;
-}
-
-.swiper-1 {
-  width: 800px;
-  position: relative;
+.swiper-baner {
   overflow: hidden;
+  position: relative !important;
 }
 
-.swiper-2 {
-  width: 400px;
-  height: 100%;
-  position: relative;
+.swiper-product {
   overflow: hidden;
+  position: relative !important;
 }
 
-.slider-content-1 {
-  height: 400px;
+.swiper-pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  position: initial !important;
 }
 
-.slider-content-2 {
-  height: 400px;
+.swiper-pagination-product {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 0px;
+}
+
+.swiper-button-prev:after,
+.swiper-button-next:after,
+.swiper-container-rtl .swiper-button-next:after {
+  content: '';
 }
 
 .swiper-button-prev,
 .swiper-button-next {
-  width: 38px;
-  height: 38px;
-  background-color: #b5b5b5;
-  opacity: 0.5;
-  border-radius: 50%;
-}
-
-.swiper-button-prev::after,
-.swiper-button-next::after {
-  font-size: 16px !important;
-  font-weight: bold;
-  color: black;
-}
-
-.swiper-pagination {
-  /* bottom: -40px; */
-  /* color: orange; */
-}
-
-.swiper-pagination-bullet-active {
-  background-color: orange !important;
-}
-
-.swiper-pagination-bullet {
-  background-color: rgb(238, 169, 39) !important;
+  width: 48px;
+  height: 48px;
 }
 </style>

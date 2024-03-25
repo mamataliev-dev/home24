@@ -10,7 +10,7 @@
       <div class="relative">
         <div>
           <img
-            class="rounded-xl relative"
+            class="rounded-xl relative w-[100%] xl:h-[300px] 2xl:h-[336px]"
             src="@/assets/img/jpg/test-image.jpg"
             alt=""
           />

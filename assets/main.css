@@ -69,7 +69,7 @@ input[type='number'] {
 }
 
 .category-grid-item {
-  @apply cursor-pointer flex flex-col items-center justify-center md:col-span-1 bg-[#F9F9F9] p-[24px] space-y-[20px] hover:text-orange;
+  @apply cursor-pointer flex flex-col items-center justify-center md:col-span-1 bg-[#F9F9F9] p-[24px] space-y-[20px] hover:text-orange rounded-lg;
 }
 
 .brand-grid-item {
@@ -114,6 +114,10 @@ input[type='number'] {
 
 .main-grid {
   @apply grid grid-cols-1 md:grid-cols-6 gap-4;
+}
+
+.category-id-grid {
+  @apply grid grid-cols-1 md:grid-cols-5 gap-x-[24px] gap-y-[16px];
 }
 
 .category-grid {
