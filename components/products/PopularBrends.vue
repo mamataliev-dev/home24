@@ -2,7 +2,7 @@
   <div class="container mx-auto conponent-margin-top">
     <div class="comp-title-box">
       <h1 class="title-temp">Популярные бренды</h1>
-      <nuxt-link to="/" class="see-all-text">Смотреть все</nuxt-link>
+      <nuxt-link to="/brand" class="see-all-text">Смотреть все</nuxt-link>
     </div>
 
     <div class="main-grid">

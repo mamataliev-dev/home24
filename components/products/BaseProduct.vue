@@ -16,7 +16,7 @@
           />
           <div v-show="showTip">
             <div
-              class="absolute z-100 top-[12px] right-[12px] flex flex-col space-y-[14px]"
+              class="absolute z-50 top-[12px] right-[12px] flex flex-col space-y-[14px]"
             >
               <button @click="addProductToFavourites">
                 <img src="@/assets/img/icons/compare-view.svg" alt="" />

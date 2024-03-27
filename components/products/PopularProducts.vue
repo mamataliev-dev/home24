@@ -12,6 +12,20 @@
         @click="getProduct(item)"
       />
     </div>
+
+    <div class="flex gap-x-[24px] my-[56px]">
+      <nuxt-link v-for="item in 4" :key="item" to="/stocks">
+        <img class="w-[390px]" src="@/assets/img/jpg/blog-ad.jpg" alt="" />
+      </nuxt-link>
+    </div>
+
+    <div class="main-grid">
+      <ProductsBaseProduct
+        v-for="item in 6"
+        :key="item"
+        @click="getProduct(item)"
+      />
+    </div>
   </div>
 </template>
 

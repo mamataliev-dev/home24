@@ -14,23 +14,21 @@
         </div>
       </div>
 
-      <div class="w-10/12 pl-[38px]">
+      <div class="w-10/12 flex flex-col pl-[38px]">
         <DynamicRouter />
         <h1 class="main-title">Оффисная мебель</h1>
 
-        <div class="category-id-grid mt-[32px]">
-          <div
-            v-for="item in 12"
+        <div class="category-item-grid mt-[32px]">
+          <ProductsBaseProduct
+            v-for="item in 6"
             :key="item"
-            class="category-grid-item"
-            @click="$router.push(`/category/furniture/office-furniture/chairs`)"
-          >
-            <img src="@/assets/img/png/fridge.png" alt="" />
-            <span class="font-firsNeueRegular text-[20px] text-center"
-              >Бытовая техника</span
-            >
-          </div>
+            @click.native="
+              $router.push(`/category/furniture/office-furniture/chairs`)
+            "
+          />
         </div>
+
+        <CategoryInfo />
       </div>
     </div>
   </div>
@@ -39,5 +37,8 @@
 <script>
 export default {
   layout: 'BrandCategoryLayout',
+  methods: {
+    getProduct(item) {},
+  },
 }
 </script>

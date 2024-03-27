@@ -1,6 +1,5 @@
 <template>
   <div class="bg-[#F4F5F5] flex items-center pt-[39px] pb-[57px]">
-    <!-- flex items-center space-x-[23px] -->
     <div class="grid grid-cols-12 gap-x-[23px] container mx-auto">
       <div class="col-span-8 relative">
         <div class="swiper-baner">
@@ -17,7 +16,7 @@
           </div>
         </div>
 
-        <div class="swiper-pagination"></div>
+        <div class="baner-swiper-pagination"></div>
         <div class="swiper-button-prev">
           <img
             class="w-[48px] h-[48px]"
@@ -134,7 +133,7 @@ export default {
       loop: true,
       modules: [Navigation, Pagination, Autoplay],
       pagination: {
-        el: '.swiper-pagination',
+        el: '.baner-swiper-pagination',
         type: 'bullets',
         clickable: true,
       },
@@ -190,6 +189,13 @@ export default {
   display: flex;
   justify-content: center;
   gap: 0px;
+}
+
+.baner-swiper-pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 }
 
 .swiper-button-prev:after,

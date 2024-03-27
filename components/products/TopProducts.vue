@@ -2,14 +2,14 @@
   <div class="container mx-auto conponent-margin-top">
     <div class="comp-title-box">
       <h1 class="title-temp">Хиты продаж</h1>
-      <nuxt-link to="/" class="see-all-text">Все товары</nuxt-link>
+      <nuxt-link to="/top" class="see-all-text">Все товары</nuxt-link>
     </div>
 
     <div class="main-grid">
       <ProductsBaseProduct
         v-for="item in 6"
         :key="item"
-        @click="getProduct(item)"
+        @click.native="getProduct(item)"
       />
     </div>
   </div>

@@ -17,20 +17,24 @@
       <div class="w-10/12 pl-[38px]">
         <DynamicRouter />
         <h1 class="main-title">Геймерские кресла</h1>
-
-        <div class="category-id-grid mt-[32px]">
-          <div
-            v-for="item in 12"
+        <!-- @click="
+              $router.push(
+                `/category/furniture/office-furniture/chairs/gaming-chair-audi`
+              )
+            " -->
+        <div class="category-item-grid mt-[32px]">
+          <ProductsBaseProduct
+            v-for="item in 6"
             :key="item"
-            class="category-grid-item"
-            @click="$router.push(`/category/furniture/office-furniture/chairs/gaming-chair-audi`)"
-          >
-            <img src="@/assets/img/png/fridge.png" alt="" />
-            <span class="font-firsNeueRegular text-[20px] text-center"
-              >Бытовая техника</span
-            >
-          </div>
+            @click.native="
+              $router.push(
+                `/category/furniture/office-furniture/chairs/${item}`
+              )
+            "
+          />
         </div>
+
+        <CategoryInfo />
       </div>
     </div>
   </div>
@@ -39,5 +43,6 @@
 <script>
 export default {
   layout: 'BrandCategoryLayout',
+  methods: {},
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto mt-[80px]">
+  <div class="mt-[80px] xl:max-w-[900px] 2xl:max-w-[1219px]">
     <p class="text-[#353437] text-[16px] font-medium mb-[24px]">
       ШИРОКИЙ АССОРТИМЕНТ МЕБЕЛИ В ТАШКЕНТЕ ПРЕДСТАВЛЕН В ИНТЕРНЕТ-МАГАЗИНЕ
       HOME24.UZ (ТАШКЕНТ, УЗБЕКИСТАН) ПО ВЫГОДНЫМ ЦЕНАМ ОТ ПРОИЗВОДИТЕЛЯ.

@@ -237,6 +237,7 @@
 <script>
 export default {
   name: 'OrderPage',
+  layout: 'CartLayout',
   data() {
     return {
       nameTxt: '',

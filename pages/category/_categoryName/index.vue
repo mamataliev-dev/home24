@@ -33,6 +33,9 @@
         </div>
       </div>
     </div>
+
+    <ProductsTopProducts />
+    <CategoryInfo />
   </div>
 </template>
 

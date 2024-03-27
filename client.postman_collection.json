@@ -1,0 +1,1241 @@
+{
+  "info": {
+    "_postman_id": "115baeca-e463-47de-a76f-30edf7e3e481",
+    "name": "client",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "33895880",
+    "_collection_link": "https://www.postman.com/okcteam/workspace/home24/collection/14842549-115baeca-e463-47de-a76f-30edf7e3e481?action=share&source=collection_link&creator=33895880"
+  },
+  "item": [
+    {
+      "name": "auth",
+      "item": [
+        {
+          "name": "login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"phone_number\": \"998991212821\",\r\n    \"password\": 12345678\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "login"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "check",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"phone_number\": 998913722502\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/check",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "check"],
+              "query": [
+                {
+                  "key": "forget",
+                  "value": "1",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"phone_number\": 998913722502,\r\n    \"sms_code\": 537405\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/register",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "register"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "logout",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/logout",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "logout"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "categories",
+      "item": [
+        {
+          "name": "index",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "lang",
+                "value": "uz",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/categories",
+              "host": ["{{base_url}}"],
+              "path": ["categories"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "16",
+                  "description": "default = 16. max = 40",
+                  "disabled": true
+                },
+                {
+                  "key": "popular",
+                  "value": "1",
+                  "disabled": true
+                },
+                {
+                  "key": "all",
+                  "value": "1",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "show",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "lang",
+                "value": "uz",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/categories/ofisnaya-mebelfwefwef",
+              "host": ["{{base_url}}"],
+              "path": ["categories", "ofisnaya-mebelfwefwef"],
+              "query": [
+                {
+                  "key": "sort",
+                  "value": "cheap_first",
+                  "description": "popular|cheap_first|expensive_first|new|high_rating",
+                  "disabled": true
+                },
+                {
+                  "key": "attributes",
+                  "value": "17",
+                  "description": "optionlar idlari vergul bn bo'linib yuboriladi",
+                  "disabled": true
+                },
+                {
+                  "key": "min_price",
+                  "value": "110000",
+                  "disabled": true
+                },
+                {
+                  "key": "max_price",
+                  "value": "1500000",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "banners",
+      "item": [
+        {
+          "name": "index",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "lang",
+                "value": "ru",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/banners",
+              "host": ["{{base_url}}"],
+              "path": ["banners"],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "top",
+                  "description": "main|promo|small",
+                  "disabled": true
+                },
+                {
+                  "key": "limit",
+                  "value": "1",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "products",
+      "item": [
+        {
+          "name": "comments",
+          "item": [
+            {
+              "name": "store",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"product_id\": 386,\r\n    \"comment\": \"Siuuuuu\",\r\n    \"stars\" : 5\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/products/comments",
+                  "host": ["{{base_url}}"],
+                  "path": ["products", "comments"]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "index",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/products?sort=cheap",
+              "host": ["{{base_url}}"],
+              "path": ["products"],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "popular",
+                  "description": "products_of_the_day | popular | bestsellers",
+                  "disabled": true
+                },
+                {
+                  "key": "limit",
+                  "value": "1",
+                  "disabled": true
+                },
+                {
+                  "key": "showcase",
+                  "value": "bestsellery",
+                  "disabled": true
+                },
+                {
+                  "key": "category",
+                  "value": "braun-1",
+                  "disabled": true
+                },
+                {
+                  "key": "min_price",
+                  "value": "7200000",
+                  "disabled": true
+                },
+                {
+                  "key": "max_price",
+                  "value": "7300000",
+                  "disabled": true
+                },
+                {
+                  "key": "sort",
+                  "value": "cheap",
+                  "description": "cheap, expensive, popular"
+                },
+                {
+                  "key": "brand",
+                  "value": "telefon",
+                  "disabled": true
+                },
+                {
+                  "key": "similar",
+                  "value": "smartfon-vivo-v23-stardust-black-8128gb-000000-3-128-2-4000mah-android-13",
+                  "disabled": true
+                },
+                {
+                  "key": "page",
+                  "value": "2",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "show",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "lang",
+                "value": "en",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/products/noutbuk-lenovo-ideapad-5-pro-ryzen5-6600hs-16512gb-ssd-amd-radeon-graphics-82sn0043rk-9",
+              "host": ["{{base_url}}"],
+              "path": [
+                "products",
+                "noutbuk-lenovo-ideapad-5-pro-ryzen5-6600hs-16512gb-ssd-amd-radeon-graphics-82sn0043rk-9"
+              ],
+              "query": [
+                {
+                  "key": "lat",
+                  "value": "41.53312886926479",
+                  "disabled": true
+                },
+                {
+                  "key": "lon",
+                  "value": "60.6362648700204",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "brands",
+      "item": [
+        {
+          "name": "index",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "lang",
+                "value": "uz",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/brands",
+              "host": ["{{base_url}}"],
+              "path": ["brands"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "1",
+                  "disabled": true
+                },
+                {
+                  "key": "top",
+                  "value": "1",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "show",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "lang",
+                "value": "uz",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/brands/home24uz",
+              "host": ["{{base_url}}"],
+              "path": ["brands", "home24uz"],
+              "query": [
+                {
+                  "key": "min_price",
+                  "value": "500000",
+                  "disabled": true
+                },
+                {
+                  "key": "max_price",
+                  "value": "1000000",
+                  "disabled": true
+                },
+                {
+                  "key": "category",
+                  "value": "ru-suscipit-dolores-vel",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "posts",
+      "item": [
+        {
+          "name": "index",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/posts",
+              "host": ["{{base_url}}"],
+              "path": ["posts"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "1",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "show",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/posts/ru-cum-repellendus-laborum-quia-autem-aut-sed-eos",
+              "host": ["{{base_url}}"],
+              "path": [
+                "posts",
+                "ru-cum-repellendus-laborum-quia-autem-aut-sed-eos"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "promotions",
+      "item": [
+        {
+          "name": "index",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/promotions",
+              "host": ["{{base_url}}"],
+              "path": ["promotions"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "1",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "show",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "lang",
+                "value": "",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/promotions/2",
+              "host": ["{{base_url}}"],
+              "path": ["promotions", "2"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "bars",
+      "item": [
+        {
+          "name": "index",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/bars",
+              "host": ["{{base_url}}"],
+              "path": ["bars"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "1",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "feedbacks",
+      "item": [
+        {
+          "name": "index",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/feedbacks?limit=100",
+              "host": ["{{base_url}}"],
+              "path": ["feedbacks"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "100"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "profile",
+      "item": [
+        {
+          "name": "addresses",
+          "item": [
+            {
+              "name": "store",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"region_id\": 1,\r\n    \"district_id\": 1,\r\n    \"village_id\": null,\r\n    \"address\": \"Polniy address\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/addresses",
+                  "host": ["{{base_url}}"],
+                  "path": ["addresses"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "update",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"region_id\": 1,\r\n    \"district_id\": 15,\r\n    \"village_id\": null,\r\n    \"address\": \"Polniy address1111\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/addresses/9",
+                  "host": ["{{base_url}}"],
+                  "path": ["addresses", "9"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "destroy",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/addresses/1",
+                  "host": ["{{base_url}}"],
+                  "path": ["addresses", "1"]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "update",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Siuuuuuuuuuuuuuuuu\",\n    \"current_password\": \"123123\",\n    \"password\": \"123123123\",\n    \"password_confirmation\": \"123123123\",\n    // \"phone_number\": \"998913722502\",\n    \"postcode\": \"100010\",\n    \"email\": \"email@email\",\n    \"subscriber\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/profile/update",
+              "host": ["{{base_url}}"],
+              "path": ["profile", "update"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "edit_name",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Siuuuuu\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/profile/edit_name",
+              "host": ["{{base_url}}"],
+              "path": ["profile", "edit_name"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "me",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/profile/me",
+              "host": ["{{base_url}}"],
+              "path": ["profile", "me"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "dicoins",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/profile/dicoins",
+              "host": ["{{base_url}}"],
+              "path": ["profile", "dicoins"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "orders",
+      "item": [
+        {
+          "name": "store",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"delivery_method\": \"courier\",\n    \"name\": \"Shohijahon\",\n    \"surname\": \"Axmetov\",\n    \"phone_number\": \"998913722502\",\n    // \"region_id\": 1,\n    // \"district_id\": null,\n    // \"address\": null,\n    \"user_address_id\": 4,\n    \"postcode\": null,\n    \"email\": null,\n    \"comments\": null,\n    \"payment_method\": \"click\",\n    \"products\": [\n        {\n            \"product_id\": 1,\n            \"count\": 10,\n            \"price\": 1000000\n        },\n        {\n            \"product_id\": 5,\n            \"count\": 20,\n            \"price\": 500000\n        }\n    ],\n    \"amount\": 1500000,\n    \"dicoin\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/order",
+              "host": ["{{base_url}}"],
+              "path": ["order"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get_products",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"products\": [1,2,3],\n    \"category\": 56\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/get_products",
+              "host": ["{{base_url}}"],
+              "path": ["get_products"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "one_click",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"test\",\n    \"phone_number\": \"998913722502\",\n    \"product_id\": 2996,\n    \"count\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/order/one_click",
+              "host": ["{{base_url}}"],
+              "path": ["order", "one_click"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "regions",
+      "item": [
+        {
+          "name": "get",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/regions",
+              "host": ["{{base_url}}"],
+              "path": ["regions"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "showcases",
+      "item": [
+        {
+          "name": "get",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{prod_url}}/showcases",
+              "host": ["{{prod_url}}"],
+              "path": ["showcases"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "show",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/showcases/novye-produkty",
+              "host": ["{{base_url}}"],
+              "path": ["showcases", "novye-produkty"],
+              "query": [
+                {
+                  "key": "category",
+                  "value": "1",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "comparison",
+      "item": [
+        {
+          "name": "comparison",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "lang",
+                "value": "en",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"products\": [7, 9, 21]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{prod_url}}/comparison",
+              "host": ["{{prod_url}}"],
+              "path": ["comparison"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "dicoins",
+      "item": [
+        {
+          "name": "get",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/dicoins",
+              "host": ["{{base_url}}"],
+              "path": ["dicoins"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "translates",
+      "item": [
+        {
+          "name": "get",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "lang",
+                "value": "uz",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/translates",
+              "host": ["{{base_url}}"],
+              "path": ["translates"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "branches",
+      "item": [
+        {
+          "name": "get",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/branches",
+              "host": ["{{base_url}}"],
+              "path": ["branches"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "faq",
+      "item": [
+        {
+          "name": "get",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/faq",
+              "host": ["{{base_url}}"],
+              "path": ["faq"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "search",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/search?search=Кондитционер Artel ART 12",
+          "host": ["{{base_url}}"],
+          "path": ["search"],
+          "query": [
+            {
+              "key": "search",
+              "value": "Кондитционер Artel ART 12"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "info",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "lang",
+            "value": "ru",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/info",
+          "host": ["{{base_url}}"],
+          "path": ["info"],
+          "query": [
+            {
+              "key": "lat",
+              "value": "40",
+              "disabled": true
+            },
+            {
+              "key": "lon",
+              "value": "60",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000/api",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "5|lmD6uJNTJrxSt65hoXRqp6zyRyQCwfrjl3mTozlw",
+      "type": "string"
+    },
+    {
+      "key": "prod_url",
+      "value": "https://api.diskont.uz/api",
+      "type": "string"
+    }
+  ]
+}

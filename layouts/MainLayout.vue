@@ -4,9 +4,11 @@
     <AdBanner />
     <ProductsProductCategories />
     <ProductsTopProducts />
+    <AppStocks />
     <ProductsPopularProducts />
     <ProductsPopularBrends />
     <FeedbackImgs />
+    <ProductsTodayProducts />
 
     <nuxt />
 
