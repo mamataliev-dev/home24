@@ -7,12 +7,14 @@
 
     <div class="main-grid">
       <div
-        v-for="item in 12"
-        :key="item"
+        v-for="item in brands.brands"
+        :key="item.id"
         class="brand-grid-item"
-        @click="getBrand(item)"
+        @click="getBrand(item.name)"
       >
-        <img src="@/assets/img/png/apple-logo.png" alt="" />
+        <img
+          :src="item.md_logo || require('@/assets/img/jpg/empty-brand.jpg')"
+        />
       </div>
     </div>
   </div>
@@ -20,8 +22,19 @@
 
 <script>
 export default {
-  name: 'PopularBrends',
+  name: 'PopularBrands',
+  computed: {
+    brands() {
+      return this.$store.state.brands
+    },
+  },
+  mounted() {
+    this.fetchBrands()
+  },
   methods: {
+    fetchBrands() {
+      this.$store.dispatch('fetchBrands')
+    },
     getBrand(val) {
       this.$router.push(`/brand/${val}`)
     },

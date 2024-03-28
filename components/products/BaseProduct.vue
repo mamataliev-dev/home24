@@ -43,7 +43,7 @@
         >
       </div>
 
-      <div class="top-grid-item-info">
+      <div class="top-grid-item-info rounded-lg">
         <div class="flex justify-between">
           <div class="flex flex-col">
             <span class="font-firsNeueRegular">3 512 750 сум</span>

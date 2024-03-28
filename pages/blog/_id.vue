@@ -2,30 +2,18 @@
   <div class="container mx-auto">
     <h1 class="main-title">Блог</h1>
 
-    <div class="flex flex-wrap mt-[32px]">
+    <div class="flex space-x-[74px] mt-[32px]">
       <div class="w-full md:w-9/12">
         <div class="flex flex-col space-y-[24px]">
           <div class="flex flex-col">
-            <h1 class="text-[32px] font-medium">
-              Любовь к семье и верность университету - по наследству: два
-              поколения преподавателей Грехнёвых в ННГУ
-            </h1>
-            <span class="text-[16px] text-gray">4 июля</span>
+            <h1 class="text-[32px] font-medium">{{ post.title }}</h1>
+            <span class="text-[16px] text-gray">{{ postData }}</span>
           </div>
 
-          <p class="text-[18px] text-gray">
-            Ежегодному празднованию Международного женского дня положила начало
-            Вторая Международная конференция социалисток, состоявшаяся в
-            Копенгагене в 1910 году. Праздновать этот день предложила Клара
-            Цеткин[3]. Одной из целей была обозначена борьба за всеобщее
-            избирательное право для женщин.
-            <br />
-            Предложение получило единодушную поддержку более 100 женщин из 17
-            стран, однако дата празднования зафиксирована не была[2]. До 1914
-            года в разных странах этот день отмечали в различные числа марта[3].
-          </p>
+          <div class="text-[18px] text-gray" v-html="post.desc"></div>
         </div>
       </div>
+
       <div class="w-full md:w-3/12">
         <AdBlog />
       </div>
@@ -40,8 +28,29 @@ export default {
   name: 'BlogId',
   head() {
     return {
-      title: 'Блог | Id',
+      title: `Блог | ${this.post.title || 'Блог'}`,
     }
+  },
+  computed: {
+    post() {
+      return this.$store.state.postId
+    },
+    postData() {
+      const createdAt = this.post.created_at
+      return new Date(createdAt).toLocaleDateString('ru-RU', {
+        month: 'long',
+        day: 'numeric',
+      })
+    },
+  },
+  mounted() {
+    this.fetchPost()
+  },
+  methods: {
+    fetchPost() {
+      const postId = this.$route.params.id
+      this.$store.dispatch('fetchPostId', postId)
+    },
   },
 }
 </script>

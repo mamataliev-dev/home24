@@ -4,11 +4,13 @@
       <div class="col-span-8 relative">
         <div class="swiper-baner">
           <div class="swiper-wrapper">
-            <div v-for="i in 3" :key="i" class="swiper-slide">
-              <div class="slider-content">
+            <div v-for="item in banners" :key="item.id" class="swiper-slide">
+              <div class="flex items-center justify-center slider-content">
                 <img
                   class="xl:h-[386px] 2xl:h-[432px] rounded-xl"
-                  src="@/assets/img/jpg/ad-baner.jpg"
+                  :src="
+                    item.lg_m_img || require('@/assets/img/jpg/empty-brand.jpg')
+                  "
                   alt=""
                 />
               </div>
@@ -124,6 +126,11 @@ import { Swiper, Navigation, Pagination, Autoplay } from 'swiper'
 import 'swiper/swiper-bundle.min.css'
 
 export default {
+  computed: {
+    banners() {
+      return this.$store.state.banners.filter((b) => b.type === 'main')
+    },
+  },
   mounted() {
     Swiper.use([Navigation, Pagination, Autoplay])
 
@@ -161,6 +168,13 @@ export default {
       slidesPerView: 1,
       spaceBetween: 0,
     })
+
+    this.fetchBanners()
+  },
+  methods: {
+    fetchBanners() {
+      this.$store.dispatch('fetchBanners')
+    },
   },
 }
 </script>

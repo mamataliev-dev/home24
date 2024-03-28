@@ -58,7 +58,7 @@
         </li>
 
         <li
-          class="flex items-center px-[18px] py-[10px] h-[44px] border border-orange ml-[44px] mr-[38px] rounded-md"
+          class="flex items-center px-[18px] xl:pr-[30px] py-[10px] h-[44px] border border-orange ml-[44px] mr-[38px] rounded-md cursor-pointer"
         >
           <img src="@/assets/img/burger-menu.svg" alt="" />
           <span class="text-lg text-orange ml-2">Каталог</span>
@@ -92,10 +92,7 @@
             <span>Избранное</span>
           </nuxt-link>
 
-          <div
-            class="nav-item relative cursor-pointer"
-            @click="openOrdersModal = true"
-          >
+          <div class="nav-item relative cursor-pointer" @click="isModal = true">
             <ImgBagImg />
             <span>Корзина</span>
           </div>
@@ -142,8 +139,15 @@
 
           <nuxt-link class="nav-item" to="/user/orders">
             <img src="@/assets/img/profile.svg" alt="" />
-            <span>Diyorbek</span>
+            <span>Войти</span>
           </nuxt-link>
+
+          <!-- Confirm Modal -->
+          <ReusedSlotConfirmUser
+            v-show="true"
+            @closeModal="closeModal"
+            :title="modalTitle"
+          />
         </li>
       </ul>
     </nav>
@@ -209,11 +213,16 @@ export default {
     return {
       query: '',
       openOrdersModal: false,
+      modalTitle: 'Войти или создать профиль',
+      isModal: false,
     }
   },
   methods: {
     openDropDownList() {},
     searchQuery() {},
+    closeModal(val) {
+      this.isModal = val
+    },
   },
 }
 </script>

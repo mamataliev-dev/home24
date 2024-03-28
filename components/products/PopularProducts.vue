@@ -14,8 +14,12 @@
     </div>
 
     <div class="flex gap-x-[24px] my-[56px]">
-      <nuxt-link v-for="item in 4" :key="item" to="/stocks">
-        <img class="w-[390px]" src="@/assets/img/jpg/blog-ad.jpg" alt="" />
+      <nuxt-link v-for="item in banners" :key="item.id" to="/stocks">
+        <img
+          class="w-[390px]"
+          :src="item.lg_m_img || require('@/assets/img/jpg/empty-brand.jpg')"
+          alt=""
+        />
       </nuxt-link>
     </div>
 
@@ -32,9 +36,20 @@
 <script>
 export default {
   name: 'AppCategories',
+  computed: {
+    banners() {
+      return this.$store.state.banners.filter((b) => b.type === 'bottom')
+    },
+  },
+  mounted() {
+    this.fetchBanners()
+  },
   methods: {
     getProduct(val) {
       console.log(val)
+    },
+    fetchBanners() {
+      this.$store.dispatch('fetchBanners')
     },
   },
 }

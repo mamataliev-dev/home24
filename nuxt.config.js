@@ -15,7 +15,11 @@ export default {
 
   css: ['@/assets/main.css'],
 
-  plugins: ['~/plugins/ant-design', '@/plugins/element-ui'],
+  plugins: [
+    '~/plugins/ant-design',
+    '@/plugins/element-ui',
+    '@/plugins/base-url',
+  ],
 
   components: true,
 

@@ -4,15 +4,17 @@
 
     <div class="main-grid">
       <div
-        v-for="item in 12"
-        :key="item"
+        v-for="item in categories"
+        :key="item.id"
         class="category-grid-item"
-        @click="$router.push(`/category/furniture`)"
+        @click="$router.push(`/category/${item.name}`)"
       >
-        <img src="@/assets/img/png/fridge.png" alt="" />
-        <span class="font-firsNeueRegular text-[20px] text-center"
-          >Бытовая техника</span
-        >
+        <img
+          :src="item.md_img || require('@/assets/img/jpg/empty-brand.jpg')"
+        />
+        <span class="font-firsNeueRegular text-[20px] text-center">{{
+          item.name
+        }}</span>
       </div>
     </div>
   </div>
@@ -21,6 +23,18 @@
 <script>
 export default {
   name: 'AppCategories',
-  methods: {},
+  computed: {
+    categories() {
+      return this.$store.state.categories
+    },
+  },
+  mounted() {
+    this.fetchBrands()
+  },
+  methods: {
+    fetchBrands() {
+      this.$store.dispatch('fetchCategories')
+    },
+  },
 }
 </script>

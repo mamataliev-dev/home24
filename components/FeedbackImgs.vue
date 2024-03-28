@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="feedback-blackout">
+    <div v-show="false" class="feedback-blackout">
       <div class="feedback-content">
         <button class="mb-[20px]" @click="isModalOpen = false">
           <span class="el-icon-close text-white text-[30px]"></span>
@@ -118,18 +118,18 @@
 
       <div class="swiper-feedback">
         <div class="swiper-wrapper">
-          <div v-for="item in 5" :key="item" class="swiper-slide">
+          <div v-for="item in feedbacks" :key="item.id" class="swiper-slide">
             <div class="slider-content">
               <div class="flex items-center gap-x-[8px] mb-[12px]">
                 <img
                   class="w-[56px] h-[56px] rounded-full"
-                  src="@/assets/img/png/client-logo.png"
+                  :src="item.logo"
                   alt=""
                 />
 
-                <span class="font-firsNeueMedium text-[14px]"
-                  >Samsung Узбекистан</span
-                >
+                <span class="font-firsNeueMedium text-[14px]">{{
+                  item.company
+                }}</span>
               </div>
 
               <div class="flex flex-col items-start gap-y-[12px]">
@@ -139,9 +139,8 @@
                   alt=""
                 />
 
-                <p class="max-w-[390px]">
-                  Большое спасибо за всю мебель. Очень качественно и по
-                  доступным ценам. Мы очень рады совместной работе с вами!
+                <p class="max-w-[390px] h-[72px] overflow-hidden">
+                  {{ item.feedback }}
                 </p>
 
                 <button class="text-orange" @click="isModalOpen = true">
@@ -183,6 +182,11 @@ export default {
       isModalOpen: false,
     }
   },
+  computed: {
+    feedbacks() {
+      return this.$store.state.feedbacks
+    },
+  },
   mounted() {
     Swiper.use([Navigation, Pagination])
 
@@ -221,6 +225,13 @@ export default {
         swiper: Swiper,
       },
     })
+
+    this.fetchFeedbacks()
+  },
+  methods: {
+    fetchFeedbacks() {
+      this.$store.dispatch('fetchFeedbacks')
+    },
   },
 }
 </script>

@@ -21,7 +21,14 @@
 
       <div class="flex flex-col gap-y-[23px]">
         <div>
-          <img class="rounded-lg" src="@/assets/img/jpg/stock.jpg" alt="" />
+          <img
+            class="rounded-lg w-[1356px] h-[368px]"
+            :src="
+              promotions[0]?.lg_banner ||
+              require('@/assets/img/jpg/empty-brand.jpg')
+            "
+            alt=""
+          />
         </div>
 
         <div class="mt-[32px]">
@@ -33,6 +40,17 @@
             />
           </div>
         </div>
+
+        <div>
+          <img
+            class="rounded-lg w-[1356px] h-[368px]"
+            :src="
+              promotions[1]?.lg_banner ||
+              require('@/assets/img/jpg/empty-brand.jpg')
+            "
+            alt=""
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -42,9 +60,22 @@
 export default {
   head() {
     return {
-      title: 'Хиты продаж',
+      title: 'Акции',
     }
   },
-  getChosenCategory() {},
+  computed: {
+    promotions() {
+      return this.$store.state.promotions
+    },
+  },
+  mounted() {
+    this.fetchPromotions()
+  },
+  methods: {
+    fetchPromotions() {
+      this.$store.dispatch('fetchPromotions')
+    },
+    getChosenCategory() {},
+  },
 }
 </script>
