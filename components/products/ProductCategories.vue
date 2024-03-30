@@ -4,10 +4,10 @@
 
     <div class="main-grid">
       <div
-        v-for="item in categories"
+        v-for="item in categories?.slice(0, 12)"
         :key="item.id"
         class="category-grid-item"
-        @click="$router.push(`/category/${item.name}`)"
+        @click="$router.push(`/category/${item.slug}`)"
       >
         <img
           :src="item.md_img || require('@/assets/img/jpg/empty-brand.jpg')"

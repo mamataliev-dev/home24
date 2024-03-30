@@ -26,15 +26,17 @@
 <script>
 export default {
   name: 'BlogId',
+  data() {
+    return {
+      post: [],
+    }
+  },
   head() {
     return {
       title: `Блог | ${this.post.title || 'Блог'}`,
     }
   },
   computed: {
-    post() {
-      return this.$store.state.postId
-    },
     postData() {
       const createdAt = this.post.created_at
       return new Date(createdAt).toLocaleDateString('ru-RU', {
@@ -47,9 +49,14 @@ export default {
     this.fetchPost()
   },
   methods: {
-    fetchPost() {
+    async fetchPost() {
       const postId = this.$route.params.id
-      this.$store.dispatch('fetchPostId', postId)
+      try {
+        const response = await this.$axiosURL.get(`/posts/${postId}`)
+        this.post = response.data.post
+      } catch (error) {
+        console.error('Error fetching:', error)
+      }
     },
   },
 }

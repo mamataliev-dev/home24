@@ -7,10 +7,10 @@
 
     <div class="main-grid">
       <div
-        v-for="item in brands.brands"
+        v-for="item in brands?.slice(0, 12)"
         :key="item.id"
         class="brand-grid-item"
-        @click="getBrand(item.name)"
+        @click="$router.push(`brand/${item.slug}`)"
       >
         <img
           :src="item.md_logo || require('@/assets/img/jpg/empty-brand.jpg')"
@@ -34,9 +34,6 @@ export default {
   methods: {
     fetchBrands() {
       this.$store.dispatch('fetchBrands')
-    },
-    getBrand(val) {
-      this.$router.push(`/brand/${val}`)
     },
   },
 }

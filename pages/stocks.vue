@@ -58,22 +58,27 @@
 
 <script>
 export default {
+  data() {
+    return {
+      promotions: [],
+    }
+  },
   head() {
     return {
       title: 'Акции',
     }
   },
-  computed: {
-    promotions() {
-      return this.$store.state.promotions
-    },
-  },
   mounted() {
     this.fetchPromotions()
   },
   methods: {
-    fetchPromotions() {
-      this.$store.dispatch('fetchPromotions')
+    async fetchPromotions() {
+      try {
+        const response = await this.$axiosURL.get(`/promotions`)
+        this.promotions = response.data.promotions.data
+      } catch (error) {
+        console.error('Error fetching:', error)
+      }
     },
     getChosenCategory() {},
   },

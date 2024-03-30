@@ -3,19 +3,23 @@
     <div class="flex">
       <div class="flex flex-col w-2/12 mt-[32px]">
         <div class="xl:mb-[20px] 2xl:mb-[40px]">
-          <img src="@/assets/img/png/artel.png" alt="" />
+          <img
+            class="border border-[#EEEEEE] rounded-lg cursor-pointer"
+            :src="brand?.lg_logo || require('@/assets/img/jpg/empty-brand.jpg')"
+            @click="isFiltered = false"
+          />
         </div>
 
         <!-- Categories -->
         <div class="category-box">
           <ul class="flex flex-col space-y-[18px]">
             <li
-              v-for="item in 10"
-              :key="item"
+              v-for="item in brandCategories"
+              :key="item.id"
               class="hover:text-orange cursor-pointer"
-              @click="getChosenCategory"
+              @click="setSotrCategory(item.slug)"
             >
-              Категории
+              {{ item.name }}
             </li>
           </ul>
         </div>
@@ -52,15 +56,21 @@
         <DynamicRouter />
         <div class="flex items-center justify-between">
           <div class="flex items-center xl:space-x-[12px] 2xl:space-x-[22px]">
-            <h1 class="main-title">Artel весь ассортимент</h1>
-            <span class="text-[14px] text-gray">100 товаров</span>
+            <h1
+              class="text-[30px] text-black font-medium mt-[12px] font-firsNeueMedium 2xl:text-[40px]"
+            >
+              {{ brand?.name }} весь ассортимент
+            </h1>
+            <span class="text-[14px] text-gray"
+              >{{ brandProducts?.total }} товаров</span
+            >
           </div>
 
           <div class="flex xl:space-x-[40px] 2xl:space-x-[60px]">
             <div class="flex items-center space-x-[16px]">
               <span class="text-gray text-[14px]">Сортировка</span>
 
-              <el-select v-model="sortCategory" placeholder="Подешевле">
+              <el-select v-model="sortBy" placeholder="Подешевле">
                 <el-option
                   v-for="item in sorts"
                   :key="item.value"
@@ -72,22 +82,62 @@
             </div>
 
             <div class="flex space-x-[18px]">
-              <button>
-                <img src="@/assets/img/icons/columns.svg" alt="" />
+              <button @click="isGridCol = true">
+                <ImgGridColums :is-active="isGridCol" />
               </button>
-              <button>
-                <img src="@/assets/img/icons/rows.svg" alt="" />
+
+              <button @click="isGridCol = false">
+                <ImgGridRows :is-active="!isGridCol" />
               </button>
             </div>
           </div>
         </div>
 
+        <!-- If empty products -->
+        <ReusedSlotEmty
+          v-if="brandProducts.data?.length === 0"
+          class="mt-[32px]"
+          :is-active-btn="false"
+          :image-src="require('@/assets/img/icons/empty-cart.svg')"
+        >
+          <template #header>
+            <h1 class="w-[600px] text-center text-[32px] font-medium">
+              Товаровы по данному брэнду отсутствуют
+            </h1>
+          </template>
+
+          <template #description>
+            <p class="text-gray text-[16px] max-w-[374px] text-center">
+              Попробуйте поискать товары другого брэнда
+            </p>
+          </template>
+        </ReusedSlotEmty>
+
+        <!-- TODO: Improve logic for switch by products array in: all, category, sort-->
+        <!-- All Products -->
         <div class="mt-[32px]">
-          <div class="category-grid">
+          <div
+            v-show="true"
+            :class="isGridCol ? 'category-grid' : 'category-grid-row'"
+          >
             <ProductsBaseProduct
-              v-for="item in 10"
-              :key="item"
-              @click="getProduct(item)"
+              v-for="item in brandProducts?.data"
+              :key="item.id"
+              :product="item"
+            />
+          </div>
+        </div>
+
+        <!-- Sorted Products -->
+        <div class="mt-[32px]">
+          <div
+            v-show="true"
+            :class="isGridCol ? 'category-grid' : 'category-grid-row'"
+          >
+            <ProductsBaseProduct
+              v-for="item in sortedProducts"
+              :key="item.id"
+              :product="item"
             />
           </div>
         </div>
@@ -100,13 +150,102 @@
 export default {
   name: 'BrandPage',
   layout: 'BrandCategoryLayout',
-  head() {
+  data() {
     return {
-      title: 'Брэнд | Artel',
+      id: this.$route.params.id,
+      price: 0,
+      sorts: [
+        { value: 'cheap', label: 'Подешевле' },
+        { value: 'popular', label: 'Популярные' },
+        { value: 'expensive', label: 'Подороже' },
+        { value: 'rating', label: 'Высокий рейтинг' },
+        { value: 'orders', label: 'Много заказов' },
+        { value: 'recently', label: 'Добавлены недавно' },
+      ],
+      isFiltered: false,
+      categoryId: 0,
+      isGridCol: true,
+      sortBy: '',
+      sortCategory: '',
+      sortedCategories: [],
+      sortedProducts: [],
+      brand: [],
+      brandCategories: [],
+      brandProducts: [],
     }
   },
+  head() {
+    return {
+      title: `Брэнд | ${this.id}`,
+    }
+  },
+  watch: {
+    sortBy(newValue, oldValue) {
+      this.fetchSortedProducts()
+      this.isFiltered = true
+    },
+  },
+  mounted() {
+    this.fetchBrandId()
+  },
   methods: {
-    getChosenCategory() {},
+    // Fetch Brand
+    async fetchBrandId() {
+      try {
+        const response = await this.$axiosURL.get(`/brands/${this.id}`)
+        this.brand = response.data
+        this.brandCategories = this.brand.categories
+        this.brandProducts = this.brand.products
+      } catch (error) {
+        console.error('Error fetching:', error)
+      }
+    },
+    // Fetch Sorted Categories
+    async fetchSortedCategories() {
+      try {
+        const response = await this.$axiosURL.get(
+          `/products?brand=${this.id}&category=${this.sortCategory}`
+        )
+
+        this.sortedCategories = response.data.products.data
+
+        this.$router.push({
+          query: {
+            brand: this.id,
+            sort: this.sortBy,
+          },
+        })
+      } catch (error) {
+        console.error('Error fetching:', error)
+      }
+    },
+    // Fetch Sorted Products
+    async fetchSortedProducts() {
+      try {
+        const response = await this.$axiosURL.get(
+          `/products?&brand=${this.id}&sort=${this.sortBy}`
+        )
+
+        this.sortedProducts = response.data.products.data
+
+        this.$router.push({
+          query: {
+            brand: this.id,
+            category: this.sortCategory,
+          },
+        })
+      } catch (error) {
+        console.error('Error fetching:', error)
+      }
+    },
+    filterByCategory(id) {
+      this.isFiltered = true
+      this.categoryId = id
+    },
+    setSotrCategory(val) {
+      this.sortCategory = val
+      this.fetchSortedCategories()
+    },
   },
 }
 </script>

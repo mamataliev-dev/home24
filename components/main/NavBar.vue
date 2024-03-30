@@ -144,9 +144,14 @@
 
           <!-- Confirm Modal -->
           <ReusedSlotConfirmUser
-            v-show="true"
-            @closeModal="closeModal"
+            v-show="false"
             :title="modalTitle"
+            :is-log-in="isLogIn"
+            :error-msg="errorMsg"
+            @closeModal="closeModal"
+            @submit="check"
+            @sendCodeAgain="sendCodeAgain"
+            @confirmCode="register"
           />
         </li>
       </ul>
@@ -215,6 +220,9 @@ export default {
       openOrdersModal: false,
       modalTitle: 'Войти или создать профиль',
       isModal: false,
+      isLogIn: false,
+      cleanPhoneNumber: '',
+      errorMsg: '',
     }
   },
   methods: {
@@ -223,6 +231,58 @@ export default {
     closeModal(val) {
       this.isModal = val
     },
+    async check(phoneNumber) {
+      try {
+        this.cleanPhoneNumber = phoneNumber.replace(/\D/g, '')
+
+        const response = await this.$axios.$post(
+          'https://e-shop.ndc.uz/api/auth/check',
+          {
+            phone_number: this.cleanPhoneNumber,
+          },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        )
+        console.log('Login Successful:', response)
+
+        if (response.authorized === 0) {
+          this.isLogIn = true
+        }
+      } catch (error) {
+        console.error('Login Error:', error)
+      }
+    },
+    async register(code) {
+      try {
+        const response = await this.$axios.$post(
+          'https://e-shop.ndc.uz/api/auth/register',
+          {
+            phone_number: this.cleanPhoneNumber,
+            sms_code: code,
+          },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        )
+
+        console.log('Registration/Login Successful:', response)
+
+        if (response.message === 'Код неверный') {
+          this.errorMsg = 'Смс код пользователя неверны'
+        }
+      } catch (error) {
+        console.error(
+          'Registration/Login Error:',
+          error.response ? error.response.data : error
+        )
+      }
+    },
+    sendCodeAgain() {},
   },
 }
 </script>

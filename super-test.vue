@@ -1,199 +1,79 @@
 <template>
-  <div class="container mx-auto">
-    <!-- If bad search -->
-    <!-- <div v-show="false">
-        <h1 class="main-title">
-          Результаты поиска по запросу "Мягкая мебель из тропик дерево"
-        </h1>
-  
-        <ReusedSlotEmty :image-src="require('@/assets/img/icons/bad-query.svg')">
-          <template #header>
-            <h1 class="text-[32px] font-medium">Мы не нашли то, что вы искали</h1>
-          </template>
-  
-          <template #description>
-            <p class="text-gray text-[16px] max-w-[374px] text-center">
-              Возможно, в названии товара ошибка или у нас пока нет такого товара
-            </p>
-          </template>
-        </ReusedSlotEmty>
-      </div> -->
+  <div>
+    <h1>All Brands</h1>
+    <ul>
+      <li v-for="brand in brands" :key="brand.id">{{ brand.name }}</li>
+    </ul>
 
-    <div class="flex">
-      <div class="flex flex-col space-y-[40px] w-2/12 mt-[32px]">
-        <!-- Categories -->
-        <div class="category-box">
-          <h1 class="category-title">Категории</h1>
+    <!-- Filtered Brands by Letter Block -->
+    <div v-if="filterLetter && filteredBrandsByLetter.length">
+      <h2>Filtered by Letter: {{ filterLetter }}</h2>
+      <ul>
+        <li v-for="brand in filteredBrandsByLetter" :key="brand.id">
+          {{ brand.name }}
+        </li>
+      </ul>
+    </div>
 
-          <ul>
-            <li>
-              <button class="hover:text-orange">Категории</button>
-            </li>
-          </ul>
-        </div>
+    <!-- Brands Filtered by Search Block -->
+    <div v-if="searchQuery && filteredBrandsBySearch.length">
+      <h2>Search Results</h2>
+      <ul>
+        <li v-for="brand in filteredBrandsBySearch" :key="brand.id">
+          {{ brand.name }}
+        </li>
+      </ul>
+    </div>
 
-        <!-- Sort By -->
-        <div class="category-box">
-          <h1 class="category-title">Сортировать</h1>
-
-          <div class="flex flex-col space-y-[8px]">
-            <div v-for="item in 4" :key="item">
-              <input type="checkbox" name="по популярности" />
-              <label class="text-black text-[16px]">по популярности</label>
-            </div>
-          </div>
-        </div>
-
-        <!-- Price -->
-        <div class="category-box">
-          <h1 class="category-title">Цена</h1>
-
-          <div class="flex flex-col">
-            <div class="block">
-              <el-slider v-model="price"></el-slider>
-            </div>
-
-            <div
-              class="flex justify-between xl:space-x-[14px] 2xl:space-x-[24px]"
-            >
-              <input
-                class="xl:w-[100px] 2xl:w-[114px] bg-[#F9F9F9] border border-[#D9D9D9] rounded-lg text-black py-[10px] px-[8px]"
-                type="number"
-                placeholder="10 000"
-              />
-              <input
-                class="xl:w-[100px] 2xl:w-[114px] bg-[#F9F9F9] border border-[#D9D9D9] rounded-lg text-black py-[10px] px-[8px]"
-                type="number"
-                placeholder="1 000 000"
-              />
-            </div>
-          </div>
-        </div>
-
-        <!-- Color -->
-        <div class="category-box">
-          <div class="flex items-end justify-between">
-            <h1 class="category-title">Цвет</h1>
-            <button
-              class="underline text-gray text-[14px]"
-              @click="clearColorSet"
-            >
-              очистить
-            </button>
-          </div>
-
-          <div class="grid grid-cols-5 auto-rows-auto gap-2">
-            <button
-              v-for="color in 10"
-              :key="color"
-              class="w-[32px] h-[32px] rounded-full bg-orange"
-            ></button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Category Info -->
-      <div class="w-10/12 pl-[38px]">
-        <DynamicRouter />
-        <div class="flex items-center justify-between">
-          <div>
-            <h1 class="main-title">Офисная мебель</h1>
-          </div>
-
-          <div class="flex space-x-[60px]">
-            <div class="flex items-center space-x-[16px]">
-              <span class="text-gray text-[14px]">Сортировка</span>
-
-              <el-select v-model="sortCategory" placeholder="Подешевле">
-                <el-option
-                  v-for="item in sorts"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                >
-                </el-option>
-              </el-select>
-            </div>
-
-            <div class="flex space-x-[18px]">
-              <button>
-                <img src="@/assets/img/icons/columns.svg" alt="" />
-              </button>
-              <button>
-                <img src="@/assets/img/icons/rows.svg" alt="" />
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Products -->
-        <div class="mt-[32px]">
-          <div class="category-grid">
-            <ProductsBaseProduct
-              v-for="item in 10"
-              :key="item"
-              @click="
-                $router.push('category/furniture/cahirs/ОФИСНОЕ КРЕСЛО 6206A-2')
-              "
-            />
-          </div>
-        </div>
-
-        <CategoryInfo />
-      </div>
+    <!-- Empty Modal/Block -->
+    <div v-if="isEmpty">
+      <p>No brands found matching the criteria.</p>
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
-  name: 'CategoryID',
-  layout: 'BrandCategoryLayout',
   data() {
     return {
-      price: 0,
-      sortCategory: '',
-      minPrice: 0,
-      sorts: [
-        {
-          value: 'Подешевле',
-          label: 'Подешевле',
-        },
-        {
-          value: 'Популярные',
-          label: 'Популярные',
-        },
-        {
-          value: 'Подороже',
-          label: 'Подороже',
-        },
-        {
-          value: 'Высокий рейтинг',
-          label: 'Высокий рейтинг',
-        },
-        {
-          value: 'Много заказов',
-          label: 'Много заказов',
-        },
-        {
-          value: 'Добавлены недавно',
-          label: 'Добавлены недавно',
-        },
-      ],
+      brands: [],
+      filterLetter: '',
+      searchQuery: '',
     }
   },
-  head() {
-    return {
-      title: 'Категории | ID',
-    }
+  computed: {
+    filteredBrandsByLetter() {
+      if (!this.filterLetter) return []
+      return this.brands.filter((brand) =>
+        brand.name.startsWith(this.filterLetter)
+      )
+    },
+    filteredBrandsBySearch() {
+      if (!this.searchQuery) return []
+      return this.brands.filter((brand) =>
+        brand.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+      )
+    },
+    isEmpty() {
+      if (this.filterLetter && !this.filteredBrandsByLetter.length) return true
+      if (this.searchQuery && !this.filteredBrandsBySearch.length) return true
+      return false
+    },
+  },
+  mounted() {
+    this.fetchBrands()
   },
   methods: {
-    getProduct(val) {
-      this.$router.push(`/product/${val}`)
-      console.log(val)
+    async fetchBrands() {
+      try {
+        const response = await axios.get('https://e-shop.ndc.uz/api/brands')
+        this.brands = response.data
+      } catch (error) {
+        console.error('Error fetching brands:', error)
+      }
     },
-    clearColorSet() {},
-    handlePriceChange() {},
   },
 }
 </script>

@@ -19,6 +19,7 @@
       </div>
 
       <nuxt-link
+        v-show="isActiveBtn"
         class="border border-orange py-[16px] px-[126px] rounded-lg text-orange font-medium text-[16px] mt-[24px]"
         to="/"
         >На главную</nuxt-link
@@ -33,6 +34,10 @@ export default {
     imageSrc: {
       type: String,
       default: '@/assets/img/icons/empty-compare.svg',
+    },
+    isActiveBtn: {
+      type: Boolean,
+      default: true,
     },
   },
 }

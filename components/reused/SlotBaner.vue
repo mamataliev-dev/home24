@@ -10,7 +10,7 @@
     <h1 v-show="isBlog" class="main-title">Другие блоги</h1>
 
     <div class="blog-grid mt-[24px]">
-      <div v-for="item in posts" :key="item.id" class="relative">
+      <div v-for="item in posts?.slice(0, 4)" :key="item.id" class="relative">
         <nuxt-link :to="`/blog/${item.slug}`">
           <div class="flex items-center justify-center bg-gray-200">
             <img

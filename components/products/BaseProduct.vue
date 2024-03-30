@@ -10,8 +10,8 @@
       <div class="relative">
         <div>
           <img
-            class="rounded-xl relative w-[100%] xl:h-[300px] 2xl:h-[336px]"
-            src="@/assets/img/jpg/test-image.jpg"
+            class="border border-[#F2F2FA] rounded-xl relative w-[100%] h-[100%]"
+            :src="product?.products[0]?.images[0]?.md_img"
             alt=""
           />
           <div v-show="showTip">
@@ -38,30 +38,47 @@
           </div>
         </div>
         <span
+          v-if="product?.products[0]?.discount_price !== null"
           class="absolute bottom-[12px] left-[12px] text-red font-bold text-lg"
-          >-30%</span
+          >-{{ product?.products[0]?.discount.pivot.percent }}%</span
         >
       </div>
 
-      <div class="top-grid-item-info rounded-lg">
-        <div class="flex justify-between">
-          <div class="flex flex-col">
-            <span class="font-firsNeueRegular">3 512 750 сум</span>
-            <span class="line-through text-[#9A999B] font-firsNeueRegular"
-              >3 512 750</span
+      <div
+        class="top-grid-item-info rounded-lg"
+        @click="$router.push(`/product/${product?.products[0]?.slug}`)"
+      >
+        <div class="flex items-center justify-between">
+          <div
+            v-if="product?.products[0]?.discount_price !== null"
+            class="flex flex-col"
+          >
+            <span class="font-firsNeueRegular">
+              {{ product?.products[0]?.discount_price }} сум</span
+            >
+            <span class="line-through text-[#9A999B] font-firsNeueRegular">{{
+              product?.products[0]?.price
+            }}</span>
+          </div>
+
+          <div v-else>
+            <span class="font-firsNeueRegular">
+              {{ product?.products[0]?.price }} сум</span
             >
           </div>
 
-          <img src="@/assets/img/order-bag.svg" alt="" />
+          <button>
+            <img src="@/assets/img/order-bag.svg" alt="" />
+          </button>
         </div>
 
         <div class="flex space-x-2">
           <img src="@/assets/img/icons/star-full.svg" alt="" />
-          <span class="font-firsNeueLight">5.0</span>
+          <span class="font-firsNeueLight">{{ product?.stars || 0 }}</span>
         </div>
 
         <h1 class="font-medium text-[14px] leading-[20px]">
-          Руководительское кресло Metta Комплект 5.1 (Чёрный)
+          {{ product?.name }}
         </h1>
       </div>
     </div>
@@ -70,6 +87,12 @@
 
 <script>
 export default {
+  props: {
+    product: {
+      type: Object,
+      default: null,
+    },
+  },
   data() {
     return {
       showTip: false,

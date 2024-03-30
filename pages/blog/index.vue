@@ -31,6 +31,7 @@ export default {
   data() {
     return {
       blogId: 1,
+      posts: [],
     }
   },
   head() {
@@ -38,17 +39,17 @@ export default {
       title: 'Блог',
     }
   },
-  computed: {
-    posts() {
-      return this.$store.state.posts
-    },
-  },
   mounted() {
     this.fetchPosts()
   },
   methods: {
-    fetchPosts() {
-      this.$store.dispatch('fetchPosts')
+    async fetchPosts() {
+      try {
+        const response = await this.$axiosURL.get('/posts')
+        this.posts = response.data.posts.data
+      } catch (error) {
+        console.error('Error fetching:', error)
+      }
     },
   },
 }

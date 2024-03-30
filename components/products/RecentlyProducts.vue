@@ -6,14 +6,28 @@
 
     <div class="main-grid">
       <ProductsBaseProduct
-        v-for="item in 6"
-        :key="item"
-        @click="getProduct(item)"
+        v-for="item in recentlyProducts?.slice(0, 6)"
+        :key="item.id"
+        :product="item"
       />
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  computed: {
+    recentlyProducts() {
+      return this.$store.state.productsSort
+    },
+  },
+  mounted() {
+    this.fetchPopularProducts()
+  },
+  methods: {
+    fetchPopularProducts() {
+      this.$store.dispatch('fetchProductsSort', 'sort=popular')
+    },
+  },
+}
 </script>

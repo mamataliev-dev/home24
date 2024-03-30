@@ -17,6 +17,7 @@ export default {
 
   plugins: [
     '~/plugins/ant-design',
+    '~/plugins/v-mask',
     '@/plugins/element-ui',
     '@/plugins/base-url',
   ],

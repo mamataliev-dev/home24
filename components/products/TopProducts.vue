@@ -7,9 +7,9 @@
 
     <div class="main-grid">
       <ProductsBaseProduct
-        v-for="item in 6"
-        :key="item"
-        @click.native="getProduct(item)"
+        v-for="item in topProducts?.slice(0, 6)"
+        :key="item.id"
+        :product="item"
       />
     </div>
   </div>
@@ -18,9 +18,17 @@
 <script>
 export default {
   name: 'AppCategories',
+  computed: {
+    topProducts() {
+      return this.$store.state.productsSort
+    },
+  },
+  mounted() {
+    this.fetchPopularProducts()
+  },
   methods: {
-    getProduct(val) {
-      console.log(val)
+    fetchPopularProducts() {
+      this.$store.dispatch('fetchProductsSort', 'sort=popular')
     },
   },
 }

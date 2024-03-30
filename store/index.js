@@ -1,139 +1,112 @@
 export const state = () => ({
   userName: '',
   loading: false,
-  brands: {},
-  categories: {},
+  categories: [],
+  categoryId: [],
   banners: [],
-  posts: [],
-  postId: [],
-  promotions: [],
-  feedbacks: [],
+  showcases: [],
+  productsSort: [],
+  brands: [],
 })
 
 export const mutations = {
-  setLoading(state, value) {
-    state.loading = value
-  },
-
-  setBrands(state, value) {
-    state.brands = value
-  },
-
   setCategories(state, value) {
     state.categories = value
+  },
+
+  setCategoryId(state, value) {
+    state.categoryId = value
   },
 
   setBanners(state, value) {
     state.banners = value
   },
 
-  setPosts(state, value) {
-    state.posts = value
+  setShowcases(state, value) {
+    state.showcases = value
   },
 
-  setPostId(state, value) {
-    state.postId = value
+  setProductsSort(state, value) {
+    state.productsSort = value
   },
 
-  setPromotions(state, value) {
-    state.promotions = value
-  },
-
-  setFeedbacks(state, value) {
-    state.feedbacks = value
+  setProducts(state, value) {
+    state.brands = value
   },
 }
 
 export const actions = {
   // Get Brands
   async fetchBrands({ commit }) {
-    commit('setLoading', true)
     try {
       const response = await this.$axiosURL.get('/brands')
-      commit('setBrands', response.data)
+      commit('setProducts', response.data.brands)
     } catch (error) {
       console.error('Error fetching:', error)
-    } finally {
-      commit('setLoading', false)
     }
   },
 
+  // ?
   // Get Product Categories
   async fetchCategories({ commit }) {
-    commit('setLoading', true)
     try {
       const response = await this.$axiosURL.get('/categories')
       commit('setCategories', response.data.data)
     } catch (error) {
       console.error('Error fetching:', error)
-    } finally {
-      commit('setLoading', false)
+    }
+  },
+
+  // ?
+  // Get Category ID
+  async fetchCategoryId({ commit }, id) {
+    try {
+      const response = await this.$axiosURL.get(`/categories/${id}`)
+      commit('setCategoryId', response.data)
+      console.log(response.data)
+    } catch (error) {
+      console.error('Error fetching:', error)
     }
   },
 
   // Get Banners
   async fetchBanners({ commit }) {
-    commit('setLoading', true)
     try {
       const response = await this.$axiosURL.get('/banners')
       commit('setBanners', response.data.banners.data)
     } catch (error) {
       console.error('Error fetching:', error)
-    } finally {
-      commit('setLoading', false)
     }
   },
 
-  // Get Posts
-  async fetchPosts({ commit }) {
-    commit('setLoading', true)
+  // ?
+  // Get Product Id
+  async fetchProductId({ commit }, id) {
     try {
-      const response = await this.$axiosURL.get('/posts')
-      commit('setPosts', response.data.posts.data)
+      const response = await this.$axiosURL.get(`/products/${id}`)
+      commit('setProductId', response.data)
     } catch (error) {
       console.error('Error fetching:', error)
-    } finally {
-      commit('setLoading', false)
     }
   },
 
-  // Get Post By Id
-  async fetchPostId({ commit }, id) {
-    commit('setLoading', true)
+  // Get Sorted Products
+  async fetchProductsSort({ commit }, query) {
     try {
-      const response = await this.$axiosURL.get(`/posts/${id}`)
-      commit('setPostId', response.data.post)
-      console.log(response.data.post)
+      const response = await this.$axiosURL.get(`/products?${query}`)
+      commit('setProductsSort', response.data.products.data)
     } catch (error) {
       console.error('Error fetching:', error)
-    } finally {
-      commit('setLoading', false)
     }
   },
 
-  // Get Promotions
-  async fetchPromotions({ commit }) {
-    commit('setLoading', true)
+  // Get Showcases
+  async fetchShowcases({ commit }, id) {
     try {
-      const response = await this.$axiosURL.get(`/promotions`)
-      commit('setPromotions', response.data.promotions.data)
+      const response = await this.$axiosURL.get(`/showcases/${id}`)
+      commit('setShowcases', response.data)
     } catch (error) {
       console.error('Error fetching:', error)
-    } finally {
-      commit('setLoading', false)
-    }
-  },
-
-  // Get Feedbacks
-  async fetchFeedbacks({ commit }) {
-    commit('setLoading', true)
-    try {
-      const response = await this.$axiosURL.get(`/feedbacks`)
-      commit('setFeedbacks', response.data.feedbacks.data)
-    } catch (error) {
-      console.error('Error fetching:', error)
-    } finally {
-      commit('setLoading', false)
     }
   },
 }

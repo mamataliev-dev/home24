@@ -8,12 +8,16 @@
         <div class="category-box">
           <ul class="flex flex-col space-y-[18px]">
             <li
-              v-for="item in 10"
-              :key="item"
+              v-for="item in showcases.categories"
+              :key="item.id"
               class="hover:text-orange cursor-pointer"
-              @click="getChosenCategory"
             >
-              Категории
+              {{ item.name }}
+
+              <li v-for="elem in item?.children" :key="elem.id">
+                {{ elem.name }}
+              </li>
+              
             </li>
           </ul>
         </div>
@@ -51,7 +55,7 @@
             <div class="flex items-center space-x-[16px]">
               <span class="text-gray text-[14px]">Сортировка</span>
 
-              <el-select v-model="sortCategory" placeholder="Подешевле">
+              <el-select v-model="sortBy" placeholder="Подешевле">
                 <el-option
                   v-for="item in sorts"
                   :key="item.value"
@@ -63,22 +67,24 @@
             </div>
 
             <div class="flex space-x-[18px]">
-              <button>
-                <img src="@/assets/img/icons/columns.svg" alt="" />
+              <button @click="isGridCol = true">
+                <ImgGridColums :is-active="isGridCol" />
               </button>
-              <button>
-                <img src="@/assets/img/icons/rows.svg" alt="" />
+
+              <button @click="isGridCol = false">
+                <ImgGridRows :is-active="!isGridCol" />
               </button>
             </div>
           </div>
         </div>
 
         <div class="mt-[32px]">
-          <div class="category-grid">
+          <div :class="isGridCol ? 'category-grid' : 'category-grid-row'">
             <ProductsBaseProduct
-              v-for="item in 10"
-              :key="item"
-              @click="getProduct(item)"
+              v-for="item in topProducts"
+              :key="item.id"
+              :product="item"
+              @click="$router.push(`/product/${item.products[0]?.slug}`)"
             />
           </div>
         </div>
@@ -89,11 +95,42 @@
 
 <script>
 export default {
+  data() {
+    return {
+      price: 0,
+      sortCategory: '',
+      sortBy: '',
+      isGridCol: true,
+      sorts: [
+        { value: 'cheap', label: 'Подешевле' },
+        { value: 'popular', label: 'Популярные' },
+        { value: 'expensive', label: 'Подороже' },
+        { value: 'rating', label: 'Высокий рейтинг' },
+        { value: 'orders', label: 'Много заказов' },
+        { value: 'recently', label: 'Добавлены недавно' },
+      ],
+    }
+  },
   head() {
     return {
       title: 'Хиты продаж',
     }
   },
-  getChosenCategory() {},
+  computed: {
+    topProducts() {
+      return this.$store.state.productsSort
+    },
+    showcases() {
+      return this.$store.state.showcases
+    },
+  },
+  mounted() {
+    this.fetchPopularProducts()
+  },
+  methods: {
+    fetchPopularProducts() {
+      this.$store.dispatch('fetchShowcases', 'top-tovary')
+    },
+  },
 }
 </script>

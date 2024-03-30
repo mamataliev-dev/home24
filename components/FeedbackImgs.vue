@@ -180,12 +180,8 @@ export default {
   data() {
     return {
       isModalOpen: false,
+      feedbacks: [],
     }
-  },
-  computed: {
-    feedbacks() {
-      return this.$store.state.feedbacks
-    },
   },
   mounted() {
     Swiper.use([Navigation, Pagination])
@@ -229,8 +225,13 @@ export default {
     this.fetchFeedbacks()
   },
   methods: {
-    fetchFeedbacks() {
-      this.$store.dispatch('fetchFeedbacks')
+    async fetchFeedbacks() {
+      try {
+        const response = await this.$axiosURL.get(`/feedbacks`)
+        this.feedbacks = response.data.feedbacks.data
+      } catch (error) {
+        console.error('Error fetching:', error)
+      }
     },
   },
 }

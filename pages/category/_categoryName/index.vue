@@ -16,21 +16,25 @@
 
       <div class="w-10/12 pl-[38px]">
         <DynamicRouter />
-        <h1 class="main-title">Мебель</h1>
+        <!-- <h1 class="main-title">{{ category.name }}</h1>
+
+        {{ category.children }}
 
         <div class="category-id-grid mt-[32px]">
           <div
-            v-for="item in 12"
-            :key="item"
+            v-for="item in category.children"
+            :key="item.id"
             class="category-grid-item"
-            @click="$router.push(`/category/furniture/office-furniture`)"
+            @click="$router.push(`/category/${$route.params.id}/${item.slug}`)"
           >
-            <img src="@/assets/img/png/fridge.png" alt="" />
-            <span class="font-firsNeueRegular text-[20px] text-center"
-              >Бытовая техника</span
-            >
+            <img
+              :src="item.lg_img || require('@/assets/img/jpg/empty-brand.jpg')"
+            />
+            <span class="font-firsNeueRegular text-[20px] text-center">{{
+              item.name
+            }}</span>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
 
@@ -42,5 +46,23 @@
 <script>
 export default {
   layout: 'BrandCategoryLayout',
+  data() {
+    return {
+      id: this.$route.params.id,
+    }
+  },
+  computed: {
+    category() {
+      return this.$store.state.categoryId
+    },
+  },
+  mounted() {
+    this.fetchCategoryId()
+  },
+  methods: {
+    fetchCategoryId() {
+      this.$store.dispatch('fetchCategoryId', this.id)
+    },
+  },
 }
 </script>
