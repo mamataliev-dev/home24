@@ -39,17 +39,12 @@ export default {
       default: false,
     },
   },
+  async asyncData({ store }) {
+    await store.dispatch('fetchPosts')
+  },
   computed: {
     posts() {
       return this.$store.state.posts
-    },
-  },
-  mounted() {
-    this.fetchPosts()
-  },
-  methods: {
-    fetchPosts() {
-      this.$store.dispatch('fetchPosts')
     },
   },
 }

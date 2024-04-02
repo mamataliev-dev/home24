@@ -107,7 +107,7 @@
         @click="$router.push(`/brand/${item.slug}`)"
       >
         <img
-          class="h-[160px] border border-[#EEEEEE] rounded-lg"
+          class="h-[160px] w-[252px] border border-[#EEEEEE] rounded-lg"
           :src="item.lg_logo || require('@/assets/img/jpg/empty-brand.jpg')"
           alt=""
         />
@@ -137,7 +137,6 @@
       </div>
     </div>
 
-    <!-- If empty brands -->
     <ReusedSlotEmty
       v-if="
         filteredBrandsByLetter.length === 0 ||
@@ -166,6 +165,9 @@
 <script>
 export default {
   layout: 'BrandCategoryLayout',
+  async asyncData({ store }) {
+    await store.dispatch('fetchBrands')
+  },
   data() {
     return {
       isEnAlphabet: true,
@@ -269,13 +271,7 @@ export default {
       }
     },
   },
-  mounted() {
-    this.fetchBrands()
-  },
   methods: {
-    fetchBrands() {
-      this.$store.dispatch('fetchBrands')
-    },
     getAllBrands() {
       this.isAllBrands = true
     },

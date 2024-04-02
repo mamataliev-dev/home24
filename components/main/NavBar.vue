@@ -163,42 +163,42 @@
         <span class="text-gray">Подарки</span>
       </nuxt-link>
 
-      <nuxt-link class="nav-item" to="/">
+      <nuxt-link class="nav-item" to="/categories/mebel">
         <img src="@/assets/img/furniture.svg" alt="" />
         <span class="text-gray">Мебель</span>
       </nuxt-link>
 
-      <nuxt-link class="nav-item" to="/">
+      <nuxt-link class="nav-item" to="/categories/bytovaya-texnika">
         <img src="@/assets/img/appliances.svg" alt="" />
         <span class="text-gray">Техника</span>
       </nuxt-link>
 
-      <nuxt-link class="nav-item" to="/">
+      <nuxt-link class="nav-item" to="/categories/main-category-4">
         <img src="@/assets/img/dishes.svg" alt="" />
         <span class="text-gray">Текстиль</span>
       </nuxt-link>
 
-      <nuxt-link class="nav-item" to="/">
+      <nuxt-link class="nav-item" to="/categories/Main category 2">
         <img src="@/assets/img/dishes.svg" alt="" />
         <span class="text-gray">Посуда</span>
       </nuxt-link>
 
-      <nuxt-link class="nav-item" to="/">
+      <nuxt-link class="nav-item" to="/categories/main-category-3">
         <img src="@/assets/img/plumbing.svg" alt="" />
         <span class="text-gray">Сантехника</span>
       </nuxt-link>
 
-      <nuxt-link class="nav-item" to="/">
+      <nuxt-link class="nav-item" to="/categories/main-category-10">
         <img src="@/assets/img/building.svg" alt="" />
         <span class="text-gray">Стройматириалы</span>
       </nuxt-link>
 
-      <nuxt-link class="nav-item" to="/">
+      <nuxt-link class="nav-item" to="/categories/main-category-5">
         <img src="@/assets/img/products.svg" alt="" />
         <span class="text-gray">Канцтовары</span>
       </nuxt-link>
 
-      <nuxt-link class="nav-item" to="/">
+      <nuxt-link class="nav-item" to="/categories/main-category-6">
         <img src="@/assets/img/stocks.svg" alt="" />
         <span class="text-gray">Акции</span>
       </nuxt-link>

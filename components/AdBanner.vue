@@ -2,16 +2,19 @@
   <div class="bg-[#F4F5F5] flex items-center pt-[39px] pb-[57px]">
     <div class="grid grid-cols-12 gap-x-[23px] container mx-auto">
       <div class="col-span-8 relative">
+        
         <div class="swiper-baner">
           <div class="swiper-wrapper">
             <div v-for="item in banners" :key="item.id" class="swiper-slide">
-              <div class="flex items-center justify-center slider-content">
+              <div
+                class="flex items-center justify-center slider-content cursor-pointer"
+                @click="$router.push('/stocks')"
+              >
                 <img
                   class="xl:h-[386px] 2xl:h-[432px] rounded-xl"
                   :src="
                     item.lg_m_img || require('@/assets/img/jpg/empty-brand.jpg')
                   "
-                  alt=""
                 />
               </div>
             </div>
@@ -168,13 +171,6 @@ export default {
       slidesPerView: 1,
       spaceBetween: 0,
     })
-
-    this.fetchBanners()
-  },
-  methods: {
-    fetchBanners() {
-      this.$store.dispatch('fetchBanners')
-    },
   },
 }
 </script>

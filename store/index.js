@@ -7,6 +7,9 @@ export const state = () => ({
   showcases: [],
   productsSort: [],
   brands: [],
+  currentShowcase: [],
+  posts: [],
+  productId: [],
 })
 
 export const mutations = {
@@ -26,21 +29,43 @@ export const mutations = {
     state.showcases = value
   },
 
+  setCurrentShowcase(state, value) {
+    state.currentShowcase = value
+  },
+
   setProductsSort(state, value) {
     state.productsSort = value
   },
 
-  setProducts(state, value) {
+  setBrands(state, value) {
     state.brands = value
+  },
+
+  setPosts(state, value) {
+    state.posts = value
+  },
+
+  setProductId(state, value) {
+    state.productId = value
   },
 }
 
 export const actions = {
+  // Get Posts
+  async fetchPosts({ commit }) {
+    try {
+      const response = await this.$axiosURL.get('/posts')
+      commit('setPosts', response.data.posts.data)
+    } catch (error) {
+      console.error('Error fetching:', error)
+    }
+  },
+
   // Get Brands
   async fetchBrands({ commit }) {
     try {
       const response = await this.$axiosURL.get('/brands')
-      commit('setProducts', response.data.brands)
+      commit('setBrands', response.data.brands)
     } catch (error) {
       console.error('Error fetching:', error)
     }
@@ -85,6 +110,7 @@ export const actions = {
     try {
       const response = await this.$axiosURL.get(`/products/${id}`)
       commit('setProductId', response.data)
+      console.log(response.data)
     } catch (error) {
       console.error('Error fetching:', error)
     }
@@ -101,10 +127,20 @@ export const actions = {
   },
 
   // Get Showcases
-  async fetchShowcases({ commit }, id) {
+  async fetchShowcases({ commit }) {
+    try {
+      const response = await this.$axiosURL.get(`/showcases`)
+      commit('setShowcases', response.data)
+    } catch (error) {
+      console.error('Error fetching:', error)
+    }
+  },
+
+  // Get Current Showcases
+  async fetchCurrentShowcase({ commit }, id) {
     try {
       const response = await this.$axiosURL.get(`/showcases/${id}`)
-      commit('setShowcases', response.data)
+      commit('setCurrentShowcase', response.data)
     } catch (error) {
       console.error('Error fetching:', error)
     }

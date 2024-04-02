@@ -1,11 +1,15 @@
 <template>
+  <!-- TODO: Improve logic for switch by products array in: all, category, sort-->
+  <!-- TODO: Improve logic to filter and search barnds by back-end -->
   <div class="container mx-auto">
     <div class="flex">
       <div class="flex flex-col w-2/12 mt-[32px]">
         <div class="xl:mb-[20px] 2xl:mb-[40px]">
           <img
             class="border border-[#EEEEEE] rounded-lg cursor-pointer"
-            :src="brand?.lg_logo || require('@/assets/img/jpg/empty-brand.jpg')"
+            :src="
+              brand.brand.lg_logo || require('@/assets/img/jpg/empty-brand.jpg')
+            "
             @click="isFiltered = false"
           />
         </div>
@@ -14,7 +18,7 @@
         <div class="category-box">
           <ul class="flex flex-col space-y-[18px]">
             <li
-              v-for="item in brandCategories"
+              v-for="item in brand.categories"
               :key="item.id"
               class="hover:text-orange cursor-pointer"
               @click="setSotrCategory(item.slug)"
@@ -59,10 +63,10 @@
             <h1
               class="text-[30px] text-black font-medium mt-[12px] font-firsNeueMedium 2xl:text-[40px]"
             >
-              {{ brand?.name }} весь ассортимент
+              {{ brand.brand.name }} весь ассортимент
             </h1>
             <span class="text-[14px] text-gray"
-              >{{ brandProducts?.total }} товаров</span
+              >{{ brand.products.total }} товаров</span
             >
           </div>
 
@@ -93,27 +97,6 @@
           </div>
         </div>
 
-        <!-- If empty products -->
-        <ReusedSlotEmty
-          v-if="brandProducts.data?.length === 0"
-          class="mt-[32px]"
-          :is-active-btn="false"
-          :image-src="require('@/assets/img/icons/empty-cart.svg')"
-        >
-          <template #header>
-            <h1 class="w-[600px] text-center text-[32px] font-medium">
-              Товаровы по данному брэнду отсутствуют
-            </h1>
-          </template>
-
-          <template #description>
-            <p class="text-gray text-[16px] max-w-[374px] text-center">
-              Попробуйте поискать товары другого брэнда
-            </p>
-          </template>
-        </ReusedSlotEmty>
-
-        <!-- TODO: Improve logic for switch by products array in: all, category, sort-->
         <!-- All Products -->
         <div class="mt-[32px]">
           <div
@@ -121,9 +104,9 @@
             :class="isGridCol ? 'category-grid' : 'category-grid-row'"
           >
             <ProductsBaseProduct
-              v-for="item in brandProducts?.data"
+              v-for="item in brandProducts"
               :key="item.id"
-              :product="item"
+              :product="item.products[0]"
             />
           </div>
         </div>
@@ -141,6 +124,39 @@
             />
           </div>
         </div>
+
+        <!-- Sorted Products -->
+        <div class="mt-[32px]">
+          <div
+            v-show="false"
+            :class="isGridCol ? 'category-grid' : 'category-grid-row'"
+          >
+            <ProductsBaseProduct
+              v-for="item in brandProducts"
+              :key="item.id"
+              :product="item.products[0]"
+            />
+          </div>
+        </div>
+
+        <ReusedSlotEmty
+          v-if="brandProducts.length === 0"
+          class="mt-[32px]"
+          :is-active-btn="false"
+          :image-src="require('@/assets/img/icons/empty-cart.svg')"
+        >
+          <template #header>
+            <h1 class="w-[600px] text-center text-[32px] font-medium">
+              Товаровы по данному брэнду отсутствуют
+            </h1>
+          </template>
+
+          <template #description>
+            <p class="text-gray text-[16px] max-w-[374px] text-center">
+              Попробуйте поискать товары другого брэнда
+            </p>
+          </template>
+        </ReusedSlotEmty>
       </div>
     </div>
   </div>
@@ -150,6 +166,62 @@
 export default {
   name: 'BrandPage',
   layout: 'BrandCategoryLayout',
+  async asyncData({ $axiosURL, params, $router }) {
+    // Fetch Brand Id
+    try {
+      const response = await $axiosURL.get(`/brands/${params.id}`)
+
+      return {
+        brand: response.data,
+        brandProducts: response.data.products.data,
+      }
+    } catch (error) {
+      console.error('Error fetching:', error)
+    }
+
+    // this.$router.push({
+    //   query: {
+    //     brand: this.id,
+    //     category: this.sortCategory,
+    //   },
+    // })
+
+    // // Fetch Sorted Categories
+    // try {
+    //   const response = await $axiosURL.get(
+    //     `/products?brand=${params.id}&category=${sortCategory}`
+    //   )
+
+    //   this.sortedCategories = response.data.products.data
+
+    //   $router.push({
+    //     query: {
+    //       brand: params.id,
+    //       sort: this.sortBy,
+    //     },
+    //   })
+    // } catch (error) {
+    //   console.error('Error fetching:', error)
+    // }
+
+    // // Fetch Sorted Products
+    // try {
+    //   const response = await this.$axiosURL.get(
+    //     `/products?&brand=${params.id}&sort=${this.sortBy}`
+    //   )
+
+    //   this.sortedProducts = response.data.products.data
+
+    //   $router.push({
+    //     query: {
+    //       brand: params.id,
+    //       category: this.sortCategory,
+    //     },
+    //   })
+    // } catch (error) {
+    //   console.error('Error fetching:', error)
+    // }
+  },
   data() {
     return {
       id: this.$route.params.id,
@@ -169,9 +241,6 @@ export default {
       sortCategory: '',
       sortedCategories: [],
       sortedProducts: [],
-      brand: [],
-      brandCategories: [],
-      brandProducts: [],
     }
   },
   head() {
@@ -186,58 +255,9 @@ export default {
     },
   },
   mounted() {
-    this.fetchBrandId()
+    console.log(this.brandProducts)
   },
   methods: {
-    // Fetch Brand
-    async fetchBrandId() {
-      try {
-        const response = await this.$axiosURL.get(`/brands/${this.id}`)
-        this.brand = response.data
-        this.brandCategories = this.brand.categories
-        this.brandProducts = this.brand.products
-      } catch (error) {
-        console.error('Error fetching:', error)
-      }
-    },
-    // Fetch Sorted Categories
-    async fetchSortedCategories() {
-      try {
-        const response = await this.$axiosURL.get(
-          `/products?brand=${this.id}&category=${this.sortCategory}`
-        )
-
-        this.sortedCategories = response.data.products.data
-
-        this.$router.push({
-          query: {
-            brand: this.id,
-            sort: this.sortBy,
-          },
-        })
-      } catch (error) {
-        console.error('Error fetching:', error)
-      }
-    },
-    // Fetch Sorted Products
-    async fetchSortedProducts() {
-      try {
-        const response = await this.$axiosURL.get(
-          `/products?&brand=${this.id}&sort=${this.sortBy}`
-        )
-
-        this.sortedProducts = response.data.products.data
-
-        this.$router.push({
-          query: {
-            brand: this.id,
-            category: this.sortCategory,
-          },
-        })
-      } catch (error) {
-        console.error('Error fetching:', error)
-      }
-    },
     filterByCategory(id) {
       this.isFiltered = true
       this.categoryId = id

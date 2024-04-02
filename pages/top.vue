@@ -3,26 +3,17 @@
     <h1 class="main-title">Хиты прожад</h1>
 
     <div class="flex mt-[32px]">
-      <div class="flex flex-col w-2/12 mt-[32px]">
-        <!-- Categories -->
+      <div class="flex flex-col w-2/12">
         <div class="category-box">
-          <ul class="flex flex-col space-y-[18px]">
-            <li
-              v-for="item in showcases.categories"
-              :key="item.id"
-              class="hover:text-orange cursor-pointer"
-            >
-              {{ item.name }}
-
-              <li v-for="elem in item?.children" :key="elem.id">
-                {{ elem.name }}
-              </li>
-              
-            </li>
-          </ul>
+          <!-- Categories -->
+          <ReusedTreeNode
+            v-for="item in showcase.categories"
+            :key="item.id"
+            :node="item"
+            @fetchCategory="fetchCategory"
+          />
         </div>
 
-        <!-- Price -->
         <div class="category-box mt-[40px]">
           <h1 class="category-title">Цена</h1>
 
@@ -81,7 +72,7 @@
         <div class="mt-[32px]">
           <div :class="isGridCol ? 'category-grid' : 'category-grid-row'">
             <ProductsBaseProduct
-              v-for="item in topProducts"
+              v-for="item in showcase.showcase.products"
               :key="item.id"
               :product="item"
               @click="$router.push(`/product/${item.products[0]?.slug}`)"
@@ -95,6 +86,9 @@
 
 <script>
 export default {
+  async asyncData({ store }) {
+    await store.dispatch('fetchCurrentShowcase', 'bestsellery')
+  },
   data() {
     return {
       price: 0,
@@ -117,19 +111,13 @@ export default {
     }
   },
   computed: {
-    topProducts() {
-      return this.$store.state.productsSort
+    showcase() {
+      return this.$store.state.currentShowcase
     },
-    showcases() {
-      return this.$store.state.showcases
-    },
-  },
-  mounted() {
-    this.fetchPopularProducts()
   },
   methods: {
-    fetchPopularProducts() {
-      this.$store.dispatch('fetchShowcases', 'top-tovary')
+    handleNodeClick(data) {
+      console.log(data)
     },
   },
 }

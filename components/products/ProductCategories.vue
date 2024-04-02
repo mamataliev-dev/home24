@@ -28,13 +28,5 @@ export default {
       return this.$store.state.categories
     },
   },
-  mounted() {
-    this.fetchBrands()
-  },
-  methods: {
-    fetchBrands() {
-      this.$store.dispatch('fetchCategories')
-    },
-  },
 }
 </script>

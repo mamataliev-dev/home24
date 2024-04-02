@@ -69,13 +69,6 @@ export default {
       slidesPerView: 1,
       spaceBetween: 0,
     })
-
-    this.fetchBanners()
-  },
-  methods: {
-    fetchBanners() {
-      this.$store.dispatch('fetchBanners')
-    },
   },
 }
 </script>

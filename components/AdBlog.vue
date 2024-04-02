@@ -24,16 +24,5 @@ export default {
       return this.$store.state.banners.filter((b) => b.type === 'type2')
     },
   },
-  mounted() {
-    this.fetchBanners()
-  },
-  methods: {
-    getProduct(val) {
-      console.log(val)
-    },
-    fetchBanners() {
-      this.$store.dispatch('fetchBanners')
-    },
-  },
 }
 </script>

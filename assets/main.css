@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+/* @layer components {
+  .main-grid {
+    @apply grid grid-cols-1 md:grid-cols-6 gap-4;
+    grid-template-columns: repeat(6, minmax(252px, 1fr));
+  }
+} */
+
+/* .main-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(252px, 1fr));
+  gap: 4rem;
+} */
+
 /* Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
@@ -113,7 +126,7 @@ input[type='number'] {
 }
 
 .main-grid {
-  @apply grid grid-cols-1 md:grid-cols-6 gap-4;
+  @apply grid grid-cols-1  md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-5;
 }
 
 .category-item-grid {

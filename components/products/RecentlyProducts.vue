@@ -5,11 +5,11 @@
     </div>
 
     <div class="main-grid">
-      <ProductsBaseProduct
-        v-for="item in recentlyProducts?.slice(0, 6)"
+      <!-- <ProductsBaseProduct
+        v-for="item in recentlyProducts.slice(0, 6)"
         :key="item.id"
         :product="item"
-      />
+      /> -->
     </div>
   </div>
 </template>

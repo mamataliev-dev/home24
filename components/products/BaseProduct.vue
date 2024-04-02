@@ -1,73 +1,80 @@
 <template>
   <div>
-    <ProductsQuickView v-show="isQuickView" @closeModal="closeModal" />
+    <!-- isQuickView -->
+    <ProductsQuickView
+      v-if="isQuickView"
+      :product-data="productData"
+      @closeModal="closeModal"
+    />
 
     <div
-      class="top-grid-item"
+      class="top-grid-item min-w-[252px]"
       @mouseover="showTip = true"
       @mouseleave="showTip = false"
     >
       <div class="relative">
         <div>
           <img
-            class="border border-[#F2F2FA] rounded-xl relative w-[100%] h-[100%]"
-            :src="product?.products[0]?.images[0]?.md_img"
+            class="border border-[#F2F2FA] rounded-xl relative w-[100%] min-h-[336px]"
+            :src="product.images[0].md_img"
             alt=""
           />
+
           <div v-show="showTip">
+            <!-- Favourity/Compare Btns -->
             <div
               class="absolute z-50 top-[12px] right-[12px] flex flex-col space-y-[14px]"
             >
-              <button @click="addProductToFavourites">
-                <img src="@/assets/img/icons/compare-view.svg" alt="" />
+              <button class="z-50" @click="setFavourite">
+                <ImgLikeBtn :is-active="isFavourite" />
               </button>
 
-              <button @click="compareProduct">
-                <img src="@/assets/img/icons/add-product-view.svg" alt="" />
+              <button class="z-50" @click="setCompare">
+                <ImgCompareBtn :is-active="isCompare" />
               </button>
             </div>
 
-            <div class="absolute z-50 inset-0 flex justify-center items-center">
+            <!-- Quick view btn -->
+            <div class="absolute inset-0 flex justify-center items-center">
               <button
                 class="shadow bg-white py-[14px] px-[19px] rounded-full"
-                @click=";(isQuickView = true), (showTip = false)"
+                @click="openQuickView(product.slug)"
               >
                 Быстрый просмотр
               </button>
             </div>
           </div>
         </div>
+
+        <!-- Discount -->
         <span
-          v-if="product?.products[0]?.discount_price !== null"
+          v-if="product?.discount_price !== null"
           class="absolute bottom-[12px] left-[12px] text-red font-bold text-lg"
-          >-{{ product?.products[0]?.discount.pivot.percent }}%</span
+          >-{{ product?.discount.pivot.percent }}%</span
         >
       </div>
 
       <div
         class="top-grid-item-info rounded-lg"
-        @click="$router.push(`/product/${product?.products[0]?.slug}`)"
+        @click="$router.push(`/product/${product?.slug}`)"
       >
         <div class="flex items-center justify-between">
-          <div
-            v-if="product?.products[0]?.discount_price !== null"
-            class="flex flex-col"
-          >
+          <div v-if="product?.discount_price !== null" class="flex flex-col">
             <span class="font-firsNeueRegular">
-              {{ product?.products[0]?.discount_price }} сум</span
+              {{ product?.discount_price }} сум</span
             >
             <span class="line-through text-[#9A999B] font-firsNeueRegular">{{
-              product?.products[0]?.price
+              formattedRealPrice
             }}</span>
           </div>
 
           <div v-else>
             <span class="font-firsNeueRegular">
-              {{ product?.products[0]?.price }} сум</span
+              {{ formattedRealPrice }} сум</span
             >
           </div>
 
-          <button>
+          <button @click="orderProduct">
             <img src="@/assets/img/order-bag.svg" alt="" />
           </button>
         </div>
@@ -97,15 +104,107 @@ export default {
     return {
       showTip: false,
       isQuickView: false,
+      isFavourite: false,
+      isCompare: false,
+      productData: {},
     }
   },
-  methods: {
-    compareProduct() {
-      this.$router.push(`/compare/${1}`)
+  computed: {
+    formattedPrice() {
+      const text = this.product.price.toString()
+
+      const formatted = text
+        .split('')
+        .reverse()
+        .join('')
+        .match(/.{1,3}/g)
+        .join(' ')
+        .split('')
+        .reverse()
+        .join('')
+
+      return formatted
     },
-    addProductToFavourites() {},
+    formattedRealPrice() {
+      const text = this.product.real_price.toString()
+
+      const formatted = text
+        .split('')
+        .reverse()
+        .join('')
+        .match(/.{1,3}/g)
+        .join(' ')
+        .split('')
+        .reverse()
+        .join('')
+
+      return formatted
+    },
+  },
+  methods: {
     closeModal(val) {
       this.isQuickView = val
+    },
+    setFavourite() {
+      this.isFavourite = !this.isFavourite
+
+      if (this.isFavourite === true) {
+        this.$message({
+          message: 'Успешно добавлено в избранное',
+          type: 'success',
+        })
+      } else {
+        this.$message({
+          message: 'Успешно удалено из избранного',
+          type: 'warning',
+        })
+      }
+    },
+    async setCompare() {
+      this.isCompare = !this.isCompare
+
+      try {
+        const response = await this.$axios.$post(
+          'https://e-shop.ndc.uz/api/comparison',
+          {
+            products: [this.product.id],
+          },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        )
+
+        //  Status returns undefined
+        if (response.status === 200) {
+          this.$message({
+            message: 'Успешно добавлено в сравнение',
+            type: 'success',
+          })
+        }
+
+        if (!this.isCompare) {
+          this.$message({
+            message: 'Успешно удалено из сравнения',
+            type: 'warning',
+          })
+        }
+      } catch (error) {
+        console.error('Post Error:', error)
+      }
+    },
+    orderProduct() {},
+    async openQuickView(id) {
+      this.isQuickView = true
+      this.showTip = false
+
+      try {
+        const response = await this.$axiosURL.get(`/products/${id}`)
+        this.productData = response.data
+      } catch (error) {
+        console.error('Error fetching:', error)
+      }
     },
   },
 }

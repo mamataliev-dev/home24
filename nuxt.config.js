@@ -30,9 +30,7 @@ export default {
     '@nuxtjs/tailwindcss',
   ],
 
-  loadingIndicator: {
-    color: '#FF6418',
-  },
+  loading: { color: '#FF6418' },
 
   server: {
     host: 'localhost',

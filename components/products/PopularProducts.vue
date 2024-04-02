@@ -7,7 +7,7 @@
 
     <div class="main-grid">
       <ProductsBaseProduct
-        v-for="item in popularProducts?.slice(0, 6)"
+        v-for="item in popularProducts.products.slice(0, 6)"
         :key="item.id"
         :product="item"
       />
@@ -25,7 +25,7 @@
 
     <div class="main-grid">
       <ProductsBaseProduct
-        v-for="item in popularProducts.slice(6, 12)"
+        v-for="item in popularProducts.products.slice(6, 12)"
         :key="item.id"
         :product="item"
       />
@@ -37,24 +37,17 @@
 export default {
   name: 'AppCategories',
   computed: {
-    popularProducts() {
-      return this.$store.state.productsSort
-    },
     banners() {
       return this.$store.state.banners.filter((b) => b.type === 'bottom')
     },
+    popularProducts() {
+      return this.$store.state.showcases.showcases.find(
+        (el) => el.slug === 'top-tovary'
+      )
+    },
   },
   mounted() {
-    this.fetchPopularProducts()
-    this.fetchBanners()
-  },
-  methods: {
-    fetchPopularProducts() {
-      this.$store.dispatch('fetchProductsSort', 'type=popular')
-    },
-    fetchBanners() {
-      this.$store.dispatch('fetchBanners')
-    },
+    console.log('popular-products', this.popularProducts)
   },
 }
 </script>

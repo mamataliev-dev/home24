@@ -5,9 +5,10 @@
       <nuxt-link to="/top" class="see-all-text">Все товары</nuxt-link>
     </div>
 
+    <!--  -->
     <div class="main-grid">
       <ProductsBaseProduct
-        v-for="item in topProducts?.slice(0, 6)"
+        v-for="item in topProducts.products.slice(0, 6)"
         :key="item.id"
         :product="item"
       />
@@ -20,15 +21,9 @@ export default {
   name: 'AppCategories',
   computed: {
     topProducts() {
-      return this.$store.state.productsSort
-    },
-  },
-  mounted() {
-    this.fetchPopularProducts()
-  },
-  methods: {
-    fetchPopularProducts() {
-      this.$store.dispatch('fetchProductsSort', 'sort=popular')
+      return this.$store.state.showcases.showcases.find(
+        (el) => el.slug === 'bestsellery'
+      )
     },
   },
 }

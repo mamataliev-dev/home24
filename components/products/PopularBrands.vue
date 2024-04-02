@@ -1,5 +1,8 @@
 <template>
   <div class="container mx-auto conponent-margin-top">
+    <!-- Loading Modal -->
+    <LoadingModal v-show="false" />
+
     <div class="comp-title-box">
       <h1 class="title-temp">Популярные бренды</h1>
       <nuxt-link to="/brand" class="see-all-text">Смотреть все</nuxt-link>
@@ -26,14 +29,6 @@ export default {
   computed: {
     brands() {
       return this.$store.state.brands
-    },
-  },
-  mounted() {
-    this.fetchBrands()
-  },
-  methods: {
-    fetchBrands() {
-      this.$store.dispatch('fetchBrands')
     },
   },
 }

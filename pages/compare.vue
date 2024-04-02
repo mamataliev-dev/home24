@@ -133,6 +133,15 @@ import 'swiper/swiper-bundle.min.css'
 export default {
   name: 'ComparePage',
   layout: 'default',
+  async asyncData({ $axiosURL }) {
+    try {
+      const response = await $axiosURL.get('/comparison')
+
+      console.log(response.data)
+    } catch (error) {
+      console.log(error)
+    }
+  },
   data() {
     return {
       isEmpty: false,

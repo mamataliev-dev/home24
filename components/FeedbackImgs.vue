@@ -151,7 +151,6 @@
           </div>
         </div>
 
-        <!-- <div class="swiper-pagination"></div> -->
         <div class="swiper-button-prev">
           <img
             class="w-[48px] h-[48px]"
@@ -177,10 +176,15 @@ import { Swiper, Navigation, Pagination } from 'swiper'
 import 'swiper/swiper-bundle.min.css'
 
 export default {
+  props: {
+    feedbacks: {
+      type: Array,
+      required: true,
+    },
+  },
   data() {
     return {
       isModalOpen: false,
-      feedbacks: [],
     }
   },
   mounted() {
@@ -221,18 +225,6 @@ export default {
         swiper: Swiper,
       },
     })
-
-    this.fetchFeedbacks()
-  },
-  methods: {
-    async fetchFeedbacks() {
-      try {
-        const response = await this.$axiosURL.get(`/feedbacks`)
-        this.feedbacks = response.data.feedbacks.data
-      } catch (error) {
-        console.error('Error fetching:', error)
-      }
-    },
   },
 }
 </script>

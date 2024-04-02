@@ -20,7 +20,13 @@
     </div>
 
     <div class="mt-[32px]">
-      <el-pagination layout="prev, pager, next" :total="1000"></el-pagination>
+      <el-pagination
+        class="pagination"
+        background
+        layout="prev, pager, next"
+        :total="postData.posts.total"
+      >
+      </el-pagination>
     </div>
   </div>
 </template>
@@ -28,29 +34,28 @@
 <script>
 export default {
   name: 'BlogPage',
+  async asyncData({ $axiosURL, store }) {
+    try {
+      const response = await $axiosURL.get('/posts')
+      const posts = response.data.posts.data
+
+      return { posts, postData: response.data }
+    } catch (error) {
+      console.error('Error fetching:', error)
+    }
+
+    await store.dispatch('fetchBanners')
+    await store.dispatch('fetchBlogs')
+  },
   data() {
     return {
       blogId: 1,
-      posts: [],
     }
   },
   head() {
     return {
       title: 'Блог',
     }
-  },
-  mounted() {
-    this.fetchPosts()
-  },
-  methods: {
-    async fetchPosts() {
-      try {
-        const response = await this.$axiosURL.get('/posts')
-        this.posts = response.data.posts.data
-      } catch (error) {
-        console.error('Error fetching:', error)
-      }
-    },
   },
 }
 </script>
@@ -61,5 +66,15 @@ export default {
   color: white;
   border-radius: 50%;
   padding: 14px 24px 14px 24px;
+}
+
+.el-pager li {
+  padding: 14px 24px !important;
+  background: #ff6418 !important;
+}
+
+.number {
+  padding: 14px 24px !important;
+  background: #ff6418 !important;
 }
 </style>
