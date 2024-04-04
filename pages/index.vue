@@ -23,6 +23,7 @@ export default {
     await store.dispatch('fetchBanners')
     await store.dispatch('fetchCategories')
     await store.dispatch('fetchShowcases')
+    await store.dispatch('fetchCategories')
 
     // Fetch Feedbacks
     try {

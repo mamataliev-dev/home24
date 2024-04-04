@@ -10,6 +10,7 @@
         @click="$router.push(`/category/${item.slug}`)"
       >
         <img
+          class="w-[204px] h-[147px]"
           :src="item.md_img || require('@/assets/img/jpg/empty-brand.jpg')"
         />
         <span class="font-firsNeueRegular text-[20px] text-center">{{

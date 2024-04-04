@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto">
-    <h1 class="main-title">Хиты прожад</h1>
+    <h1 class="main-title">{{ showcase.showcase.name }}</h1>
 
     <div class="flex mt-[32px]">
       <div class="flex flex-col w-2/12">
@@ -86,8 +86,8 @@
 
 <script>
 export default {
-  async asyncData({ store }) {
-    await store.dispatch('fetchCurrentShowcase', 'bestsellery')
+  async asyncData({ store, params }) {
+    await store.dispatch('fetchCurrentShowcase', params.id)
   },
   data() {
     return {
@@ -107,7 +107,7 @@ export default {
   },
   head() {
     return {
-      title: 'Хиты продаж',
+      title: this.showcase.showcase.name,
     }
   },
   computed: {
@@ -115,10 +115,14 @@ export default {
       return this.$store.state.currentShowcase
     },
   },
+  mounted() {
+    console.log('12fggffg', this.showcase)
+  },
   methods: {
     handleNodeClick(data) {
       console.log(data)
     },
+    fetchCategory(id) {},
   },
 }
 </script>

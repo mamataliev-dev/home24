@@ -2,7 +2,9 @@
   <div class="container mx-auto conponent-margin-top">
     <div class="comp-title-box">
       <h1 class="title-temp">{{ todaysProducts.name }}</h1>
-      <nuxt-link to="/category/tv" class="see-all-text">Все товары</nuxt-link>
+      <nuxt-link :to="`/showcases/${todaysProducts.slug}`" class="see-all-text"
+        >Все товары</nuxt-link
+      >
     </div>
 
     <div class="flex flex-col gap-y-[56px]">

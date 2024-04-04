@@ -27,6 +27,9 @@
         :total="postData.posts.total"
       >
       </el-pagination>
+
+
+
     </div>
   </div>
 </template>

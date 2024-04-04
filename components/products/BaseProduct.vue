@@ -23,7 +23,7 @@
           <div v-show="showTip">
             <!-- Favourity/Compare Btns -->
             <div
-              class="absolute z-50 top-[12px] right-[12px] flex flex-col space-y-[14px]"
+              class="absolute z-30 top-[12px] right-[12px] flex flex-col space-y-[14px]"
             >
               <button class="z-50" @click="setFavourite">
                 <ImgLikeBtn :is-active="isFavourite" />
@@ -35,7 +35,7 @@
             </div>
 
             <!-- Quick view btn -->
-            <div class="absolute inset-0 flex justify-center items-center">
+            <div class="absolute z-20 inset-0 flex justify-center items-center">
               <button
                 class="shadow bg-white py-[14px] px-[19px] rounded-full"
                 @click="openQuickView(product.slug)"
@@ -43,6 +43,10 @@
                 Быстрый просмотр
               </button>
             </div>
+
+            <div
+              class="absolute top-0 left-0 w-[100%] h-[100%] bg-gray z-10 opacity-35 rounded-lg"
+            ></div>
           </div>
         </div>
 
@@ -54,6 +58,7 @@
         >
       </div>
 
+      <!-- Price / Stars / Title -->
       <div
         class="top-grid-item-info rounded-lg"
         @click="$router.push(`/product/${product?.slug}`)"
@@ -79,12 +84,14 @@
           </button>
         </div>
 
-        <div class="flex space-x-2">
+        <div class="flex items-center space-x-2">
           <img src="@/assets/img/icons/star-full.svg" alt="" />
-          <span class="font-firsNeueLight">{{ product?.stars || 0 }}</span>
+          <span class="text-[14px] font-firsNeueLight">{{
+            product?.stars || 'Нет отзывов'
+          }}</span>
         </div>
 
-        <h1 class="font-medium text-[14px] leading-[20px]">
+        <h1 class="truncate-text font-medium text-[14px] leading-[20px]">
           {{ product?.name }}
         </h1>
       </div>
@@ -179,13 +186,21 @@ export default {
         //  Status returns undefined
         if (response.status === 200) {
           this.$message({
+            showClose: true,
             message: 'Успешно добавлено в сравнение',
             type: 'success',
           })
         }
 
+        // this.$message({
+        //   showClose: true,
+        //   message: 'Успешно добавлено в сравнение',
+        //   type: 'success',
+        // })
+
         if (!this.isCompare) {
           this.$message({
+            showClose: true,
             message: 'Успешно удалено из сравнения',
             type: 'warning',
           })
@@ -202,6 +217,8 @@ export default {
       try {
         const response = await this.$axiosURL.get(`/products/${id}`)
         this.productData = response.data
+
+        console.log(response.data)
       } catch (error) {
         console.error('Error fetching:', error)
       }
@@ -209,3 +226,12 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.truncate-text {
+  width: 250px; /* or whatever width you want */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+</style>

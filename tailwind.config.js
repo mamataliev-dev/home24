@@ -19,6 +19,7 @@ module.exports = {
         newOrange: '#FF7E00',
         white: '#FFFFFF',
         innerBlack: '#27282A',
+        customBg: 'rgba(255, 100, 24, 0.08)',
       },
       fontFamily: {
         firsNeueLight: 'Firs Neue Light',

@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto">
-    <SlotEmty :image-src="require('@/assets/img/icons/404.svg')">
+    <ReusedSlotEmty :image-src="require('@/assets/img/icons/404.svg')">
       <template #header>
         <h1 class="text-[32px] font-medium">Страница не найдена!</h1>
       </template>
@@ -10,10 +10,10 @@
           Не переживайте и продолжайте покупку
         </p>
       </template>
-    </SlotEmty>
+    </ReusedSlotEmty>
   </div>
 </template>
-
+SlotEmty
 <script>
 export default {
   name: 'ErrorPage',

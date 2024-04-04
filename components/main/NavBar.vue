@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="">
     <nav class="bg-[#F4F5F5] mb-[20px]">
       <div class="container mx-auto">
         <div class="bg-[#F4F5F5] p-[8px] flex justify-between">
@@ -58,9 +58,24 @@
         </li>
 
         <li
-          class="flex items-center px-[18px] xl:pr-[30px] py-[10px] h-[44px] border border-orange ml-[44px] mr-[38px] rounded-md cursor-pointer"
+          class="burger flex items-center justify-center px-[18px] xl:pr-[30px] py-[10px] h-[44px] bg-customBg ml-[44px] mr-[38px] rounded-md cursor-pointer"
+          @click="toggleMenu"
         >
-          <img src="@/assets/img/burger-menu.svg" alt="" />
+          <div class="flex flex-col space-y-1 cursor-pointer">
+            <div
+              :class="menuOpen ? 'transform rotate-45 translate-y-1.5' : ''"
+              class="w-4 h-0.5 bg-[#FF6418] transition-all duration-200"
+            ></div>
+            <div
+              :class="menuOpen ? 'opacity-0' : ''"
+              class="w-4 h-0.5 bg-[#FF6418] transition-all duration-200"
+            ></div>
+            <div
+              :class="menuOpen ? 'transform -rotate-45 -translate-y-1.5' : ''"
+              class="w-4 h-0.5 bg-[#FF6418] transition-all duration-200"
+            ></div>
+          </div>
+
           <span class="text-lg text-orange ml-2">Каталог</span>
         </li>
 
@@ -158,55 +173,80 @@
     </nav>
 
     <div class="flex justify-between container mx-auto mb-[20px]">
-      <nuxt-link class="nav-item" to="/">
-        <img src="@/assets/img/crown.svg" alt="" />
-        <span class="text-gray">Подарки</span>
-      </nuxt-link>
+      <div v-for="item in categories.slice(0, 9)" :key="item.id">
+        <span
+          class="text-gray cursor-pointer"
+          @click="$router.push(`/category/${item.slug}`)"
+          >{{ item.name }}</span
+        >
+      </div>
 
-      <nuxt-link class="nav-item" to="/categories/mebel">
-        <img src="@/assets/img/furniture.svg" alt="" />
-        <span class="text-gray">Мебель</span>
-      </nuxt-link>
-
-      <nuxt-link class="nav-item" to="/categories/bytovaya-texnika">
-        <img src="@/assets/img/appliances.svg" alt="" />
-        <span class="text-gray">Техника</span>
-      </nuxt-link>
-
-      <nuxt-link class="nav-item" to="/categories/main-category-4">
-        <img src="@/assets/img/dishes.svg" alt="" />
-        <span class="text-gray">Текстиль</span>
-      </nuxt-link>
-
-      <nuxt-link class="nav-item" to="/categories/Main category 2">
-        <img src="@/assets/img/dishes.svg" alt="" />
-        <span class="text-gray">Посуда</span>
-      </nuxt-link>
-
-      <nuxt-link class="nav-item" to="/categories/main-category-3">
-        <img src="@/assets/img/plumbing.svg" alt="" />
-        <span class="text-gray">Сантехника</span>
-      </nuxt-link>
-
-      <nuxt-link class="nav-item" to="/categories/main-category-10">
-        <img src="@/assets/img/building.svg" alt="" />
-        <span class="text-gray">Стройматириалы</span>
-      </nuxt-link>
-
-      <nuxt-link class="nav-item" to="/categories/main-category-5">
-        <img src="@/assets/img/products.svg" alt="" />
-        <span class="text-gray">Канцтовары</span>
-      </nuxt-link>
-
-      <nuxt-link class="nav-item" to="/categories/main-category-6">
-        <img src="@/assets/img/stocks.svg" alt="" />
-        <span class="text-gray">Акции</span>
-      </nuxt-link>
-
-      <nuxt-link class="nav-item" to="/">
+      <div class="nav-item" @click="menuOpen = true">
         <span class="text-orange">Ещё</span>
         <img src="@/assets/img/arrow-down-orange.svg" alt="" />
-      </nuxt-link>
+      </div>
+
+      <!-- All Categories Modal -->
+      <div
+        v-show="menuOpen"
+        class="absolute top-[129px] left-0 z-50 w-full h-full bg-white shadow-2xl"
+      >
+        <div class="container mx-auto grid grid-cols-12">
+          <div
+            class="col-span-2 flex flex-col space-y-[40px] border-r border-[#F2F2FA] py-[20px]"
+          >
+            <span
+              v-for="(item, index) in categories"
+              :key="item.id"
+              class="text-gray text-[18px] hover:text-orange focus:text-orange cursor-pointer"
+              @click=";(activeCategory = item.name), (indexed = index)"
+            >
+              {{ item.name }}
+            </span>
+          </div>
+
+          <div class="col-span-10 ml-[24px] py-[20px]">
+            <h1 class="text-orange text-[32px] font-firsNeueMedium">
+              {{ activeCategory }}
+            </h1>
+
+            <div class="grid grid-cols-4 grid-rows-2 gap-y-[48px] mt-[24px]">
+              <!-- children -->
+              <div
+                v-for="elem in categories[indexed]?.children"
+                :key="elem.id"
+                class="flex flex-col space-y-[24px]"
+              >
+                <!-- children name -->
+                <h2 class="text-[18px] font-medium">{{ elem.name }}</h2>
+
+                <!-- sub children -->
+                <ul
+                  v-for="ij in elem.children"
+                  :key="ij.id"
+                  class="flex flex-col space-y-[16px]"
+                >
+                  <!-- sub children name -->
+                  <li
+                    class="text-[14px] cursor-pointer"
+                    @click="$router.push(`category/${ij.slug}`)"
+                  >
+                    -{{ ij.name }}
+                  </li>
+                </ul>
+
+                <div
+                  v-if="elem.children.length > 5"
+                  class="flex items-center space-x-[10px] cursor-pointer"
+                >
+                  <span class="text-gray text-[14px]">Ещё 6</span>
+                  <span class="el-icon-arrow-up text-[15px] text-gray"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -223,7 +263,18 @@ export default {
       isLogIn: false,
       cleanPhoneNumber: '',
       errorMsg: '',
+      menuOpen: false,
+      activeCategory: 'Мебель',
+      indexed: 0,
     }
+  },
+  computed: {
+    categories() {
+      return this.$store.state.categories
+    },
+  },
+  mounted() {
+    console.log('caregories', this.categories[0].children)
   },
   methods: {
     openDropDownList() {},
@@ -283,6 +334,15 @@ export default {
       }
     },
     sendCodeAgain() {},
+    toggleMenu() {
+      this.menuOpen = !this.menuOpen
+    },
   },
 }
 </script>
+
+<style>
+.burger {
+  background-color: rgba(255, 100, 24, 0.08);
+}
+</style>

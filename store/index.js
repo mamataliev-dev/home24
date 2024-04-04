@@ -104,7 +104,6 @@ export const actions = {
     }
   },
 
-  // ?
   // Get Product Id
   async fetchProductId({ commit }, id) {
     try {

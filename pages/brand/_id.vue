@@ -99,10 +99,7 @@
 
         <!-- All Products -->
         <div class="mt-[32px]">
-          <div
-            v-show="true"
-            :class="isGridCol ? 'category-grid' : 'category-grid-row'"
-          >
+          <div :class="isGridCol ? 'category-grid' : 'category-grid-row'">
             <ProductsBaseProduct
               v-for="item in brandProducts"
               :key="item.id"
@@ -114,7 +111,7 @@
         <!-- Sorted Products -->
         <div class="mt-[32px]">
           <div
-            v-show="true"
+            v-show="false"
             :class="isGridCol ? 'category-grid' : 'category-grid-row'"
           >
             <ProductsBaseProduct
@@ -170,6 +167,8 @@ export default {
     // Fetch Brand Id
     try {
       const response = await $axiosURL.get(`/brands/${params.id}`)
+
+      console.log('+_+', response.data.products.data)
 
       return {
         brand: response.data,

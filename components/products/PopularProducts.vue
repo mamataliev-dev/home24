@@ -2,7 +2,9 @@
   <div class="container mx-auto conponent-margin-top">
     <div class="comp-title-box">
       <h1 class="title-temp">Популярные товары</h1>
-      <nuxt-link to="/" class="see-all-text">Все товары</nuxt-link>
+      <nuxt-link :to="`/showcases/${popularProducts.slug}`" class="see-all-text"
+        >Все товары</nuxt-link
+      >
     </div>
 
     <div class="main-grid">
@@ -45,9 +47,6 @@ export default {
         (el) => el.slug === 'top-tovary'
       )
     },
-  },
-  mounted() {
-    console.log('popular-products', this.popularProducts)
   },
 }
 </script>

@@ -16,11 +16,9 @@
 
       <div class="w-10/12 pl-[38px]">
         <DynamicRouter />
-        <!-- <h1 class="main-title">{{ category.name }}</h1>
+        <h1 class="main-title">{{ category.name }}</h1>
 
-        {{ category.children }}
-
-        <div class="category-id-grid mt-[32px]">
+        <!-- <div class="category-id-grid mt-[32px]">
           <div
             v-for="item in category.children"
             :key="item.id"
@@ -46,9 +44,14 @@
 <script>
 export default {
   layout: 'BrandCategoryLayout',
+  asyncData({ store, params }) {
+    // await store.dispatch('fetchCategoryId', params.id)
+
+    console.log(params.subCategoryName)
+  },
   data() {
     return {
-      id: this.$route.params.id,
+      // id: this.$route.params.id,
     }
   },
   computed: {
@@ -56,13 +59,7 @@ export default {
       return this.$store.state.categoryId
     },
   },
-  mounted() {
-    this.fetchCategoryId()
-  },
-  methods: {
-    fetchCategoryId() {
-      this.$store.dispatch('fetchCategoryId', this.id)
-    },
-  },
+  mounted() {},
+  methods: {},
 }
 </script>

@@ -22,9 +22,13 @@
             :as-nav-for="$refs.c2"
             :focus-on-select="true"
           >
-            <div v-for="(image, index) in product?.images || 1" :key="index">
+            <div
+              v-for="(image, index) in product?.images || 1"
+              :key="index"
+              class="flex space-x-[25px]"
+            >
               <img
-                class="w-[400px] h-[400px] 2xl:w-[488px] 2xl:h-[500px] border border-[#F2F2FA] rounded-lg relative"
+                class="m-auto w-[400px] h-[400px] 2xl:w-[488px] 2xl:h-[500px] border border-[#F2F2FA] rounded-lg relative"
                 :src="image.md_img"
                 alt=""
               />
@@ -43,13 +47,13 @@
           <VueSlickCarousel
             ref="c2"
             :as-nav-for="$refs.c1"
-            :slides-to-show="4"
+            :slides-to-show="product?.images.length || 1"
             :focus-on-select="true"
             class="mt-[24px]"
           >
             <div v-for="(image, index) in product?.images || 1" :key="index">
               <img
-                class="cursor-pointer w-[60px] h-[60px] rounded-lg border border-[#F2F2FA]"
+                class="c1-img cursor-pointer w-[60px] h-[60px] rounded-lg border border-[#F2F2FA]"
                 :src="image.md_img"
                 alt=""
               />
@@ -57,7 +61,7 @@
           </VueSlickCarousel>
         </div>
 
-        <div class="flex flex-col space-y-[20px] 2xl:space-y-[32px] w-1/2">
+        <div class="flex flex-col space-y-[20px] 2xl:space-y-[18px] w-1/2">
           <div class="flex justify-between">
             <div class="flex items-center space-x-3">
               <img
@@ -87,7 +91,7 @@
           <div
             class="flex flex-col space-y-[25px] 2xl:space-y-[42px] bg-[#F9F9F9] p-[24px] rounded-md"
           >
-            <div class="flex items-start justify-between">
+            <div class="flex items-center justify-between">
               <div>
                 <h1
                   class="text-black font-medium text-[24px] font-firsNeueMedium"
@@ -95,7 +99,10 @@
                   {{ formattedPrice }} сум
                 </h1>
 
-                <h3 class="text-gray line-through font-firsNeueMedium">
+                <h3
+                  v-if="product?.discount !== null"
+                  class="text-gray line-through font-firsNeueMedium"
+                >
                   {{ formattedRealPrice }} сум
                 </h3>
               </div>
@@ -134,14 +141,14 @@
             <div
               v-for="(item, index) in characteristics[0].characteristics"
               :key="index"
-              class="flex items-end justify-between space-y-[14px]"
+              class="flex items-end justify-between mt-[14px]"
             >
               <span class="text-[#5D5D5F]">{{ item.name }}:</span>
               <div
-                class="flex-1 mx-2 border-b border-dotted text-[#5D5D5F"
+                class="flex-1 mx-2 border-b border-dotted text-[#5D5D5F]"
               ></div>
               <span class="text-[#020105] font-medium text-end">{{
-                item.options[0].name
+                item.options[0]?.name
               }}</span>
             </div>
 
@@ -230,11 +237,13 @@ export default {
 
       if (this.isFavourite === true) {
         this.$message({
+          showClose: true,
           message: 'Успешно добавлено в избранное',
           type: 'success',
         })
       } else {
         this.$message({
+          showClose: true,
           message: 'Успешно удалено из избранного',
           type: 'warning',
         })
@@ -282,3 +291,10 @@ export default {
   },
 }
 </script>
+
+<style>
+.slick-track {
+  display: flex !important;
+  gap: 20px !important;
+}
+</style>
