@@ -9,7 +9,7 @@
 
     <div class="main-grid">
       <ProductsBaseProduct
-        v-for="item in topProducts.products.slice(0, 6)"
+        v-for="item in topProducts?.products.slice(0, 6)"
         :key="item.id"
         :product="item"
       />

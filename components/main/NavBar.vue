@@ -152,20 +152,20 @@
             </nuxt-link>
           </div>
 
-          <nuxt-link class="nav-item" to="/user/orders">
+          <button class="nav-item" @click="openProfile">
             <img src="@/assets/img/profile.svg" alt="" />
             <span>Войти</span>
-          </nuxt-link>
+          </button>
 
           <!-- Confirm Modal -->
           <ReusedSlotConfirmUser
-            v-show="false"
+            v-if="isModal"
             :title="modalTitle"
             :is-log-in="isLogIn"
             :error-msg="errorMsg"
             @closeModal="closeModal"
             @submit="check"
-            @sendCodeAgain="sendCodeAgain"
+            @sendCodeAgain="register"
             @confirmCode="register"
           />
         </li>
@@ -273,9 +273,6 @@ export default {
       return this.$store.state.categories
     },
   },
-  mounted() {
-    console.log('caregories', this.categories[0].children)
-  },
   methods: {
     openDropDownList() {},
     searchQuery() {},
@@ -321,11 +318,13 @@ export default {
           }
         )
 
-        console.log('Registration/Login Successful:', response)
-
         if (response.message === 'Код неверный') {
           this.errorMsg = 'Смс код пользователя неверны'
         }
+
+        this.$axios.setToken(response.token)
+        localStorage.setItem('authToken', response.token)
+        this.$router.push('/user/settings')
       } catch (error) {
         console.error(
           'Registration/Login Error:',
@@ -333,9 +332,23 @@ export default {
         )
       }
     },
-    sendCodeAgain() {},
     toggleMenu() {
       this.menuOpen = !this.menuOpen
+    },
+    fetchCategories() {
+      this.$store.dispatch('fetchCategories')
+    },
+    openProfile() {
+      const token = localStorage.getItem('authToken')
+
+      if (token) {
+        this.$router.push('/user/orders')
+        this.isModal = false
+      } else {
+        this.isModal = true
+      }
+
+      // this.$router.push('/user/orders')
     },
   },
 }

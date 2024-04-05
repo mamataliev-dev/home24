@@ -15,7 +15,8 @@
       <div class="relative">
         <div>
           <img
-            class="border border-[#F2F2FA] rounded-xl relative w-[100%] min-h-[336px]"
+            :class="isGridCol ? 'h-[427px]' : 'h-[336px]'"
+            class="border border-[#F2F2FA] rounded-xl relative w-[100%] [h-[336px]"
             :src="product.images[0].md_img"
             alt=""
           />
@@ -105,6 +106,10 @@ export default {
     product: {
       type: Object,
       default: null,
+    },
+    isGridCol: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -229,7 +234,7 @@ export default {
 
 <style scoped>
 .truncate-text {
-  width: 250px; /* or whatever width you want */
+  width: 250px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

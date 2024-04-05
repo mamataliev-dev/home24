@@ -146,7 +146,7 @@ input[type='number'] {
 }
 
 .category-grid-row {
-  @apply grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3  2xl:grid-cols-3  gap-[24px];
+  @apply grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3  gap-[24px];
 }
 
 .blog-grid {

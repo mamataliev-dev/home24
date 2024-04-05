@@ -4,6 +4,6 @@
 
 <script>
 export default {
-  middleware: 'redirect-user',
+  middleware: ['redirect-user', 'auth'],
 }
 </script>

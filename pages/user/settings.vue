@@ -55,29 +55,37 @@
             <div class="flex flex-col space-y-[40px]">
               <div class="profile-box">
                 <span class="text-gray text-[14px]">Ф.И.О:</span>
-                <span class="text-black text-[14px]">{{ userName }}</span>
+                <span class="text-black text-[14px]">{{
+                  user?.name || 'Пусто'
+                }}</span>
               </div>
 
               <div class="profile-box">
                 <span class="text-gray text-[14px]">E-mail:</span>
-                <span class="text-black text-[14px]">{{ userEmail }}</span>
+                <span class="text-black text-[14px]">{{
+                  user?.email || 'Пусто'
+                }}</span>
               </div>
 
               <div class="profile-box">
                 <span class="text-gray text-[14px]">Пароль:</span>
-                <span class="text-black text-[14px]">{{ userPassword }}</span>
+                <span class="text-black text-[14px]">{{
+                  user?.password || 'Пусто'
+                }}</span>
               </div>
             </div>
 
             <div class="flex flex-col space-y-[40px]">
               <div class="profile-box">
                 <span class="text-gray text-[14px]">Телефон:</span>
-                <span class="text-black text-[14px]">{{ userPhone }}</span>
+                <span class="text-black text-[14px]">+{{ user?.login }}</span>
               </div>
 
               <div class="profile-box">
                 <span class="text-gray text-[14px]">Адресс:</span>
-                <span class="text-black text-[14px]">{{ userAddress }}</span>
+                <span class="text-black text-[14px]">{{
+                  userAddress || 'Пусто'
+                }}</span>
               </div>
             </div>
           </div>
@@ -96,7 +104,10 @@
             </p>
 
             <div class="flex space-x-[18px]">
-              <el-switch v-model="isNotifactions"></el-switch>
+              <el-switch
+                v-model="isNotifactions"
+                @change="updateSubscribe"
+              ></el-switch>
               <span class="text-black text-[14px]">через СМС</span>
             </div>
           </div>
@@ -121,7 +132,7 @@
 
             <form
               class="grid grid-cols-1 md:grid-cols-3 gap-[24px]"
-              @submit.prevent="updateUsetData"
+              @submit.prevent="updateUser"
             >
               <div class="flex flex-col space-y-[6px]">
                 <label for="name" class="font-medium text-gray text-[16px]"
@@ -165,7 +176,7 @@
 
             <form
               class="grid grid-cols-1 md:grid-cols-3 gap-[24px]"
-              @submit.prevent="updateUsetData"
+              @submit.prevent="updateUser"
             >
               <div class="flex flex-col space-y-[6px]">
                 <label for="name" class="font-medium text-gray text-[16px]"
@@ -228,7 +239,7 @@
 
             <form
               class="grid grid-cols-1 md:grid-cols-3 gap-[24px]"
-              @submit.prevent="updateUsetData"
+              @submit.prevent="updateUser"
             >
               <div class="flex flex-col space-y-[6px]">
                 <label for="name" class="font-medium text-gray text-[16px]"
@@ -267,7 +278,7 @@
 
           <button
             class="flex items-center justify-center bg-orange text-white rounded-md py-[14px] px-[64px]"
-            @click="updateUsetData"
+            @click="updateUser"
           >
             Сохранить
           </button>
@@ -289,14 +300,11 @@
 export default {
   name: 'UserSettingsPage',
   layout: 'UserLayout',
+  middleware: 'auth',
   data() {
     return {
       isModalLogOut: false,
       activeName: 'orders',
-      userName: 'Diyorbek',
-      userEmail: 'info@home24.uz',
-      userPassword: 'user-password',
-      userPhone: '+998(93) 567 93 83',
       userAddress: '+998(93) 567 93 83',
       isNotifactions: false,
       isEditing: false,
@@ -415,6 +423,7 @@ export default {
           ],
         },
       ],
+      userData: {},
     }
   },
   head() {
@@ -422,12 +431,34 @@ export default {
       title: 'Настройки Личных данных',
     }
   },
+  computed: {
+    user() {
+      return this.userData.user
+    },
+  },
+  mounted() {
+    this.fetchUser()
+    console.log('user', this.userData)
+  },
   methods: {
+    async fetchUser() {
+      try {
+        const response = await this.$axiosURL.get('/profile/me', {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+          },
+        })
+
+        this.userData = response.data
+        console.log('profile', this.user)
+      } catch (error) {
+        console.log(error)
+      }
+    },
     closeModal(val) {
       this.isModalLogOut = val
     },
     logOutUser() {},
-    updateUsetData() {},
     onChangeRegion() {},
     onChangeCiteStreet() {},
     cancelUpdating() {
@@ -442,6 +473,83 @@ export default {
       this.newPasswordConfirm = ''
       this.region = ''
     },
+    updateUser() {
+      // if (
+      //   this.newEmail === '' ||
+      //   this.newPhone === '' ||
+      //   this.newName === '' ||
+      //   this.newAddress === '' ||
+      //   this.newEmailIndex === '' ||
+      //   this.newPassword === ''
+      // ) {
+      //   console.log()
+      // }
+
+      // Update User Data
+      try {
+        const response = this.$axiosURL.put(
+          '/profile/update',
+          {
+            name: this.newName,
+            current_password: '12345678',
+            password: this.newPassword,
+            password_confirmation: this.newPasswordConfirm,
+            postcode: '',
+            email: this.newEmail,
+            subscriber: 0,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+            },
+          }
+        )
+
+        console.log(response.data)
+      } catch (error) {
+        console.log(error)
+      }
+
+      // Update Address Data
+      // try {
+      //   const response = this.$axiosURL.put('/address', {
+      //     region_id: 1,
+      //     district_id: 1,
+      //     village_id: null,
+      //     address: 'Polniy address',
+      //   })
+
+      //   console.log(response)
+      // } catch (error) {
+      //   console.log(error)
+      // }
+    },
+    updateSubscribe() {
+      try {
+        const response = this.$axiosURL.put(
+          '/profile/update',
+          {
+            subscriber: this.isNotifactions,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+            },
+          }
+        )
+
+        console.log(response.data)
+      } catch (error) {
+        console.log(error)
+      }
+    },
   },
 }
 </script>
+
+<style>
+.el-switch.is-checked .el-switch__core {
+  background-color: #ff6418;
+  border-color: #ff6418;
+}
+</style>

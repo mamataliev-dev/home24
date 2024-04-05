@@ -1,17 +1,22 @@
 <template>
   <div>
-    <button class="text-[14px] text-gray mb-[8px] hover" @click="toggle">
-      {{ node.name }}
-    </button>
+    <div v-for="item in node" :key="item.id">
+      <button
+        class="text-[14px] text-gray mb-[8px] hover"
+        @click="toggle(item.slug)"
+      >
+        {{ item.name }}
+      </button>
 
-    <div v-if="isOpen">
-      <ReusedTreeNode
-        v-for="child in node.children"
-        :key="child.id"
-        :node="child"
-        class="mb-[12px] pl-[12px]"
-        @click="fetchCategory(child.id)"
-      />
+      <div v-if="isOpen">
+        <ReusedTreeNode
+          v-for="child in item.children"
+          :key="child.id"
+          :node="child"
+          class="mb-[12px] pl-[12px]"
+          @click="fetchCategory(child.id)"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -20,7 +25,7 @@
 export default {
   props: {
     node: {
-      type: Object,
+      type: Array,
       required: true,
     },
     activeNodeId: {
@@ -39,8 +44,9 @@ export default {
     },
   },
   methods: {
-    toggle() {
+    toggle(slug) {
       this.isOpen = !this.isOpen
+      this.$emit('fetchCategoryId', slug)
     },
 
     fetchCategory(id) {

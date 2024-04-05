@@ -30,11 +30,15 @@ export default {
   },
   computed: {
     breadcrumbs() {
-      const pathArray = this.$route.path.split('/').filter((p) => p)
+      const pathArray = this.$route.path
+        .split('/')
+        .filter((p) => p && !p.includes('category'))
+
       return pathArray.map((path, index) => {
         const text = path.replace(/-/g, ' ').replace(/\w\S*/g, (txt) => {
           return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
         })
+
         const to = '/' + pathArray.slice(0, index + 1).join('/')
         return { text, to }
       })

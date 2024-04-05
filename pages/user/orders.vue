@@ -236,6 +236,7 @@
 export default {
   name: 'OrdersPage',
   layout: 'UserLayout',
+  middleware: 'auth',
   data() {
     return {
       activeTab: 'all',
@@ -247,6 +248,7 @@ export default {
       orderStatus: 'Доставлено',
       isModalLogOut: false,
       sortCategory: '',
+      userData: {},
       sorts: [
         {
           value: 'Подешевле',
@@ -280,7 +282,29 @@ export default {
       title: 'Мои Заказы',
     }
   },
+  computed: {
+    user() {
+      return this.userData.user
+    },
+  },
+  mounted() {
+    this.fetchUser()
+  },
   methods: {
+    async fetchUser() {
+      try {
+        const response = await this.$axiosURL.get('/profile/me', {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+          },
+        })
+
+        this.userData = response.data
+        console.log('profile', this.user)
+      } catch (error) {
+        console.log(error)
+      }
+    },
     closeModal(val) {
       this.isModalLogOut = val
     },

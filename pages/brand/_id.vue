@@ -168,8 +168,6 @@ export default {
     try {
       const response = await $axiosURL.get(`/brands/${params.id}`)
 
-      console.log('+_+', response.data.products.data)
-
       return {
         brand: response.data,
         brandProducts: response.data.products.data,
@@ -252,9 +250,6 @@ export default {
       this.fetchSortedProducts()
       this.isFiltered = true
     },
-  },
-  mounted() {
-    console.log(this.brandProducts)
   },
   methods: {
     filterByCategory(id) {
