@@ -37,7 +37,7 @@ export default {
     port: 8000,
   },
 
-  modules: [],
+  modules: [['cookie-universal-nuxt', { alias: 'cookies' }]],
 
   build: {},
 

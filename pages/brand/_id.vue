@@ -108,6 +108,11 @@
           </div>
         </div>
 
+        <div class="mt-[32px]">
+          <el-pagination background layout="prev, pager, next" :total="1000">
+          </el-pagination>
+        </div>
+
         <!-- Sorted Products -->
         <div class="mt-[32px]">
           <div

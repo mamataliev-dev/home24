@@ -6,11 +6,13 @@
           <h1 class="category-title">Категории</h1>
 
           <ul class="flex flex-col space-y-[12px]">
-            <li v-for="item in category.children" :key="item.id">
+            <li v-for="item in category?.children" :key="item.id">
               <button
                 class="hover:text-orange"
                 @click="
-                  $router.push(`/category/${$route.params.id}/${item.slug}`)
+                  $router.push(
+                    `/category/${$route.params.categoryId}/${item.slug}`
+                  )
                 "
               >
                 {{ item.name }}
@@ -22,11 +24,13 @@
 
       <div class="w-10/12 pl-[38px]">
         <DynamicRouter />
-        <h1 class="main-title">{{ category.name }}</h1>
+        <h1 class="main-title">
+          {{ category?.name }}
+        </h1>
 
         <div class="category-id-grid mt-[32px]">
           <div
-            v-for="item in category.children"
+            v-for="item in category?.children"
             :key="item.id"
             class="category-grid-item"
             @click="
@@ -46,19 +50,30 @@
     </div>
 
     <ProductsTopProducts />
-    <CategoryInfo :desc="category.desc" />
+
+    <CategoryInfo :desc="category?.desc" />
   </div>
 </template>
 
 <script>
 export default {
   layout: 'BrandCategoryLayout',
-  async asyncData({ store, params }) {
+  async asyncData({ app, store, params }) {
     await store.dispatch('fetchCategoryId', params.categoryId)
     await store.dispatch('fetchShowcases')
+
+    app.$cookies.set('lastCategoryId', params.categoryId, {
+      path: '/',
+      maxAge: 60 * 60 * 24 * 7,
+    })
   },
   data() {
     return {}
+  },
+  head() {
+    return {
+      title: 'Категории',
+    }
   },
   computed: {
     categoryData() {
@@ -77,9 +92,5 @@ export default {
       return this.categoryData.product_min_price
     },
   },
-  mounted() {
-    console.log(this.$route.params.categoryId)
-  },
-  methods: {},
 }
 </script>

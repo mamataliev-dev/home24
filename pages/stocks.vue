@@ -1,85 +1,27 @@
 <template>
-  <div class="container mx-auto">
-    <h1 class="main-title">Акции</h1>
-
-    <div class="flex mt-[32px] gap-x-[24px]">
-      <div class="flex flex-col w-2/12 mt-[32px]">
-        <!-- Categories -->
-        <div class="category-box">
-          <ul class="flex flex-col space-y-[18px]">
-            <li
-              v-for="item in 10"
-              :key="item"
-              class="hover:text-orange cursor-pointer"
-              @click="getChosenCategory"
-            >
-              Категории
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="flex flex-col gap-y-[23px]">
-        <div>
-          <img
-            class="rounded-lg w-[1356px] h-[368px]"
-            :src="
-              promotions[0]?.lg_banner ||
-              require('@/assets/img/jpg/empty-brand.jpg')
-            "
-            alt=""
-          />
-        </div>
-
-        <div class="mt-[32px]">
-          <div class="category-grid">
-            <ProductsBaseProduct
-              v-for="item in 10"
-              :key="item"
-              @click="getProduct(item)"
-            />
-          </div>
-        </div>
-
-        <div>
-          <img
-            class="rounded-lg w-[1356px] h-[368px]"
-            :src="
-              promotions[1]?.lg_banner ||
-              require('@/assets/img/jpg/empty-brand.jpg')
-            "
-            alt=""
-          />
-        </div>
-      </div>
-    </div>
-  </div>
+  <div></div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      promotions: [],
+  async asyncData({ $axiosURL }) {
+    try {
+      const response = await $axiosURL.get(`/promotions`)
+      console.log(response.data.promotions.data)
+      return { promotions: response.data.promotions.data }
+    } catch (error) {
+      console.error('Error fetching:', error)
     }
+  },
+  data() {
+    return {}
   },
   head() {
     return {
       title: 'Акции',
     }
   },
-  mounted() {
-    this.fetchPromotions()
-  },
   methods: {
-    async fetchPromotions() {
-      try {
-        const response = await this.$axiosURL.get(`/promotions`)
-        this.promotions = response.data.promotions.data
-      } catch (error) {
-        console.error('Error fetching:', error)
-      }
-    },
     getChosenCategory() {},
   },
 }

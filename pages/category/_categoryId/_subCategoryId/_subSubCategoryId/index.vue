@@ -43,6 +43,18 @@
 <script>
 export default {
   layout: 'BrandCategoryLayout',
-  methods: {},
+  mounted() {
+    let routesHistory = localStorage.getItem('categoryRoutes')
+    routesHistory = routesHistory ? JSON.parse(routesHistory) : []
+    routesHistory.push(this.$route.path)
+    localStorage.setItem('routesHistory', JSON.stringify(routesHistory))
+
+    this.fetchCategories()
+  },
+  methods: {
+    async fetchCategories() {
+      await this.$store.dispatch('fetchCategoryId', this.$route.params.id)
+    },
+  },
 }
 </script>

@@ -4,48 +4,91 @@
       <!-- Product View -->
       <div class="flex flex-col xl:col-span-9 2xl:col-span-8">
         <!-- Images / Characteristics -->
-        <div class="flex space-x-[32px]">
-          <div>
-            <VueSlickCarousel
-              ref="c2"
-              :as-nav-for="$refs.c1"
-              :slides-to-show="product.images.length"
-              :focus-on-select="true"
-            >
-              <div v-for="(image, index) in product.images" :key="index">
-                <img
-                  class="image-item h-[80px] cursor-pointer rounded-lg border border-[#F2F2FA]"
-                  :src="image.md_img"
-                  alt=""
-                />
-              </div>
-            </VueSlickCarousel>
 
-            <VueSlickCarousel
-              ref="c1"
-              :as-nav-for="$refs.c2"
-              :focus-on-select="true"
-            >
-              <div v-for="(image, index) in product.images" :key="index">
-                <img
-                  class="w-[530px] h-[530px] border border-[#F2F2FA] rounded-lg relative"
-                  :src="image.md_img"
-                  alt=""
-                />
-
-                <div
-                  v-if="product?.discount !== null"
-                  class="absolute bottom-[18px] right-[18px] z-10 text-red"
-                >
-                  <span class="text-2xl font-bold"
-                    >-{{ product?.discount }}%</span
+        <div id="product" class="flex space-x-[32px]">
+          <div class="w-5/12 flex items-start">
+            <div class="mr-2 first_slide">
+              <VueSlickCarousel
+                :ref="slideTwo"
+                :vertical="true"
+                :vertical-swiping="true"
+                :arrows="false"
+                :as-nav-for="c1"
+                :slides-to-show="6"
+                :focus-on-select="true"
+                @afterChange="activeItem"
+                @beforeChange="syncSliders"
+              >
+                <div v-for="(img, index) in product.images" :key="img.id">
+                  <div
+                    :class="{ 'border-orange': index === activeSlider }"
+                    class="h-[80px] w-[80px] mx-auto border border-[#F2F2FA] rounded-xl cursor-pointer p-1"
                   >
+                    <img
+                      class="object-contain w-full h-full"
+                      :src="img.lg_img"
+                      :alt="product.for_search"
+                    />
+                  </div>
                 </div>
+              </VueSlickCarousel>
+            </div>
+
+            <div
+              class="w-[230px] h-[230px] rounded-lg border border-[#F2F2FA] p-2 relative"
+            >
+              <div
+                v-if="product.discount"
+                class="z-10 absolute bottom-4 right-10 flex flex-col items-center justify-end"
+              >
+                <svg
+                  class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-[70%]"
+                  width="71"
+                  height="60"
+                  viewBox="0 0 71 60"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M1.39197 44.4974L31.5498 2.88616C33.9831 -0.471304 39.0073 -0.407333 41.3543 3.011L69.7678 44.3935C71.94 47.5571 70.617 51.933 67.0126 53.2503C42.5257 62.1992 26.8576 62.2496 3.93275 53.4015C0.350396 52.0189 -0.86143 47.6066 1.39197 44.4974Z"
+                    fill="#E90A0A"
+                  />
+                </svg>
+                <p class="font-ttfirs text-white text-xs leading-[0.8] z-10">
+                  скидки
+                </p>
+                <h4
+                  class="text-base text-white font-semibold leading-tight font-ttfirs mb-1 z-10"
+                >
+                  {{ product.discount }}%
+                </h4>
               </div>
-            </VueSlickCarousel>
+
+              <VueSlickCarousel
+                v-if="product.images.length !== 0"
+                :ref="slideOne"
+                :arrows="false"
+                :as-nav-for="c2"
+                :focus-on-select="true"
+                :infinite="false"
+                @beforeChange="syncSliders"
+              >
+                <div
+                  v-for="img in product.images"
+                  :key="img.id"
+                  class="h-[450px]"
+                >
+                  <img
+                    class="object-contain w-full h-full"
+                    :src="img.lg_img"
+                    :alt="product.for_search"
+                  />
+                </div>
+              </VueSlickCarousel>
+            </div>
           </div>
 
-          <div class="flex flex-col">
+          <div class="w-3/12 flex flex-col">
             <!-- Stars / Comments / Id -->
             <div class="flex justify-between">
               <div class="flex items-center space-x-3">
@@ -165,13 +208,22 @@
               <div class="mt-[32px]">
                 <div v-html="product.info.desc"></div>
               </div>
+
+              <div
+                v-if="product.info.desc === ''"
+                class="flex flex-col items-center justify-center space-y-[24px] mt-[48px]"
+              >
+                <img src="@/assets/img/icons/empty-desc.svg" alt="" />
+
+                <span class="text-black font-medium">Описание отсутствует</span>
+              </div>
             </el-tab-pane>
 
             <el-tab-pane
               :label="`Отзывы (${product.info.comments.length})`"
               name="second"
             >
-              <div class="">
+              <div>
                 <div
                   v-for="(item, index) in product.info.comments"
                   :key="index"
@@ -197,7 +249,6 @@
                         >
                       </div>
                     </div>
-                    <!--  -->
                   </div>
 
                   <!-- Text -->
@@ -304,7 +355,7 @@
 
             <button
               class="flex items-start space-x-[12px] p-[15px] justify-center text-orange border border-orange rounded-md"
-              @click="buyInOneClick"
+              @click="isBuyOneClick = true"
             >
               <img src="@/assets/img/icons/tap.svg" alt="" />
               <span>Купить в один клик</span>
@@ -363,6 +414,71 @@
 
     <ProductsTopProducts />
 
+    <!-- Buy In One Click -->
+    <ProductsBuyInOneClick
+      v-if="isBuyOneClick"
+      :product-data="product"
+      @closeModal="closeBuyOneClickModal"
+    />
+
+    <!-- Successfully ordered -->
+    <div
+      v-if="isSuccessOrder"
+      class="fixed inset-0 z-50 bg-black bg-opacity-65 flex justify-center items-center"
+    >
+      <div class="bg-white rounded-md shadow-lg w-[590px]" @click.stop>
+        <!-- Header -->
+        <div
+          class="flex justify-between items-center rounded-md pt-[22px] pb-[14px] pl-[40px] pr-[30px] bg-[#F7F7F7]"
+        >
+          <h1 class="font-medium text-[24px] text-black font-firsNeueMedium">
+            Заказ принят
+          </h1>
+
+          <button @click="isSuccessModal = false">
+            <a-icon class="text-orange text-[30px]" type="close" />
+          </button>
+        </div>
+
+        <div class="flex flex-col items-center justify-center p-[40px]">
+          <div class="flex flex-col space-y-[24px] items-start justify-center">
+            <svg
+              class="m-auto"
+              width="80"
+              height="80"
+              viewBox="0 0 80 80"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle cx="40" cy="40" r="40" fill="#D0F4E4" />
+              <path
+                d="M38.147 46.5858C37.366 47.3668 36.0996 47.3668 35.3186 46.5858L30.0828 41.35C29.5581 40.8253 29.5581 39.9747 30.0828 39.45C30.6075 38.9253 31.4581 38.9253 31.9828 39.45L35.3186 42.7858C36.0996 43.5668 37.366 43.5668 38.147 42.7858L48.0161 32.9167C48.5408 32.392 49.3915 32.392 49.9161 32.9167C50.4408 33.4413 50.4408 34.292 49.9161 34.8167L38.147 46.5858Z"
+                fill="#009A10"
+              />
+            </svg>
+
+            <p class="text-[18px] font-medium text-center">
+              Заказ №32839 оформлен. Мы свяжемся с вами в ближайшее время
+            </p>
+          </div>
+
+          <div class="flex gap-x-[24px] mt-[40px]">
+            <button
+              class="font-medium bg-lightGray rounded-lg text-black px-[37px] py-[16px]"
+            >
+              Продолжить покупку
+            </button>
+
+            <button
+              class="font-medium bg-orange rounded-lg text-white px-[37px] py-[16px]"
+            >
+              Перейти к просмотру
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- 
     <div
         v-if="option.title == 'Цвет'"
@@ -392,6 +508,11 @@ export default {
     return {
       quantity: 1,
       activeTab: 'first',
+      c1: null,
+      c2: null,
+      activeSlider: 0,
+      isBuyOneClick: false,
+      isSuccessOrder: false,
     }
   },
   head() {
@@ -446,10 +567,11 @@ export default {
       return formatted
     },
   },
-  mounted() {
-    console.log('*************main-product*************', this.productData)
-  },
   methods: {
+    closeBuyOneClickModal(val) {
+      this.isBuyOneClick = val
+    },
+
     async fetchProductArrtibute(id) {
       await this.$store.dispatch('fetchProductId', id)
 
@@ -458,11 +580,22 @@ export default {
       // })
     },
 
+    syncSliders(_, nextPosition) {
+      this.c1.goTo(nextPosition)
+      this.c2.goTo(nextPosition)
+    },
+    slideOne(el) {
+      this.c1 = el
+    },
+    slideTwo(el) {
+      this.c2 = el
+    },
+    activeItem(num) {
+      this.activeSlider = num
+    },
     handleClick() {},
-
     addProductToCart() {},
     buyInOneClick() {},
-
     setFavourite() {
       this.isFavourite = !this.isFavourite
 
@@ -525,7 +658,20 @@ export default {
 </script>
 
 <style>
-.image-item {
+/* #product .slick-track {
+  display: flex;
+  flex-direction: column !important;
+} */
+
+#product .first_slide .slick-slide {
+  width: auto !important;
+}
+
+#product .slick-list {
+  height: 528px;
+}
+
+#product .image-item {
   width: 80px !important;
 }
 

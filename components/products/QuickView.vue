@@ -2,7 +2,7 @@
   <div
     class="fixed inset-0 z-50 bg-black bg-opacity-65 flex justify-center items-center"
   >
-    <div class="bg-white rounded-md shadow-lg w-[984px]" @click.stop>
+    <div id="view" class="bg-white rounded-md shadow-lg w-[984px]" @click.stop>
       <div
         class="flex justify-between items-center rounded-md px-[32px] py-[15px] 2xl:py-[24px] bg-[#F7F7F7]"
       >
@@ -77,7 +77,11 @@
             <div class="flex items-center space-x-3">
               <a-icon class="text-gray" type="message" />
               <span class="text-gray text-[16px]">
-                {{ product?.info.comments.length }} Отзывов
+                {{
+                  product?.info.comments.length !== 0
+                    ? product?.info.comments.length + ' Отзывов'
+                    : 'Нет отзывов'
+                }}
               </span>
             </div>
 
@@ -129,7 +133,7 @@
 
               <button
                 class="flex items-start space-x-[12px] p-[15px] justify-center text-orange border border-orange rounded-md"
-                @click="buyInOneClick"
+                @click="isBuyOneClick = true"
               >
                 <img src="@/assets/img/icons/tap.svg" alt="" />
                 <span>Купить в один клик</span>
@@ -163,6 +167,13 @@
         </div>
       </div>
     </div>
+
+    <!-- Buy In one Click -->
+    <ProductsBuyInOneClick
+      v-if="isBuyOneClick"
+      :product-data="product"
+      @closeModal="closeBuyOneClickModal"
+    />
   </div>
 </template>
 
@@ -183,7 +194,9 @@ export default {
     },
   },
   data() {
-    return {}
+    return {
+      isBuyOneClick: false,
+    }
   },
   computed: {
     product() {
@@ -288,12 +301,15 @@ export default {
         console.error('Post Error:', error)
       }
     },
+    closeBuyOneClickModal(val) {
+      this.isBuyOneClick = val
+    },
   },
 }
 </script>
 
 <style>
-.slick-track {
+#view .slick-track {
   display: flex !important;
   gap: 20px !important;
 }

@@ -172,6 +172,7 @@
       </ul>
     </nav>
 
+    <!-- All Categories Modal -->
     <div class="flex justify-between container mx-auto mb-[20px]">
       <div v-for="item in categories.slice(0, 9)" :key="item.id">
         <span
@@ -186,10 +187,9 @@
         <img src="@/assets/img/arrow-down-orange.svg" alt="" />
       </div>
 
-      <!-- All Categories Modal -->
       <div
         v-show="menuOpen"
-        class="absolute top-[129px] left-0 z-50 w-full h-full bg-white shadow-2xl"
+        class="absolute top-[129px] left-0 z-50 bg-white shadow-2xl w-full pb-[70px]"
       >
         <div class="container mx-auto grid grid-cols-12">
           <div
@@ -199,16 +199,18 @@
               v-for="(item, index) in categories"
               :key="item.id"
               class="text-gray text-[18px] hover:text-orange focus:text-orange cursor-pointer"
-              @click=";(activeCategory = item.name), (indexed = index)"
+              @click="getCurrentCategory(item.name, index, item.slug)"
             >
               {{ item.name }}
             </span>
           </div>
 
           <div class="col-span-10 ml-[24px] py-[20px]">
-            <h1 class="text-orange text-[32px] font-firsNeueMedium">
-              {{ activeCategory }}
-            </h1>
+            <button @click="$router.push(`category/${categorySlug}`)">
+              <h1 class="text-orange text-[32px] font-firsNeueMedium">
+                {{ activeCategory }}
+              </h1>
+            </button>
 
             <div class="grid grid-cols-4 grid-rows-2 gap-y-[48px] mt-[24px]">
               <!-- children -->
@@ -266,6 +268,7 @@ export default {
       menuOpen: false,
       activeCategory: 'Мебель',
       indexed: 0,
+      categorySlug: '',
     }
   },
   computed: {
@@ -347,8 +350,11 @@ export default {
       } else {
         this.isModal = true
       }
-
-      // this.$router.push('/user/orders')
+    },
+    getCurrentCategory(name, index, slug) {
+      this.activeCategory = name
+      this.indexed = index
+      this.categorySlug = slug
     },
   },
 }

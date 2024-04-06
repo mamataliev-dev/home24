@@ -21,11 +21,11 @@
             :key="item.id"
             class="flex flex-col space-y-[12px]"
           >
-            <h1 class="category-title">{{ item.name }}</h1>
+            <h1 class="category-title">{{ item?.name }}</h1>
 
             <!-- Atrribtes -->
             <div v-for="elem in item.options" :key="elem.id">
-              <div v-if="item.name !== 'Цвет'" class="flex space-x-[15px]">
+              <div v-if="item?.name !== 'Цвет'" class="flex space-x-[15px]">
                 <input type="radio" :name="elem.name" />
                 <label>{{ elem.name }}</label>
               </div>
@@ -35,7 +35,7 @@
           <!-- Colors -->
           <div class="felx flex-col space-y-[16px]">
             <div class="flex justify-between items-center mb-16px">
-              <h1 class="category-title">{{ item.name }}</h1>
+              <h1 class="category-title">{{ item?.name }}</h1>
 
               <button
                 v-if="filterColor !== ''"
@@ -51,6 +51,7 @@
 
       <div class="w-10/12 pl-[38px]">
         <DynamicRouter />
+
         <div class="flex justify-between items-center">
           <h1 class="main-title">{{ category.name }}</h1>
 
@@ -58,6 +59,8 @@
             @sort-category="sortCategory"
             @update-grid-layout="updateGrid"
           />
+
+          <CategoryInfo :desc="category.desc" />
         </div>
 
         <div
@@ -71,8 +74,6 @@
             />
           </div>
         </div>
-
-        <CategoryInfo :desc="category.desc" />
       </div>
     </div>
   </div>
@@ -81,13 +82,25 @@
 <script>
 export default {
   layout: 'BrandCategoryLayout',
-  async asyncData({ store, params }) {
+  async asyncData({ params, app, store }) {
     await store.dispatch('fetchCategoryId', params.subCategoryId)
+
+    const categoryId = app.$cookies.get('lastCategoryId')
+    const newPath = `/${categoryId}/subCategory/${params.subCategoryId}`
+    app.$cookies.set('lastVisitedPath', newPath, {
+      path: '/',
+      maxAge: 60 * 60 * 24 * 7,
+    })
   },
   data() {
     return {
       isGridCol: false,
       filterColor: '',
+    }
+  },
+  head() {
+    return {
+      title: `Категории | ${this.category.name}`,
     }
   },
   computed: {
@@ -111,14 +124,12 @@ export default {
     },
   },
   methods: {
+    fetchCategoryId() {},
     updateGrid(val) {
       this.isGridCol = val
       console.log(val)
     },
     sortCategory(val) {},
-    fetchCategoryId(id) {
-      this.$router.push(`/category${this.$route.params.categoryId}/${id}`)
-    },
     chosenColor(color) {
       this.filterColor = color
     },

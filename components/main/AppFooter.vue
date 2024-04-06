@@ -8,19 +8,19 @@
 
         <ul class="footer-link-box">
           <li class="footer-link">
-            <nuxt-link to="/">О компании</nuxt-link>
+            <nuxt-link to="/about">О компании</nuxt-link>
           </li>
 
           <li class="footer-link">
-            <nuxt-link to="/">Наши партнеры</nuxt-link>
+            <nuxt-link to="/partners">Наши партнеры</nuxt-link>
           </li>
 
           <li class="footer-link">
-            <nuxt-link to="/">Блог</nuxt-link>
+            <nuxt-link to="/blog">Блог</nuxt-link>
           </li>
 
           <li class="footer-link">
-            <nuxt-link to="/">О наших акциях и скидках</nuxt-link>
+            <nuxt-link to="/stocks">О наших акциях и скидках</nuxt-link>
           </li>
 
           <li class="footer-link">
@@ -34,7 +34,7 @@
 
         <ul class="footer-link-box">
           <li class="footer-link">
-            <nuxt-link to="/">Вопросы и ответы</nuxt-link>
+            <nuxt-link to="/faq">Вопросы и ответы</nuxt-link>
           </li>
 
           <li class="footer-link">
@@ -46,7 +46,7 @@
           </li>
 
           <li class="footer-link">
-            <nuxt-link to="/">Для партнеров</nuxt-link>
+            <nuxt-link to="/partners">Для партнеров</nuxt-link>
           </li>
         </ul>
       </div>
@@ -56,19 +56,19 @@
 
         <ul class="footer-link-box">
           <li class="footer-link">
-            <nuxt-link to="/">Личный кабинет</nuxt-link>
+            <nuxt-link to="/user/settings">Личный кабинет</nuxt-link>
           </li>
 
           <li class="footer-link">
-            <nuxt-link to="/">Избранные товары</nuxt-link>
+            <nuxt-link to="/favourites">Избранные товары</nuxt-link>
           </li>
 
           <li class="footer-link">
-            <nuxt-link to="/">Список сравнения</nuxt-link>
+            <nuxt-link to="/compare">Список сравнения</nuxt-link>
           </li>
 
           <li class="footer-link">
-            <nuxt-link to="/">Мои заказы</nuxt-link>
+            <nuxt-link to="/user/orders">Мои заказы</nuxt-link>
           </li>
         </ul>
       </div>
