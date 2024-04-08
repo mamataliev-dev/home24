@@ -19,14 +19,17 @@
       </el-breadcrumb-item>
     </el-breadcrumb>
 
-    <div class="grid grid-cols-12">
+    <!-- grid grid-cols-12 -->
+    <div class="flex space-x-[130px]">
       <!-- Product View -->
-      <div class="flex flex-col xl:col-span-9 2xl:col-span-8">
+      <!-- flex flex-col col-span-10 xl:col-span-9 2xl:col-span-8 -->
+      <!--  w-8/12 -->
+      <div class="flex flex-col">
         <!-- Images / Characteristics -->
 
         <div id="product" class="flex space-x-[32px]">
-          <div class="w-5/12 flex items-start">
-            <div class="mr-2 first_slide">
+          <div class="flex items-start">
+            <div class="mr-2 first_slide w-[80px]">
               <VueSlickCarousel
                 :ref="slideTwo"
                 :vertical="true"
@@ -54,7 +57,7 @@
             </div>
 
             <div
-              class="w-[230px] h-[230px] rounded-lg border border-[#F2F2FA] p-2 relative"
+              class="w-[430px] h-[530px] rounded-lg border border-[#F2F2FA] p-2 relative"
             >
               <div
                 v-if="product.discount"
@@ -107,7 +110,7 @@
             </div>
           </div>
 
-          <div class="w-3/12 flex flex-col">
+          <div class="w-[320px] flex flex-col ml-0">
             <!-- Stars / Comments / Id -->
             <div class="flex justify-between">
               <div class="flex items-center space-x-3">
@@ -329,10 +332,10 @@
         </div>
       </div>
 
+      <!-- w-3/12 -->
       <!-- Price / Order / Delivery -->
-      <div
-        class="xl:col-span-3 2xl:col-span-3 flex flex-col items-end space-y-[16px]"
-      >
+      <!-- xl:col-span-3 2xl:col-span-3 flex flex-col items-end space-y-[16px] -->
+      <div class="">
         <div
           class="xl:w-[320px] 2xl:w-[414px] flex flex-col space-y-[25px] 2xl:space-y-[42px] bg-[#F9F9F9] p-[24px] rounded-md"
         >

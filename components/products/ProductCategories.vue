@@ -31,3 +31,19 @@ export default {
   },
 }
 </script>
+
+<style>
+.grid-category {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  /* grid-template-rows: repeat(auto-fill, minmax(481px, 1fr)); */
+  gap: 16px;
+}
+
+/* @media (max-width: 1400px) {
+  .grid-category {
+    grid-template-columns: repeat(auto-fill, minmax(252px, 1fr)) !important;
+    column-gap: 10px;
+  }
+} */
+</style>

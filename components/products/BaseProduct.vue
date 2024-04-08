@@ -16,8 +16,8 @@
         <div>
           <div class="relative">
             <img
-              :class="isGridCol ? 'h-[427px]' : 'h-[336px]'"
-              class="border border-[#F2F2FA] rounded-xl relative w-[100%] [h-[336px]"
+              :class="isGridCol ? 'w-[434px] h-[427px]' : 'h-[336px]'"
+              class="product-img border border-[#F2F2FA] rounded-xl relative w-[100%] [h-[336px]"
               :src="product.images[0].md_img"
               alt=""
             />
@@ -81,7 +81,7 @@
 
       <!-- Price / Stars / Title -->
       <div
-        class="top-grid-item-info rounded-lg"
+        class="h-[137px] top-grid-item-info rounded-lg"
         @click="$router.push(`/product/${product?.slug}`)"
       >
         <div class="flex items-center justify-between">

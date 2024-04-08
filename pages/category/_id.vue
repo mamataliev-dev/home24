@@ -7,16 +7,39 @@
           <h1 class="category-title">Категории</h1>
 
           <ul class="flex flex-col space-y-[12px]">
-            <li
-              v-for="item in category.children"
-              :key="item.id"
-              @click="fetchCategory(item.slug)"
-            >
-              <button class="hover:text-orange">
+            <li v-for="(elem, index) in category" :key="index">
+              <button
+                class="font-bold hover:text-orange"
+                @click="fetchCategory(elem.slug)"
+              >
+                {{ elem?.name }}
+                {{ elem?.slug }}
+              </button>
+            </li>
+          </ul>
+
+          <ul class="flex flex-col space-y-[12px]">
+            <li v-for="item in category.children" :key="item.id">
+              <button
+                class="hover:text-orange"
+                @click="fetchCategory(item.slug)"
+              >
                 {{ item.name }}
               </button>
             </li>
           </ul>
+
+          <!-- <ul class="flex flex-col space-y-[12px]">
+            <li
+              v-for="(item, index) in breadcrumbsCategory"
+              :key="index"
+              @click="fetchCategory(item.to)"
+            >
+              <button class="hover:text-orange">
+                {{ item.text }}
+              </button>
+            </li>
+          </ul> -->
         </div>
 
         <!-- Sort by -->
@@ -99,9 +122,14 @@
             :to="crumb.to"
             class="cursor-pointer"
           >
-            <span class="text-gray text-[16px] font-firsNeueRegular">
+            <span
+              v-if="crumb.to"
+              class="text-gray text-[16px] font-firsNeueRegular"
+            >
               {{ crumb.text }}
             </span>
+
+            <span v-else>{{ crumb.text }}</span>
           </el-breadcrumb-item>
         </el-breadcrumb>
 
@@ -159,7 +187,7 @@
         />
 
         <CategoryInfo
-          v-show="!isParent"
+          v-show="!isParent && products.length !== 0"
           class="mt-[80px]"
           :desc="category.desc"
         />
@@ -185,21 +213,65 @@ export default {
       isParent: true,
       selectedSort: '',
       categoryId: this.$route.params.id,
+      categoryArr: null,
     }
   },
   head() {
     return {
-      title: 'Категории',
+      title: `Категории | ${this.category.name}`,
     }
   },
   computed: {
+    // categoryHistory() {
+    //   const breadcrumbs = []
+    //   const currentCategory = this.category.children
+
+    //   if (currentCategory.parent !== null) {
+    //     breadcrumbs.push({
+    //       name: currentCategory.name,
+    //       to: currentCategory.slug,
+    //     })
+    //   } else if (currentCategory.parent === null) {
+    //     breadcrumbs.push({
+    //       name: currentCategory.name,
+    //       to: currentCategory.slug,
+    //     })
+    //   }
+
+    //   return breadcrumbs
+    // },
     breadcrumbs() {
+      const breadcrumbs = []
+
+      if (this.category) {
+        let currentCategory = this.category
+
+        breadcrumbs.push({
+          text: currentCategory.name,
+          to: '',
+        })
+
+        currentCategory = currentCategory.parent
+
+        while (currentCategory) {
+          breadcrumbs.unshift({
+            text: currentCategory.name,
+            to: currentCategory.slug,
+          })
+
+          currentCategory = currentCategory.parent
+        }
+      }
+
+      return breadcrumbs
+    },
+    breadcrumbsCategory() {
       const breadcrumbs = []
 
       if (this.category) {
         breadcrumbs.push({
           text: this.category.name,
-          to: `/category/${this.category.slug}`,
+          to: this.category.slug,
         })
       }
 
@@ -208,7 +280,7 @@ export default {
       while (currentCategory) {
         breadcrumbs.unshift({
           text: currentCategory.name,
-          to: `/category/${currentCategory.slug}`,
+          to: currentCategory.slug,
         })
 
         currentCategory = currentCategory.parent
@@ -285,6 +357,8 @@ export default {
     } else {
       this.isParent = true
     }
+
+    console.log(this.breadcrumbs)
   },
   methods: {
     fetchCategory(slug) {

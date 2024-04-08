@@ -1,34 +1,13 @@
 <template>
-  <div class="container mx-auto mt-[32px]">
-    <!-- Breadcrumbs -->
-    <el-breadcrumb separator=">">
-      <el-breadcrumb-item :to="{ path: '/' }">
-        <span class="text-orange text-[16px] font-firsNeueRegular"
-          >Главная</span
-        >
-      </el-breadcrumb-item>
-      <el-breadcrumb-item
-        v-for="(crumb, index) in breadcrumbs"
-        :key="index"
-        :to="{ path: crumb.slug }"
-      >
-        <span class="text-gray text-[16px] font-firsNeueRegular">
-          {{ crumb.name }}
-        </span>
-      </el-breadcrumb-item>
-    </el-breadcrumb>
-
-    <!-- Category List -->
-    <div>
-      <div
-        v-for="category in categories"
-        :key="category.slug"
-        @click="handleCategoryClick(category)"
-        class="category-item cursor-pointer"
-      >
-        {{ category.name }}
-      </div>
-    </div>
+  <div>
+    <nav class="breadcrumbs">
+      <ul>
+        <li v-for="(crumb, index) in breadcrumbsPath" :key="index">
+          <router-link :to="crumb.to">{{ crumb.text }}</router-link>
+        </li>
+      </ul>
+    </nav>
+    <!-- Content and logic to display categories and handle selections -->
   </div>
 </template>
 
@@ -36,46 +15,46 @@
 export default {
   data() {
     return {
-      displayedProducts: [], // This will hold the processed list of products for display
-    }
+      // Assuming `category` would be populated with the current category from the API
+      category: null,
+      // Example of categories structure received from API
+      categories: [
+        { id: 1, name: "Root Category", slug: "root-category", parent_id: null },
+        { id: 2, name: "Child Category", slug: "child-category", parent_id: 1 },
+        { id: 3, name: "Sub Child Category", slug: "sub-child-category", parent_id: 2 },
+        // Add your actual categories structure here
+      ],
+    };
   },
-  methods: {
-    async fetchProducts() {
-      try {
-        const response = await fetch('YOUR_API_ENDPOINT')
-        if (!response.ok) {
-          throw new Error('Network response was not ok')
-        }
-        const responseBody = await response.json()
+  computed: {
+    breadcrumbsPath() {
+      const breadcrumbs = [];
+      let currentCategory = this.category;
 
-        // Navigate through the 'products' object, then 'data' array
-        const productsData = responseBody.products.data
-
-        this.displayedProducts = productsData
-          .map((mainProduct) => {
-            // Attempt to find the default product variant using 'default_product_id'
-            const defaultVariant = mainProduct.products.find(
-              (variant) => variant.id === mainProduct.default_product_id
-            )
-
-            // If a default variant is found, return it; otherwise, return the first variant
-            // If there are no variants, return undefined (or handle as appropriate)
-            return defaultVariant || mainProduct.products[0] || undefined
-          })
-          .filter((product) => product !== undefined) // Filter out any undefined entries if no variants are found
-      } catch (error) {
-        console.error('There was a problem with the fetch operation:', error)
+      // Build breadcrumbs for the current category and its parents
+      while (currentCategory) {
+        breadcrumbs.unshift({
+          text: currentCategory.name,
+          to: `/category/${currentCategory.slug}`,
+        });
+        // Find the parent category object based on currentCategory.parent_id
+        currentCategory = this.categories.find(cat => cat.id === currentCategory.parent_id);
       }
+
+      return breadcrumbs;
     },
   },
   mounted() {
-    this.fetchProducts() // Fetch products when the component mounts
+    // Example to set the initial category (this would be based on your actual data fetching logic)
+    this.fetchCategory();
   },
-}
-</script>
+  methods: {
+    fetchCategory() {
+      // Simulate fetching a category by id (for demonstration, this just selects a category directly)
+      this.category = this.categories.find(cat => cat.id === 3); // Assuming '3' is the current category id
 
-<style>
-.category-item {
-  margin-top: 10px;
-}
-</style>
+      // Here you would fetch the category from the API and set `this.category`
+    },
+  },
+};
+</script>
