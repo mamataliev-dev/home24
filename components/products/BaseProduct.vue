@@ -14,23 +14,43 @@
     >
       <div class="relative">
         <div>
-          <img
-            :class="isGridCol ? 'h-[427px]' : 'h-[336px]'"
-            class="border border-[#F2F2FA] rounded-xl relative w-[100%] [h-[336px]"
-            :src="product.images[0].md_img"
-            alt=""
-          />
+          <div class="relative">
+            <img
+              :class="isGridCol ? 'h-[427px]' : 'h-[336px]'"
+              class="border border-[#F2F2FA] rounded-xl relative w-[100%] [h-[336px]"
+              :src="product.images[0].md_img"
+              alt=""
+            />
+
+            <div
+              v-if="isFavorite"
+              class="absolute top-[12px] right-[12px] active-item"
+              @click="setFavourite"
+            >
+              <ImgLikeBtn :is-active="true" />
+            </div>
+          </div>
 
           <div v-show="showTip">
             <!-- Favourity/Compare Btns -->
             <div
-              class="absolute z-30 top-[12px] right-[12px] flex flex-col space-y-[14px]"
+              v-if="!isFavorite"
+              class="absolute z-50 top-[12px] right-[12px] flex flex-col space-y-[14px]"
             >
-              <button class="z-50" @click="setFavourite">
+              <button @click="setFavourite">
                 <ImgLikeBtn :is-active="isFavourite" />
               </button>
 
-              <button class="z-50" @click="setCompare">
+              <button @click="setCompare">
+                <ImgCompareBtn :is-active="isCompare" />
+              </button>
+            </div>
+
+            <div
+              v-if="isFavorite"
+              class="absolute z-50 top-[50px] right-[12px] flex flex-col space-y-[14px]"
+            >
+              <button @click="setCompare">
                 <ImgCompareBtn :is-active="isCompare" />
               </button>
             </div>
@@ -119,6 +139,7 @@ export default {
       isFavourite: false,
       isCompare: false,
       productData: {},
+      isFavorite: false,
     }
   },
   computed: {
@@ -153,14 +174,59 @@ export default {
       return formatted
     },
   },
+  watch: {
+    isFavorite(newVal) {
+      if (newVal) {
+        this.checkFavorite()
+        this.isFavorite = newVal
+      }
+    },
+  },
+  mounted() {
+    this.checkFavorite()
+  },
   methods: {
+    checkFavorite() {
+      const products = localStorage.getItem('favourite')
+
+      const parsedProducts = JSON.parse(products)
+      const id = this.product.id
+
+      parsedProducts.products.forEach((item) => {
+        if (id === item) {
+          this.isFavorite = true
+        } else {
+          this.isFavorite = false
+        }
+      })
+    },
     closeModal(val) {
       this.isQuickView = val
     },
     setFavourite() {
       this.isFavourite = !this.isFavourite
 
-      if (this.isFavourite === true) {
+      let storageObject
+      const storedValue = localStorage.getItem('favourite')
+
+      if (storedValue === null) {
+        storageObject = {
+          products: [],
+        }
+      } else {
+        storageObject = JSON.parse(storedValue)
+      }
+
+      const productIndex = storageObject.products.indexOf(this.product.id)
+      if (productIndex > -1) {
+        storageObject.products.splice(productIndex, 1)
+      } else {
+        storageObject.products.push(this.product.id)
+      }
+
+      localStorage.setItem('favourite', JSON.stringify(storageObject))
+
+      if (this.isFavourite) {
         this.$message({
           message: 'Успешно добавлено в избранное',
           type: 'success',
@@ -176,7 +242,7 @@ export default {
       this.isCompare = !this.isCompare
 
       try {
-        const response = await this.$axios.$post(
+        await this.$axios.$post(
           'https://e-shop.ndc.uz/api/comparison',
           {
             products: [this.product.id],
@@ -188,26 +254,17 @@ export default {
           }
         )
 
-        //  Status returns undefined
-        if (response.status === 200) {
-          this.$message({
-            showClose: true,
-            message: 'Успешно добавлено в сравнение',
-            type: 'success',
-          })
-        }
-
-        // this.$message({
-        //   showClose: true,
-        //   message: 'Успешно добавлено в сравнение',
-        //   type: 'success',
-        // })
-
         if (!this.isCompare) {
           this.$message({
             showClose: true,
             message: 'Успешно удалено из сравнения',
             type: 'warning',
+          })
+        } else {
+          this.$message({
+            showClose: true,
+            message: 'Успешно добавлено в сравнение',
+            type: 'success',
           })
         }
       } catch (error) {
@@ -233,6 +290,10 @@ export default {
 </script>
 
 <style scoped>
+.active-item {
+  z-index: 100 !important;
+}
+
 .truncate-text {
   width: 250px;
   white-space: nowrap;

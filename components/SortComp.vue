@@ -17,11 +17,13 @@
       </div>
 
       <div class="flex space-x-[18px]">
-        <button @click="$emit('update-grid-layout', false), (isGridCol = true)">
+        <button @click="$emit('update-grid-layout', true), (isGridCol = true)">
           <ImgGridColums :is-active="isGridCol" />
         </button>
 
-        <button @click="$emit('update-grid-layout', true), (isGridCol = false)">
+        <button
+          @click="$emit('update-grid-layout', false), (isGridCol = false)"
+        >
           <ImgGridRows :is-active="!isGridCol" />
         </button>
       </div>
@@ -50,3 +52,23 @@ export default {
   },
 }
 </script>
+
+<style>
+.el-select .el-input.is-focus .el-input__inner {
+  border: 1px solid #ff6418 !important;
+}
+
+.el-select .el-input__inner:focus {
+  border: 1px solid #ff6418 !important;
+}
+
+.el-select-dropdown__item.selected {
+  color: #ff6418 !important;
+}
+
+.el-select-dropdown__item {
+  font-weight: light !important;
+  font-style: 14px !important;
+  color: #020105 !important;
+}
+</style>

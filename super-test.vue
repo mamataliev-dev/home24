@@ -1,55 +1,81 @@
-<div class="container mx-auto">
-    <h1 class="main-title">Акции</h1>
+<template>
+  <div class="container mx-auto mt-[32px]">
+    <!-- Breadcrumbs -->
+    <el-breadcrumb separator=">">
+      <el-breadcrumb-item :to="{ path: '/' }">
+        <span class="text-orange text-[16px] font-firsNeueRegular"
+          >Главная</span
+        >
+      </el-breadcrumb-item>
+      <el-breadcrumb-item
+        v-for="(crumb, index) in breadcrumbs"
+        :key="index"
+        :to="{ path: crumb.slug }"
+      >
+        <span class="text-gray text-[16px] font-firsNeueRegular">
+          {{ crumb.name }}
+        </span>
+      </el-breadcrumb-item>
+    </el-breadcrumb>
 
-    <div class="flex mt-[32px] gap-x-[24px]">
-      <div class="flex flex-col w-2/12 mt-[32px]">
-        <!-- Categories -->
-        <div class="category-box">
-          <ul class="flex flex-col space-y-[18px]">
-            <li
-              v-for="item in 10"
-              :key="item"
-              class="hover:text-orange cursor-pointer"
-              @click="getChosenCategory"
-            >
-              Категории
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="flex flex-col gap-y-[23px]">
-        <div>
-          <img
-            class="rounded-lg w-[1356px] h-[368px]"
-            :src="
-              promotions[0]?.lg_banner ||
-              require('@/assets/img/jpg/empty-brand.jpg')
-            "
-            alt=""
-          />
-        </div>
-
-        <div class="mt-[32px]">
-          <div class="category-grid">
-            <ProductsBaseProduct
-              v-for="item in 10"
-              :key="item"
-              @click="getProduct(item)"
-            />
-          </div>
-        </div>
-
-        <div>
-          <img
-            class="rounded-lg w-[1356px] h-[368px]"
-            :src="
-              promotions[1]?.lg_banner ||
-              require('@/assets/img/jpg/empty-brand.jpg')
-            "
-            alt=""
-          />
-        </div>
+    <!-- Category List -->
+    <div>
+      <div
+        v-for="category in categories"
+        :key="category.slug"
+        @click="handleCategoryClick(category)"
+        class="category-item cursor-pointer"
+      >
+        {{ category.name }}
       </div>
     </div>
   </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      displayedProducts: [], // This will hold the processed list of products for display
+    }
+  },
+  methods: {
+    async fetchProducts() {
+      try {
+        const response = await fetch('YOUR_API_ENDPOINT')
+        if (!response.ok) {
+          throw new Error('Network response was not ok')
+        }
+        const responseBody = await response.json()
+
+        // Navigate through the 'products' object, then 'data' array
+        const productsData = responseBody.products.data
+
+        this.displayedProducts = productsData
+          .map((mainProduct) => {
+            // Attempt to find the default product variant using 'default_product_id'
+            const defaultVariant = mainProduct.products.find(
+              (variant) => variant.id === mainProduct.default_product_id
+            )
+
+            // If a default variant is found, return it; otherwise, return the first variant
+            // If there are no variants, return undefined (or handle as appropriate)
+            return defaultVariant || mainProduct.products[0] || undefined
+          })
+          .filter((product) => product !== undefined) // Filter out any undefined entries if no variants are found
+      } catch (error) {
+        console.error('There was a problem with the fetch operation:', error)
+      }
+    },
+  },
+  mounted() {
+    this.fetchProducts() // Fetch products when the component mounts
+  },
+}
+</script>
+
+<style>
+.category-item {
+  margin-top: 10px;
+}
+</style>

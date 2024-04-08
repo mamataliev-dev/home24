@@ -1,7 +1,7 @@
 <template>
   <div>
     <MainNavBar />
-    <DynamicRouter />
+
 
     <nuxt />
 

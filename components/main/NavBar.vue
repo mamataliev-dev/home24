@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div>
     <nav class="bg-[#F4F5F5] mb-[20px]">
       <div class="container mx-auto">
         <div class="bg-[#F4F5F5] p-[8px] flex justify-between">
@@ -176,20 +176,29 @@
     <div class="flex justify-between container mx-auto mb-[20px]">
       <div v-for="item in categories.slice(0, 9)" :key="item.id">
         <span
-          class="text-gray cursor-pointer"
+          class="text-gray cursor-pointer hover:text-orange"
           @click="$router.push(`/category/${item.slug}`)"
           >{{ item.name }}</span
         >
       </div>
 
-      <div class="nav-item" @click="menuOpen = true">
+      <div class="nav-item cursor-pointer" @click="menuOpen = !menuOpen">
         <span class="text-orange">Ещё</span>
-        <img src="@/assets/img/arrow-down-orange.svg" alt="" />
+        <img
+          v-show="!menuOpen"
+          src="@/assets/img/arrow-down-orange.svg"
+          alt=""
+        />
+
+        <span
+          v-show="menuOpen"
+          class="close-modal el-icon-close p-[6px] rounded-full bg-none hover:bg-slate-100 hover:text-innerBlack"
+        ></span>
       </div>
 
       <div
         v-show="menuOpen"
-        class="absolute top-[129px] left-0 z-50 bg-white shadow-2xl w-full pb-[70px]"
+        class="categories-modal absolute top-[129px] left-0 bg-white w-full pb-[70px]"
       >
         <div class="container mx-auto grid grid-cols-12">
           <div
@@ -230,7 +239,7 @@
                 >
                   <!-- sub children name -->
                   <li
-                    class="text-[14px] cursor-pointer"
+                    class="text-[14px] cursor-pointer hover:text-orange"
                     @click="$router.push(`category/${ij.slug}`)"
                   >
                     -{{ ij.name }}
@@ -271,14 +280,17 @@ export default {
       categorySlug: '',
     }
   },
+  async fetch() {
+    await this.$store.dispatch('fetchCategories')
+  },
   computed: {
     categories() {
       return this.$store.state.categories
     },
   },
   methods: {
-    openDropDownList() {},
     searchQuery() {},
+    openDropDownList() {},
     closeModal(val) {
       this.isModal = val
     },
@@ -338,9 +350,6 @@ export default {
     toggleMenu() {
       this.menuOpen = !this.menuOpen
     },
-    fetchCategories() {
-      this.$store.dispatch('fetchCategories')
-    },
     openProfile() {
       const token = localStorage.getItem('authToken')
 
@@ -361,6 +370,18 @@ export default {
 </script>
 
 <style>
+.close-modal {
+  color: #ff6418;
+  font-size: 25px;
+  z-index: 10000;
+}
+
+.categories-modal {
+  z-index: 9999;
+  /* box-shadow: 0 8px 6px -6px black; */
+  box-shadow: 0 15px 10px -15px rgba(0, 0, 0, 0.5);
+}
+
 .burger {
   background-color: rgba(255, 100, 24, 0.08);
 }

@@ -1,20 +1,20 @@
 <template>
   <div>
-    <div v-for="item in node" :key="item.id">
+    <div v-for="(item, index) in node" :key="index">
       <button
         class="text-[14px] text-gray mb-[8px] hover"
-        @click="toggle(item.slug)"
+        @click="toggle(item.id)"
       >
         {{ item.name }}
       </button>
 
       <div v-if="isOpen">
-        <ReusedTreeNode
+        <TreeNode
           v-for="child in item.children"
           :key="child.id"
-          :node="child"
+          :node="item.children"
           class="mb-[12px] pl-[12px]"
-          @click="fetchCategory(child.id)"
+          @fetchCategoryId="fetchCategoryId(child.id)"
         />
       </div>
     </div>
@@ -44,13 +44,13 @@ export default {
     },
   },
   methods: {
-    toggle(slug) {
+    toggle(id) {
       this.isOpen = !this.isOpen
-      this.$emit('fetchCategoryId', slug)
+      this.$emit('fetchCategoryId', id)
     },
 
-    fetchCategory(id) {
-      this.$emit('fetchCategory', id)
+    fetchCategoryId(id) {
+      this.$emit('fetchCategoryId', id)
     },
   },
 }

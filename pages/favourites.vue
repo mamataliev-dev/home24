@@ -3,10 +3,12 @@
     <div class="flex items-center justify-between">
       <div class="flex flex-col space-y-[14px]">
         <h1 class="main-title">Избранное</h1>
-        <span class="text-[16px] font-firsNeueRegular">Товаров: 5</span>
+        <span class="text-[16px] font-firsNeueRegular"
+          >Товаров: {{ products.length }}</span
+        >
       </div>
 
-      <div v-show="!isEmpty" class="flex items-center space-x-[40px]">
+      <div v-show="false" class="flex items-center space-x-[40px]">
         <button
           class="text-orange text-[16px] w-auto border-b border-orange leading-[24px] font-firsNeueRegular"
         >
@@ -26,20 +28,18 @@
     </div>
 
     <!-- Products -->
-    <div
-      v-show="!isEmpty"
-      class="grid grid-cols-1 md:grid-cols-6 gap-x-[24px] gap-y-[48px] mt-[32px]"
-    >
+    <div class="main-grid mt-[32px]">
       <ProductsBaseProduct
-        v-for="item in 12"
-        :key="item"
-        @click="getProduct(item)"
+        v-for="item in products"
+        :key="item.id"
+        :product="item"
+        @click="$router.push(`/product/${item.products[0]?.slug}`)"
       />
     </div>
 
     <!-- If Emty -->
     <ReusedSlotEmty
-      v-show="isEmpty"
+      v-if="products.length === 0"
       :image-src="require('@/assets/img/icons/empty-favourites.svg')"
     >
       <template #header>
@@ -65,6 +65,7 @@ export default {
   data() {
     return {
       isEmpty: false,
+      products: [],
       sortCategory: '',
       sorts: [
         {
@@ -98,6 +99,31 @@ export default {
     return {
       title: 'Избранные товары',
     }
+  },
+  mounted() {
+    this.fetchFavoutire()
+  },
+  methods: {
+    async fetchFavoutire() {
+      try {
+        const products = localStorage.getItem('favourite')
+        const productsData = JSON.parse(products)
+
+        const response = await this.$axios.$post(
+          'https://e-shop.ndc.uz/api/get_products',
+          {
+            products: productsData.products,
+            category: null,
+          }
+        )
+
+        console.log(response)
+
+        this.products = response.products
+      } catch (error) {
+        console.log(error)
+      }
+    },
   },
 }
 </script>

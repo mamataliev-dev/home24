@@ -6,67 +6,20 @@
       <div class="flex flex-col w-2/12">
         <div class="category-box">
           <!-- Categories -->
-          <ReusedTreeNode
-            v-for="item in showcase.categories"
-            :key="item.id"
-            :node="item"
-            @fetchCategory="fetchCategory"
+          <TreeNode
+            :node="showcase.categories"
+            @fetchCategoryId="fetchCategoryId"
           />
         </div>
 
         <div class="category-box mt-[40px]">
-          <h1 class="category-title">Цена</h1>
-
-          <div class="flex flex-col">
-            <div class="block">
-              <el-slider v-model="price"></el-slider>
-            </div>
-
-            <div
-              class="flex justify-between xl:space-x-[14px] 2xl:space-x-[24px]"
-            >
-              <input
-                class="xl:w-[100px] 2xl:w-[114px] bg-[#F9F9F9] border border-[#D9D9D9] rounded-lg text-black py-[10px] px-[8px]"
-                type="number"
-                placeholder="10 000"
-              />
-              <input
-                class="xl:w-[100px] 2xl:w-[114px] bg-[#F9F9F9] border border-[#D9D9D9] rounded-lg text-black py-[10px] px-[8px]"
-                type="number"
-                placeholder="1 000 000"
-              />
-            </div>
-          </div>
+          <PriceSlider @sortByPrice="sortByPrice" />
         </div>
       </div>
 
-      <div class="w-10/12 pl-[38px]">
+      <div class="w-10/12 pl-[24px]">
         <div class="flex items-center justify-end">
-          <div class="flex xl:space-x-[40px] 2xl:space-x-[60px]">
-            <div class="flex items-center space-x-[16px]">
-              <span class="text-gray text-[14px]">Сортировка</span>
-
-              <el-select v-model="sortBy" placeholder="Подешевле">
-                <el-option
-                  v-for="item in sorts"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                >
-                </el-option>
-              </el-select>
-            </div>
-
-            <div class="flex space-x-[18px]">
-              <button @click="isGridCol = true">
-                <ImgGridColums :is-active="isGridCol" />
-              </button>
-
-              <button @click="isGridCol = false">
-                <ImgGridRows :is-active="!isGridCol" />
-              </button>
-            </div>
-          </div>
+          <SortComp @update-grid-layout="updateGridLayout" />
         </div>
 
         <div class="mt-[32px]">
@@ -79,6 +32,8 @@
             />
           </div>
         </div>
+
+        <PaginationComp class="mt-[10px]" />
       </div>
     </div>
   </div>
@@ -115,14 +70,29 @@ export default {
       return this.$store.state.currentShowcase
     },
   },
-  mounted() {
-    console.log('12fggffg', this.showcase)
-  },
   methods: {
     handleNodeClick(data) {
       console.log(data)
     },
-    fetchCategory(id) {},
+    async fetchCategoryId(id) {
+      try {
+        const response = await this.$axiosURL.get(
+          `/showcases/${this.showcase.showcase.slug}/?category=${id}`
+        )
+        this.$store.commit('setShowcases', response.data)
+        this.$router.push(
+          `/showcases/${this.showcase.showcase.slug}/?category=${id}`
+        )
+      } catch (error) {
+        console.error('Error fetching:', error)
+      }
+    },
+    handlePriceInput(prices) {
+      console.log('Selected Prices:', prices)
+    },
+    updateGridLayout(val) {
+      this.isGridCol = val
+    },
   },
 }
 </script>

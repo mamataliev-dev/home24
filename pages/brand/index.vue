@@ -137,6 +137,8 @@
       </div>
     </div>
 
+    <PaginationComp />
+
     <ReusedSlotEmty
       v-if="
         filteredBrandsByLetter.length === 0 ||

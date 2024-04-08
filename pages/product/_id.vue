@@ -1,5 +1,24 @@
 <template>
   <div class="container mx-auto mt-[32px]">
+    <el-breadcrumb separator=">" class="mt-[32px] mb-[32px]">
+      <el-breadcrumb-item :to="{ path: '/' }">
+        <span class="text-orange text-[16px] font-firsNeueRegular">
+          Главная
+        </span>
+      </el-breadcrumb-item>
+
+      <el-breadcrumb-item
+        v-for="(crumb, index) in breadcrumbs"
+        :key="index"
+        :to="crumb.to"
+        class="cursor-pointer"
+      >
+        <span class="text-gray text-[16px] font-firsNeueRegular">
+          {{ crumb.text }}
+        </span>
+      </el-breadcrumb-item>
+    </el-breadcrumb>
+
     <div class="grid grid-cols-12">
       <!-- Product View -->
       <div class="flex flex-col xl:col-span-9 2xl:col-span-8">
@@ -142,7 +161,7 @@
                     <div v-for="(option, j) in item.options" :key="j">
                       <button
                         :class="
-                          option.active === false
+                          option.aviable === false
                             ? 'diagonal-line-container'
                             : ''
                         "
@@ -154,7 +173,7 @@
                           effect="light"
                           content="Нет в наличии"
                           :placement="
-                            option.active === false ? 'top-start' : 'null'
+                            option.aviable === false ? 'top-start' : 'null'
                           "
                         >
                           <span class="font-firsNeueMedium text-black">
@@ -513,6 +532,12 @@ export default {
       activeSlider: 0,
       isBuyOneClick: false,
       isSuccessOrder: false,
+      path: [
+        {
+          name: '',
+          slug: '',
+        },
+      ],
     }
   },
   head() {
@@ -521,6 +546,51 @@ export default {
     }
   },
   computed: {
+    breadcrumbs() {
+      const breadcrumbs = []
+
+      if (this.product.info.category) {
+        breadcrumbs.push({
+          text: this.product.info.category.name,
+          to: `/category/${this.product.info.category.slug}`,
+        })
+      }
+
+      let currentCategory = this.product.info.category.parent
+
+      while (currentCategory) {
+        breadcrumbs.unshift({
+          text: currentCategory.name,
+          // slug: currentCategory.slug,
+          to: `/category/${currentCategory.slug}`,
+        })
+
+        currentCategory = currentCategory.parent
+      }
+
+      const pathArray = this.$route.path
+        .split('/')
+        .filter(
+          (p) => p && !p.includes('product') && p && !p.includes('category')
+        )
+
+      pathArray.forEach((path, index) => {
+        const text = path
+          .replace(/-/g, ' ')
+          .replace(
+            /\w\S*/g,
+            (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+          )
+
+        const to = '/' + pathArray.slice(0, index + 1).join('/')
+
+        if (!breadcrumbs.some((breadcrumb) => breadcrumb.text === text)) {
+          breadcrumbs.push({ text, to })
+        }
+      })
+
+      return breadcrumbs
+    },
     productData() {
       return this.$store.state.productId
     },
@@ -567,19 +637,24 @@ export default {
       return formatted
     },
   },
+  mounted() {
+    this.getParentCategory()
+  },
   methods: {
+    getParentCategory() {
+      this.path.push({
+        name: this.product.info.category.parent.name,
+        slug: this.product.info.category.parent.slug,
+      })
+
+      console.log(this.product.info.category.parent)
+    },
     closeBuyOneClickModal(val) {
       this.isBuyOneClick = val
     },
-
     async fetchProductArrtibute(id) {
       await this.$store.dispatch('fetchProductId', id)
-
-      // this.$router.push({
-      //   query: id,
-      // })
     },
-
     syncSliders(_, nextPosition) {
       this.c1.goTo(nextPosition)
       this.c2.goTo(nextPosition)
@@ -613,7 +688,6 @@ export default {
         })
       }
     },
-
     async setCompare() {
       this.isCompare = !this.isCompare
 
@@ -658,11 +732,6 @@ export default {
 </script>
 
 <style>
-/* #product .slick-track {
-  display: flex;
-  flex-direction: column !important;
-} */
-
 #product .first_slide .slick-slide {
   width: auto !important;
 }

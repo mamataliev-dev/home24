@@ -82,11 +82,22 @@ export const actions = {
     }
   },
 
-  // ?
   // Get Category ID
   async fetchCategoryId({ commit }, id) {
     try {
       const response = await this.$axiosURL.get(`/categories/${id}`)
+      commit('setCategoryId', response.data)
+    } catch (error) {
+      console.error('Error fetching:', error)
+    }
+  },
+
+  // Get Sorted Category ID
+  async sortCategoryBy({ commit }, id, sort) {
+    try {
+      const response = await this.$axiosURL.get(
+        `/categories/${id}?sort=${sort}`
+      )
       commit('setCategoryId', response.data)
       console.log(response.data)
     } catch (error) {
@@ -109,7 +120,6 @@ export const actions = {
     try {
       const response = await this.$axiosURL.get(`/products/${id}`)
       commit('setProductId', response.data)
-      console.log(response.data)
     } catch (error) {
       console.error('Error fetching:', error)
     }

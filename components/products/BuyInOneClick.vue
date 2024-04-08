@@ -35,7 +35,9 @@
               >
 
               <div class="flex flex-col space-y-[5px]">
-                <span class="text-gray text-[12px]"
+                <span
+                  :class="product.stock === 0 ? 'text-red' : ''"
+                  class="text-gray text-[12px]"
                   >В наличии: {{ product.stock }}</span
                 >
                 <div
@@ -62,46 +64,58 @@
           </div>
         </div>
 
-        <!-- Customer Name -->
-        <div class="flex flex-col space-y-[6px]">
-          <label class="font-medium text-[16px]"
-            >Ф.И.О <span class="text-gray">*</span></label
-          >
-          <input
-            v-model="userName"
-            class="input w-full border border-[#EBEBEB] p-[16px] rounded-lg placeholder:text-gray text-[16px] focus:outline-orange"
-            type="text"
-            placeholder="Ф.И.О"
-          />
-          <label v-if="isEmptyUserName" class="text-[14px] text-red italic"
-            >Пожалуйста заполните свою Ф.И.О</label
-          >
-        </div>
-
-        <!-- Customer Phone Number -->
-        <div class="flex flex-col space-y-[6px]">
-          <label class="font-medium text-[16px]"
-            >Телефон <span class="text-gray">*</span></label
-          >
-
-          <input
-            v-model="userPhone"
-            v-mask="'+998 (##) ###-####'"
-            class="w-full border border-[#EBEBEB] p-[16px] rounded-lg placeholder:text-gray text-[16px] focus:outline-orange"
-            type="text"
-            placeholder="+998 (__) ___ __ __"
-          />
-          <label v-if="isEmptyUserPhone" class="text-[14px] text-red italic"
-            >Длина поля номер телефона должна быть 12
-          </label>
-        </div>
-
-        <button
-          class="w-full p-[16px] bg-orange rounded-lg focus:outline-orange"
-          @click="orderProduct"
+        <!-- If empty -->
+        <div
+          v-if="product.stock === 0"
+          class="flex items-center justify-center"
         >
-          <span class="font-medium text-white">Оформить</span>
-        </button>
+          <span class="p-[16px] text-[18px] text-red font-medium"
+            >К сожалению, товара нет в наличии</span
+          >
+        </div>
+
+        <div v-if="product.stock !== 0" class="flex flex-col space-y-[24px]">
+          <!-- Customer Name -->
+          <div class="flex flex-col space-y-[6px]">
+            <label class="font-medium text-[16px]"
+              >Ф.И.О <span class="text-gray">*</span></label
+            >
+            <input
+              v-model="userName"
+              class="input w-full border border-[#EBEBEB] p-[16px] rounded-lg placeholder:text-gray text-[16px] focus:outline-orange"
+              type="text"
+              placeholder="Ф.И.О"
+            />
+            <label v-if="isEmptyUserName" class="text-[14px] text-red italic"
+              >Пожалуйста заполните свою Ф.И.О</label
+            >
+          </div>
+
+          <!-- Customer Phone Number -->
+          <div class="flex flex-col space-y-[6px]">
+            <label class="font-medium text-[16px]"
+              >Телефон <span class="text-gray">*</span></label
+            >
+
+            <input
+              v-model="userPhone"
+              v-mask="'+998 (##) ###-####'"
+              class="w-full border border-[#EBEBEB] p-[16px] rounded-lg placeholder:text-gray text-[16px] focus:outline-orange"
+              type="text"
+              placeholder="+998 (__) ___ __ __"
+            />
+            <label v-if="isEmptyUserPhone" class="text-[14px] text-red italic"
+              >Длина поля номер телефона должна быть 12
+            </label>
+          </div>
+
+          <button
+            class="w-full p-[16px] bg-orange rounded-lg focus:outline-orange"
+            @click="orderProduct"
+          >
+            <span class="font-medium text-white">Оформить</span>
+          </button>
+        </div>
       </div>
     </div>
 

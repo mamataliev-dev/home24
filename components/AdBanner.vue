@@ -2,7 +2,6 @@
   <div class="bg-[#F4F5F5] flex items-center pt-[39px] pb-[57px]">
     <div class="grid grid-cols-12 gap-x-[23px] container mx-auto">
       <div class="col-span-8 relative">
-        
         <div class="swiper-baner">
           <div class="swiper-wrapper">
             <div v-for="item in banners" :key="item.id" class="swiper-slide">

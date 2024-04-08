@@ -19,18 +19,7 @@
       </div>
     </div>
 
-    <div class="mt-[32px]">
-      <el-pagination
-        class="pagination"
-        background
-        layout="prev, pager, next"
-        :total="postData.posts.total"
-      >
-      </el-pagination>
-
-
-
-    </div>
+    <PaginationComp />
   </div>
 </template>
 

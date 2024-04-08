@@ -74,7 +74,7 @@ export default {
 }
 
 .el-icon-arrow-right:before {
-  content: url('@/assets/img/icons/plus.svg');
+  content: url('@/assets/img/icons/faq-plus.svg');
 }
 
 .el-collapse-item__arrow.is-active {

@@ -19,6 +19,9 @@
 
 <script>
 export default {
+  async fetch() {
+    await this.$store.dispatch('fetchBanners')
+  },
   computed: {
     banners() {
       return this.$store.state.banners.filter((b) => b.type === 'type2')

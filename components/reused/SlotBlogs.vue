@@ -39,8 +39,8 @@ export default {
       default: false,
     },
   },
-  async asyncData({ store }) {
-    await store.dispatch('fetchPosts')
+  async fetch() {
+    await this.$store.dispatch('fetchPosts')
   },
   computed: {
     posts() {
