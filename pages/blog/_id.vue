@@ -1,5 +1,6 @@
 <template>
   <div class="container mx-auto">
+    <DynamicRouter />
     <h1 class="main-title">Блог</h1>
 
     <div class="flex space-x-[74px] mt-[32px]">

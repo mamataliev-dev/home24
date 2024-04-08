@@ -1,5 +1,6 @@
 <template>
   <div class="container mx-auto">
+    <DynamicRouter />
     <h1 class="main-title">Блог</h1>
 
     <div class="blog-grid user-data-cont">
