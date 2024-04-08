@@ -107,7 +107,10 @@
             <span>Избранное</span>
           </nuxt-link>
 
-          <div class="nav-item relative cursor-pointer" @click="isModal = true">
+          <div
+            class="nav-item relative cursor-pointer"
+            @click="$router.push('/cart')"
+          >
             <ImgBagImg />
             <span>Корзина</span>
           </div>

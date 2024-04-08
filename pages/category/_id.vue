@@ -6,7 +6,7 @@
         <div class="category-box">
           <h1 class="category-title">Категории</h1>
 
-          <ul class="flex flex-col space-y-[12px]">
+          <!-- <ul class="flex flex-col space-y-[12px]">
             <li v-for="(elem, index) in category" :key="index">
               <button
                 class="font-bold hover:text-orange"
@@ -16,7 +16,7 @@
                 {{ elem?.slug }}
               </button>
             </li>
-          </ul>
+          </ul> -->
 
           <ul class="flex flex-col space-y-[12px]">
             <li v-for="item in category.children" :key="item.id">
@@ -28,18 +28,6 @@
               </button>
             </li>
           </ul>
-
-          <!-- <ul class="flex flex-col space-y-[12px]">
-            <li
-              v-for="(item, index) in breadcrumbsCategory"
-              :key="index"
-              @click="fetchCategory(item.to)"
-            >
-              <button class="hover:text-orange">
-                {{ item.text }}
-              </button>
-            </li>
-          </ul> -->
         </div>
 
         <!-- Sort by -->
@@ -153,9 +141,12 @@
           </div>
         </div>
 
+        <!-- .main-grid {
+  @apply grid grid-cols-1  md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-5;
+} -->
         <!-- If child category -->
         <div v-show="!isParent">
-          <div class="main-grid mt-[32px]">
+          <div class="category-grid mt-[32px]">
             <ProductsBaseProduct
               v-for="item in products"
               :key="item.id"

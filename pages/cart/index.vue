@@ -10,7 +10,6 @@
 
       <!-- Products -->
       <div class="flex items-start space-x-[24px] pb-[73px]">
-
         <div class="w-8/12 mt-[32px] bg-white rounded-lg px-[45px] py-[34px]">
           <div class="flex space-x-[12px] pb-[14px] border-b border-[#DDDDDD]">
             <input type="checkbox" />
@@ -136,6 +135,9 @@
 export default {
   name: 'UserCart',
   layout: 'CartLayout',
+  async asyncData({ store }) {
+    await store.dispatch('fetchShowcases')
+  },
   data() {
     return {
       isEmpty: false,
