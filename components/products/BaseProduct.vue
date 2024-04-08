@@ -193,7 +193,7 @@ export default {
       const id = this.product.id
 
       parsedProducts.products.forEach((item) => {
-        if (id === item) {
+        if (id === parseInt(item)) {
           this.isFavorite = true
         } else {
           this.isFavorite = false

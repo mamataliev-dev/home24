@@ -235,6 +235,9 @@ export default {
   width: 100%;
   height: 100%;
   position: fixed;
+  top: 0;
+  left: 0;
+  /* transform: translate(-50%, -50%); */
   background-color: rgba(0, 0, 0, 0.7);
   z-index: 100;
 }
